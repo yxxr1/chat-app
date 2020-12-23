@@ -55,7 +55,7 @@ const _: React.FC<ComponentProps> = (
         dispatch(getChats());
     }
     const onSend = () => {
-        if(!value.length) return;
+        if(!value.trim().length) return;
         // @ts-ignore
         dispatch(publishChat(currentChat.id, value));
         setValue('');
