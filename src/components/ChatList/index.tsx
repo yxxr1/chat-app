@@ -85,7 +85,7 @@ const _: React.FC<ComponentProps> = (
                 onSubmit={e => {e.preventDefault(); onNewChatSubmit()}}
             >
                 <h3 style={{color: '#fff', textAlign: 'center'}}>Введите название</h3>
-                <Input onChange={setValue} value={value} autofocus />
+                <Input onChange={setValue} value={value} autoFocus />
                 <Button
                     title={"OK"}
                 />

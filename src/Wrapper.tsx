@@ -64,7 +64,7 @@ const _: React.FC<ComponentProps> = (
                     onSubmit={e => {e.preventDefault(); dispatch(setUser(value))}}
                 >
                     <h2>Введите имя</h2>
-                    <Input onChange={setValue} value={value} autofocus />
+                    <Input onChange={setValue} value={value} autoFocus />
                     <Button
                         title={"OK"}
                     />
