@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {connect, DispatchProp} from 'react-redux'
 import styled from 'styled-components'
 
@@ -39,7 +39,6 @@ const _: React.FC<ComponentProps> = (
 ) => {
     useEffect(() => {
         const subscribe = () => {
-            if(currentChat) console.log(currentChat.name)
             // @ts-ignore
             dispatch(subscribeChat(currentChat.id, subscribe));
         }
@@ -60,9 +59,11 @@ const _: React.FC<ComponentProps> = (
         // @ts-ignore
         dispatch(publishChat(currentChat.id, value));
         setValue('');
+        input?.current?.focus();
     }
 
     const [value, setValue] = useState('');
+    const input = useRef<HTMLElement>();
 
     if(currentChat === null) return (<Container />);
     return (<Container>
@@ -89,7 +90,12 @@ const _: React.FC<ComponentProps> = (
             style={{height: '30px', display: 'flex'}}
             onSubmit={e => {e.preventDefault(); onSend()}}
         >
-            <Input style={{flex: 9}} value={value} onChange={setValue} />
+            <Input style={{flex: 9}}
+                   ref={input}
+                   value={value}
+                   onChange={setValue}
+                   autoFocus
+            />
             <Button style={{flex: 1}} title={'->'} />
         </form>
     </Container>)

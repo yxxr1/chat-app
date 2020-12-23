@@ -1,12 +1,11 @@
-import React from 'react'
+import React, {forwardRef, MutableRefObject} from 'react'
 import styled from "styled-components";
 
 
 export interface Props {
     onChange: (value: string) => any,
     value: string,
-    autofocus?: boolean,
-    style?: Object
+    [key: string]: any
 }
 
 const InputC = styled.input`
@@ -15,12 +14,11 @@ const InputC = styled.input`
       outline: none;
       padding: 0 10px;
     `
-export function Input({value, onChange, autofocus, style}: Props) {
-    // @ts-ignore
+export const Input = forwardRef(({value, onChange, ...props}: Props, ref: any) => {
     return (<InputC
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        autoFocus={autofocus}
-        style={style}
+        {...props}
+        ref={ref}
     />)
-}
+})
