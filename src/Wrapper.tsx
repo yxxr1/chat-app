@@ -20,12 +20,19 @@ export interface Props {
 }
 type ComponentProps =  Props & DispatchProp;
 
-const Container1 = styled.div`
+const Container1 = styled.main`
   display: flex;
   height: calc(100% - 70px);
   padding-top: 10px;
 `
 const Container2 = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
+const Container3 = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,9 +60,9 @@ const _: React.FC<ComponentProps> = (
     switch(userName){
         case undefined:
             return (
-                <Container2>
+                <Container3>
                     <Loader />
-                </Container2>
+                </Container3>
             )
         case null:
             return (

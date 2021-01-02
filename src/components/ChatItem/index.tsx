@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export function ChatItem({chat, current, onClick}: Props) {
-    const Chat = styled.div`
+    const Chat = styled.li`
       height: 30px;
       display: flex;
       align-items: center;
@@ -19,6 +19,7 @@ export function ChatItem({chat, current, onClick}: Props) {
       background-color: ${current ? 'aliceblue' : 'white'};
       cursor: pointer;
       user-select: none;
+      list-style-type: none;
       
       &:not(:last-child) {
         border-bottom: solid 1px #eee;

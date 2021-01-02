@@ -10,7 +10,7 @@ export interface Props {
 }
 type ComponentProps =  Props & DispatchProp;
 
-const HeaderC = styled.div`
+const HeaderC = styled.header`
         height: 60px;
         border-bottom: solid 1px #eee;
         display: flex;

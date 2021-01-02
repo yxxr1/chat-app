@@ -70,14 +70,16 @@ const _: React.FC<ComponentProps> = (
                 <Button title={"Все"} active={currentTab === 0} onClick={() => setCurrentTab(0)}/>
                 <Button title={"Участие"} active={currentTab === 1} onClick={() => setCurrentTab(1)}/>
             </Filter>
-            {list.map((chat, ind) => (
-                <ChatItem
-                    key={ind}
-                    chat={chat}
-                    current={!!currentChat && currentChat.id === chat.id}
-                    onClick={onChatClick}
-                />
-            ))}
+            <ul style={{padding: '0'}}>
+                {list.map((chat, ind) => (
+                    <ChatItem
+                        key={ind}
+                        chat={chat}
+                        current={!!currentChat && currentChat.id === chat.id}
+                        onClick={onChatClick}
+                    />
+                ))}
+            </ul>
         </List>
 
         <PopUp isShow={popup} onClose={() => setPopup(false)}>
