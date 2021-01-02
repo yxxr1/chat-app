@@ -20,13 +20,13 @@ export function Message({message}: Props) {
     let content;
     switch(message.service){
         case 1:
-            content = <i>{userTitle} присоединился к чату</i>
+            content = <i style={{userSelect: 'none'}}>{userTitle} присоединился к чату</i>
             break;
         case 2:
-            content = <i>{userTitle} вышел из чата</i>
+            content = <i style={{userSelect: 'none'}}>{userTitle} вышел из чата</i>
             break
         default:
-            content = <><b>{userTitle}:</b> {message.text}</>
+            content = <><b style={{userSelect: 'none', cursor: 'pointer'}}>{userTitle}: </b>{message.text}</>
     }
 
     return (<MessageC title={formatDate(new Date(message.date))}>
