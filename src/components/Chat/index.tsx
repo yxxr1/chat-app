@@ -59,8 +59,11 @@ const _: React.FC<ComponentProps> = (
         // @ts-ignore
         dispatch(publishChat(currentChat.id, value));
         setValue('');
-        input?.current?.focus();
     }
+
+    useEffect(() => {
+        input?.current?.focus();
+    }, [currentChat, messages])
 
     const [value, setValue] = useState('');
     const input = useRef<HTMLElement>();
