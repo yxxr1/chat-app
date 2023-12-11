@@ -1,35 +1,23 @@
-import React from 'react'
-import {Chat} from "../../store/interfaces";
-import styled from "styled-components";
+import React from 'react';
+import { Message as MessageType } from '@store/types';
+import { Chat, Title, Message } from './styled';
 
+type Props = {
+  name: string;
+  lastMessage: MessageType | null;
+  isCurrent: boolean;
+  onClick: () => void;
+};
 
-export interface Props {
-    chat: Chat,
-    current: boolean,
-    onClick: (id: string) => any
-}
-
-export function ChatItem({chat, current, onClick}: Props) {
-    const Chat = styled.li`
-      height: 30px;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      font-weight: ${current ? 'bold' : 'normal'};
-      background-color: ${current ? 'aliceblue' : 'white'};
-      cursor: pointer;
-      user-select: none;
-      list-style-type: none;
-      
-      &:not(:last-child) {
-        border-bottom: solid 1px #eee;
-      }
-      &:hover {
-        background-color: aliceblue;
-      }
-    `
-
-    return (<Chat onClick={() => onClick(chat.id)}>
-        {chat.name}
-    </Chat>)
-}
+export const ChatItem: React.FC<Props> = ({ name, lastMessage, isCurrent, onClick }) => {
+  return (
+    <Chat isCurrent={isCurrent} onClick={onClick}>
+      <Title>{name}</Title>
+      {lastMessage && (
+        <Message>
+          <i>{lastMessage.fromName}:</i> {lastMessage.text}
+        </Message>
+      )}
+    </Chat>
+  );
+};

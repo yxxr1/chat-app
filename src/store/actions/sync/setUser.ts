@@ -1,8 +1,4 @@
+import { createAction } from '@utils/actions';
+import { User } from '@store/types';
 
-export interface SetUserAction {
-    type: 'SET_USER',
-    name: string,
-    id: string
-}
-
-export const setUser = (name: string, id: string): SetUserAction => ({type: 'SET_USER', name, id})
+export const setUser = createAction('SET_USER', (user: User) => ({ user }));

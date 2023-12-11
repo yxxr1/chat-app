@@ -1,26 +1,3 @@
-import {DispatchProp} from "react-redux";
-import fetch from "../../../utils/fetch";
+import { makeQuery } from '@utils/actions';
 
-interface ParamsType {
-    chatId: string,
-    message: string
-}
-interface ResponseType {
-
-}
-
-export const publishChat = (chatId: string, message: string) => {
-    return async (dispatch: DispatchProp) => {
-        try {
-            const params: ParamsType = {chatId, message}
-            let resp = await fetch('publish', {
-                method: 'post',
-                body: JSON.stringify(params)
-            });
-            // let data: ResponseType = await resp.json();
-            // @ts-ignore
-        } catch(e){
-            console.log(e)
-        }
-    }
-}
+export const publishChat = (chatId: string, message: string) => makeQuery('publish', 'POST', { chatId, message });

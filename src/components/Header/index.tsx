@@ -1,37 +1,25 @@
-import React from 'react'
-import {connect, DispatchProp} from 'react-redux'
-import styled from 'styled-components'
+import React from 'react';
+import { Button } from 'antd';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { Header as HeaderC } from './styled';
 
-import {State} from "../../store/interfaces";
+type Props = {
+  userId: string | null;
+  userName: string | null;
+  onLogout: () => void;
+};
 
-export interface Props {
-    userId?: string,
-    userName?: string | null,
-}
-type ComponentProps =  Props & DispatchProp;
-
-const HeaderC = styled.header`
-        height: 60px;
-        border-bottom: solid 1px #eee;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: darkslategrey;
-        color: #fff;
-    `
-const _: React.FC<ComponentProps> = (
-    {userName, userId, dispatch}:
-        ComponentProps
-) => {
-
-    return (<HeaderC>
-        {userName && userId ? <h3>{userName}({userId.substr(userId.length - 4)})</h3> : <></>}
-    </HeaderC>)
-}
-
-const mapStateToProps = (state: State): Props => ({
-    userId: state.userId,
-    userName: state.userName
-})
-
-export const Header = connect(mapStateToProps)(_)
+export const Header: React.FC<Props> = ({ userName, userId, onLogout }) => (
+  <HeaderC>
+    {userName && userId ? (
+      <>
+        <h3>
+          {userName}({userId.substr(userId.length - 4)})
+        </h3>
+        <Button type="link" title="Logout" onClick={onLogout}>
+          <AiOutlineLogout size={22} />
+        </Button>
+      </>
+    ) : null}
+  </HeaderC>
+);

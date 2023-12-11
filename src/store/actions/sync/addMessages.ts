@@ -1,9 +1,4 @@
-import {Message} from "../../interfaces";
+import { Message } from '@store/types';
+import { createAction } from '@utils/actions';
 
-export interface AddMessagesAction {
-    type: 'ADD_MESSAGES'
-    messages: Message[],
-    id: string
-}
-
-export const addMessages = (messages: Message[], id: string): AddMessagesAction => ({type: 'ADD_MESSAGES', messages, id})
+export const addMessages = createAction('ADD_MESSAGES', (messages: Message[], id: string) => ({ messages, id }));

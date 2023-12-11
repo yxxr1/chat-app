@@ -1,0 +1,20 @@
+.list {
+  height: 100%;
+  width: 260px;
+  padding-right: 10px;
+  border-right: 1px solid #eee;
+
+  .create-button {
+    width: 100%;
+  }
+
+  .filter {
+    margin: 10px 0;
+    display: flex;
+
+    & > * {
+      flex: 1;
+      text-align: center;
+    }
+  }
+}

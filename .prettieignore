@@ -1,0 +1,8 @@
+/dist
+/tmp
+/node_modules
+/.vscode
+/.idea
+/public
+package-lock.json
+package.json

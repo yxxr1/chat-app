@@ -1,8 +1,4 @@
-import {Chat} from '../../interfaces'
+import { Chat } from '@store/types';
+import { createAction } from '@utils/actions';
 
-export interface SetChatListAction {
-    type: 'SET_CHAT_LIST',
-    list: Chat[]
-}
-
-export const setChatList = (list: Chat[]): SetChatListAction => ({type: 'SET_CHAT_LIST', list})
+export const setChatList = createAction('SET_CHAT_LIST', (list: Chat[]) => ({ list }));

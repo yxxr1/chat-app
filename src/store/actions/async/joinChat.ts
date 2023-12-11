@@ -1,31 +1,23 @@
-import {DispatchProp} from "react-redux";
-import fetch from "../../../utils/fetch";
-import {Message} from "../../interfaces";
-import {addMessages} from "../sync/addMessages";
-import {joinChat as joinChatSync} from "../sync/joinChat";
+import { makeQuery } from '@utils/actions';
+import { Message } from '@store/types';
+import { addMessages } from '@actions/sync/addMessages';
+import { joinChat as joinChatSync } from '@actions/sync/joinChat';
+import { subscribeChat } from '@actions/async/subscribeChat';
 
-interface ParamsType {
-    chatId: string
-}
 interface ResponseType {
-    messages: Message[]
+  messages: Message[];
 }
 
-export const joinChat = (chatId: string) => {
-    return async (dispatch: DispatchProp) => {
-        try {
-            const params: ParamsType = {chatId}
-            let resp = await fetch('join', {
-                method: 'post',
-                body: JSON.stringify(params)
-            });
-            let data: ResponseType = await resp.json();
-            // @ts-ignore
-            dispatch(addMessages(data.messages, chatId));
-            // @ts-ignore
-            dispatch(joinChatSync(chatId));
-        } catch(e){
-            console.log(e)
-        }
-    }
-}
+export const joinChat = (chatId: string) =>
+  makeQuery<ResponseType>('join', 'POST', { chatId }, (dispatch, data) => {
+    dispatch(addMessages(data.messages, chatId));
+    dispatch(joinChatSync(chatId));
+
+    const subscribe = (isFailure?: boolean) => {
+      if (!isFailure) {
+        dispatch(subscribeChat(chatId, subscribe));
+      }
+    };
+
+    subscribe();
+  });

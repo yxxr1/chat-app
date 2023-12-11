@@ -1,21 +1,15 @@
-import {DispatchProp} from "react-redux";
-import fetch from "../../../utils/fetch";
-import {setChatList} from "../sync/setChatList";
-import {Chat} from "../../interfaces";
+import { makeQuery } from '@utils/actions';
+import { Chat } from '@store/types';
+import { setChatList } from '@actions/sync/setChatList';
+import { joinChat } from '@actions/async/joinChat';
 
 interface ResponseType {
- chats: Chat[]
+  chats: Chat[];
+  joinedChatsIds: Chat['id'][];
 }
 
-export const getChats = () => {
-    return async (dispatch: DispatchProp) => {
-        try {
-            let resp = await fetch('chats');
-            let data: ResponseType = await resp.json();
-            // @ts-ignore
-            dispatch(setChatList(data.chats));
-        } catch(e){
-            console.log(e)
-        }
-    }
-}
+export const getChats = () =>
+  makeQuery<ResponseType>('chats', 'GET', null, (dispatch, data) => {
+    dispatch(setChatList(data.chats));
+    data.joinedChatsIds.forEach((chatId) => dispatch(joinChat(chatId)));
+  });

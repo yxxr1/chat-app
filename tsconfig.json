@@ -6,6 +6,8 @@
       "dom.iterable",
       "esnext"
     ],
+    "declaration": true,
+    "sourceMap": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -13,14 +15,29 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@components/*": ["components/*"],
+      "@actions/*": ["store/actions/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"],
+      "@screens/*": ["screens/*"],
+      "@containers/*": ["containers/*"],
+      "@styles/*": ["styles/*"]
+    },
+    "plugins": [{
+      "name": "typescript-plugin-css-modules"
+    }]
   },
   "include": [
-    "src"
+    "src",
+    "declarations.d.ts"
   ]
 }

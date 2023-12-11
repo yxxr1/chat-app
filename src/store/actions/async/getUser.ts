@@ -1,23 +1,20 @@
-import {setUser} from "../sync/setUser";
-import {DispatchProp} from "react-redux";
-
-import fetch from '../../../utils/fetch'
+import { makeQuery } from '@utils/actions';
+import { setUser } from '@actions/sync/setUser';
 
 interface ResponseType {
-    name: string | null,
-    id: string
+  name: string | null;
+  id: string | null;
 }
 
-export const getUser = () => {
-    return async (dispatch: DispatchProp) => {
-        try {
-            let resp = await fetch('username');
-            let data: ResponseType = await resp.json();
-            // @ts-ignore
-            dispatch(setUser(data.name, data.id));
-        } catch(e){
-            console.log(e)
-        }
-
-    }
-}
+export const getUser = () =>
+  makeQuery<ResponseType>(
+    'user',
+    'GET',
+    null,
+    (dispatch, data) => {
+      dispatch(setUser(data));
+    },
+    (dispatch) => {
+      dispatch(setUser({ id: null, name: null }));
+    },
+  );

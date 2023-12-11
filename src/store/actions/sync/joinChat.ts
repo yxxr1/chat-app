@@ -1,7 +1,3 @@
+import { createAction } from '@utils/actions';
 
-export interface JoinChatAction {
-    type: 'JOIN_CHAT',
-    id: string
-}
-
-export const joinChat = (id: string): JoinChatAction => ({type: 'JOIN_CHAT', id})
+export const joinChat = createAction('JOIN_CHAT', (id: string) => ({ id }));

@@ -1,35 +1,27 @@
-import React from 'react'
-import {Message as MessageI} from "../../store/interfaces";
-import styled from "styled-components";
+import React, { useMemo } from 'react';
+import moment from 'moment';
+import { Message as MessageType } from '@store/types';
+import { Message as MessageC, MessageDateTime, ServiceMessage } from './styled';
 
+type Props = {
+  message: MessageType;
+};
 
-export interface Props {
-    message: MessageI
-}
+export const Message: React.FC<Props> = ({ message }) => {
+  const userTitle = useMemo(() => `${message.fromName}(${message.fromId.substr(message.fromId.length - 4)})`, [message]);
 
-const dup = (s: number) => s < 10 ? '0' + s : s;
-const formatDate = (date: Date) =>
-    `${date.getFullYear()}-${dup(date.getMonth())}-${dup(date.getDate())} 
-    ${dup(date.getHours())}:${dup(date.getMinutes())}:${dup(date.getSeconds())}`
+  switch (message.service) {
+    case 1:
+      return <ServiceMessage>{userTitle} joined chat</ServiceMessage>;
+    case 2:
+      return <ServiceMessage>{userTitle} left chat</ServiceMessage>;
+  }
 
-const MessageC = styled.div`
-  padding: 3px 0;
-`
-export function Message({message}: Props) {
-    const userTitle = `${message.fromName}(${message.fromId.substr(message.fromId.length - 4)})`
-    let content;
-    switch(message.service){
-        case 1:
-            content = <i style={{userSelect: 'none'}}>{userTitle} присоединился к чату</i>
-            break;
-        case 2:
-            content = <i style={{userSelect: 'none'}}>{userTitle} вышел из чата</i>
-            break
-        default:
-            content = <><b style={{userSelect: 'none', cursor: 'pointer'}}>{userTitle}: </b>{message.text}</>
-    }
-
-    return (<MessageC title={formatDate(new Date(message.date))}>
-        {content}
-    </MessageC>)
-}
+  return (
+    <MessageC>
+      <b style={{ userSelect: 'none', cursor: 'pointer' }}>{userTitle}: </b>
+      <span>{message.text}</span>
+      <MessageDateTime>{moment(message.date).calendar()}</MessageDateTime>
+    </MessageC>
+  );
+};
