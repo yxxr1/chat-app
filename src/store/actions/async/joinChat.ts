@@ -9,13 +9,19 @@ interface ResponseType {
 }
 
 export const joinChat = (chatId: string) =>
-  makeQuery<ResponseType>('join', 'POST', { chatId }, (dispatch, data) => {
+  makeQuery<ResponseType>('join', 'POST', { chatId }, (dispatch, data, getState) => {
     dispatch(addMessages(data.messages, chatId));
     dispatch(joinChatSync(chatId));
 
     const subscribe = (isFailure?: boolean) => {
       if (!isFailure) {
-        dispatch(subscribeChat(chatId, subscribe));
+        const {
+          allChats: {
+            [chatId]: { messages },
+          },
+        } = getState();
+        const lastMessageId = messages.slice(-1)[0]?.id ?? null;
+        dispatch(subscribeChat(chatId, lastMessageId, subscribe));
       }
     };
 

@@ -6,11 +6,11 @@ interface ResponseType {
   messages: Message[];
 }
 
-export const subscribeChat = (chatId: string, callback: (isFailure: boolean) => void) =>
+export const subscribeChat = (chatId: string, lastMessageId: string, callback: (isFailure: boolean) => void) =>
   makeQuery<ResponseType>(
     'subscribe',
     'POST',
-    { chatId },
+    { chatId, lastMessageId },
     (dispatch, data) => {
       dispatch(addMessages(data.messages, chatId));
       callback(false);

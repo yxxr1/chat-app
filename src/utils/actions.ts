@@ -1,6 +1,10 @@
 import { notification } from 'antd';
-import { ThunkDispatchType } from '@store/types';
+import { AnyAction } from 'redux';
+import { ThunkDispatch, ThunkAction } from 'redux-thunk';
+import { State } from '@store/types';
 import { fetch } from '@utils/fetch';
+
+type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;
 
 export const createAction =
   <Type extends string, PayloadCreator extends (...args: never[]) => ReturnType<PayloadCreator>>(
@@ -14,10 +18,10 @@ export const makeQuery =
     path: string,
     method: 'GET' | 'POST',
     body: object | null,
-    onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType) => void) | null,
-    onFailure?: (dispatch: ThunkDispatchType, response: ErrorResponseType) => void,
-  ): ((dispatch: ThunkDispatchType) => Promise<void>) =>
-  async (dispatch) => {
+    onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
+    onFailure?: (dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void,
+  ): ThunkAction<Promise<void>, State, void, AnyAction> =>
+  async (dispatch, getState) => {
     try {
       const resp = await fetch(path, {
         method,
@@ -25,12 +29,11 @@ export const makeQuery =
       });
 
       if (resp.status >= 200 && resp.status < 300) {
-        onSuccess?.(dispatch, await resp.json());
+        onSuccess?.(dispatch, await resp.json(), getState);
       } else {
-        onFailure?.(dispatch, await resp.json());
+        onFailure?.(dispatch, await resp.json(), getState);
       }
     } catch (e) {
-      console.error(e);
       notification.error({ message: 'Network error' });
     }
   };

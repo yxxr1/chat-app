@@ -1,5 +1,3 @@
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { addMessages } from '@actions/sync/addMessages';
 import { joinChat } from '@actions/sync/joinChat';
 import { quitChat } from '@actions/sync/quitChat';
@@ -17,7 +15,7 @@ export type Chat = {
 
 export type Message = {
   id: string;
-  text: string;
+  text: string | null;
   fromId: string;
   fromName: string;
   date: string;
@@ -46,5 +44,3 @@ export type Action =
   | ReturnType<typeof setUser>
   | ReturnType<typeof addChats>
   | ReturnType<typeof deleteChats>;
-
-export type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;
