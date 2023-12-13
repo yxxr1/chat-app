@@ -47,7 +47,8 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
 
   useEffect(() => {
     inputRef?.current?.focus();
-  }, [currentChat, currentChat?.messages]);
+    setMessageText('');
+  }, [currentChat?.id]);
 
   if (currentChat === null) {
     return (
