@@ -7,6 +7,7 @@ import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
 import { authUser } from '@actions/async/auth';
 import { setUser } from '@actions/async/setUser';
+import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -66,7 +67,12 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
         afterOpenChange={onModalChange}
       >
         <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
-          <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter user name' }]}>
+          <Form.Item
+            name="name"
+            label="Name"
+            validateTrigger="onBlur"
+            rules={[{ required: true, validator: nameValidator, message: 'Please enter correct user name' }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item name="connectionMethod" label="Connection method">

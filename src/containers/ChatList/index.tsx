@@ -8,6 +8,7 @@ import { setCurrentChat } from '@actions/sync/setCurrentChat';
 import { createChat } from '@actions/async/createChat';
 import { joinChat } from '@actions/async/joinChat';
 import { ChatItem } from '@components/ChatItem';
+import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
 
 export interface Props {
@@ -100,7 +101,12 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, ...p
         afterOpenChange={onModalChange}
       >
         <Form form={form} onFinish={onCreateSubmit}>
-          <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter chat name' }]}>
+          <Form.Item
+            name="name"
+            label="Name"
+            validateTrigger="onBlur"
+            rules={[{ required: true, validator: nameValidator, message: 'Please enter correct chat name' }]}
+          >
             <Input ref={inputRef} autoFocus />
           </Form.Item>
         </Form>

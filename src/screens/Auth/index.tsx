@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import { authUser } from '@actions/async/auth';
+import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -20,7 +21,12 @@ const _Auth: React.FC<Props> = (props) => {
     <div className={styles.container}>
       <Form form={form} onFinish={onSubmit}>
         <h1 className={styles.title}>Welcome to Chat</h1>
-        <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter user name' }]}>
+        <Form.Item
+          name="name"
+          label="Name"
+          validateTrigger="onBlur"
+          rules={[{ validator: nameValidator, message: 'Please enter correct user name' }]}
+        >
           <Input autoFocus />
         </Form.Item>
 
