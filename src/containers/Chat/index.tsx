@@ -11,6 +11,8 @@ import { Message } from '@components/Message';
 import { useJoinChat } from './use-join-chat';
 import styles from './styles.module.scss';
 
+const MAX_MESSAGE_LENGTH = 1024;
+
 export interface Props {
   currentChat: ChatType | null;
   joinedChatsIds: ChatType['id'][];
@@ -33,7 +35,9 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
   const [messageText, setMessageText] = useState('');
 
   const onMessageSend = useCallback(() => {
-    if (!messageText.trim().length) {
+    const message = messageText.trim();
+
+    if (!message.length || message.length > MAX_MESSAGE_LENGTH) {
       return;
     }
 
@@ -86,6 +90,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
           autoFocus
+          maxLength={MAX_MESSAGE_LENGTH}
         />
         <Button className={styles['send-button']} type="text" onClick={() => onMessageSend()}>
           <AiOutlineSend />
