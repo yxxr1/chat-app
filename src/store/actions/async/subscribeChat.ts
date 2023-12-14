@@ -12,7 +12,10 @@ export const subscribeChat = (chatId: string, lastMessageId: string, callback: (
     'POST',
     { chatId, lastMessageId },
     (dispatch, data) => {
-      dispatch(addMessages(data.messages, chatId));
+      if (data.messages.length) {
+        dispatch(addMessages(data.messages, chatId));
+      }
+
       callback(false);
     },
     () => {
