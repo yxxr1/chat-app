@@ -1,4 +1,4 @@
 import { createAction } from '@utils/actions';
-import { User } from '@store/types';
+import { State } from '@store/types';
 
-export const setUser = createAction('SET_USER', (user: User) => ({ user }));
+export const setUser = createAction('SET_USER', (user: State['user']) => ({ user }));

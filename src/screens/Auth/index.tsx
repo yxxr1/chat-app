@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'antd';
-import { setUser } from '@actions/async/setUser';
+import { authUser } from '@actions/async/auth';
 import styles from './styles.module.scss';
 
 type Props = {
-  setUser: (name: string) => void;
+  authUser: (name: string) => void;
 };
 
 const _Auth: React.FC<Props> = (props) => {
@@ -13,7 +13,7 @@ const _Auth: React.FC<Props> = (props) => {
 
   const onSubmit = useCallback(() => {
     const name = form.getFieldValue('name');
-    props.setUser(name);
+    props.authUser(name);
   }, [form]);
 
   return (
@@ -32,4 +32,4 @@ const _Auth: React.FC<Props> = (props) => {
   );
 };
 
-export const Auth = connect(null, { setUser })(_Auth);
+export const Auth = connect(null, { authUser })(_Auth);

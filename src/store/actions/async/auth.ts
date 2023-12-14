@@ -1,13 +1,20 @@
 import { notification } from 'antd';
 import { setUser as setUserSync } from '@actions/sync/setUser';
 import { makeQuery } from '@utils/actions';
-import { User, UserSettings } from '@store/types';
+import { User } from '@store/types';
 
-export const setUser = (name: User['name'], settings: UserSettings) =>
-  makeQuery<User>(
-    'user',
+type ResponseType =
+  | User
+  | {
+      id: null;
+      name: null;
+    };
+
+export const authUser = (name: string | null) =>
+  makeQuery<ResponseType>(
+    'auth',
     'POST',
-    { name, settings },
+    { name },
     (dispatch, data) => {
       dispatch(setUserSync(data));
     },

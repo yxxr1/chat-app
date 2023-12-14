@@ -22,13 +22,23 @@ export type Message = {
   service?: number;
 };
 
+export type UserSettings = {
+  connectionMethod: 'http' | 'ws';
+};
+
 export type User = {
-  id: string | null;
-  name: string | null;
+  id: string;
+  name: string;
+  settings: UserSettings;
 };
 
 export type State = {
-  user: User;
+  user:
+    | User
+    | {
+        id: null;
+        name: null;
+      };
   isLoading: boolean;
   allChats: { [chatId: Chat['id']]: Chat };
   joinedChatsIds: Chat['id'][];

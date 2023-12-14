@@ -1,13 +1,9 @@
 import { makeQuery } from '@utils/actions';
 import { setUser } from '@actions/sync/setUser';
-
-interface ResponseType {
-  name: string | null;
-  id: string | null;
-}
+import { User } from '@store/types';
 
 export const getUser = () =>
-  makeQuery<ResponseType>(
+  makeQuery<User>(
     'user',
     'GET',
     null,

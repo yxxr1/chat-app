@@ -12,9 +12,9 @@ export const Header = styled.header`
   align-items: center;
   background-color: darkslategrey;
   color: #fff;
+`;
 
-  > .ant-btn {
-    position: absolute;
-    right: 20px;
-  }
+export const Buttons = styled.div`
+  position: absolute;
+  right: 20px;
 `;
