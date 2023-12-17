@@ -6,6 +6,8 @@ import { setCurrentChat } from '@actions/sync/setCurrentChat';
 import { setUser } from '@actions/sync/setUser';
 import { addChats } from '@actions/sync/addChats';
 import { deleteChats } from '@actions/sync/deleteChats';
+import { addSubscribedChats } from '@actions/sync/addSubscribedChats';
+import { CONNECTION_METHODS } from '@const/settings';
 
 export type Chat = {
   id: string;
@@ -23,7 +25,7 @@ export type Message = {
 };
 
 export type UserSettings = {
-  connectionMethod: 'http' | 'ws';
+  connectionMethod: (typeof CONNECTION_METHODS)[keyof typeof CONNECTION_METHODS];
 };
 
 export type User = {
@@ -33,15 +35,11 @@ export type User = {
 };
 
 export type State = {
-  user:
-    | User
-    | {
-        id: null;
-        name: null;
-      };
+  user: User | null;
   isLoading: boolean;
   allChats: { [chatId: Chat['id']]: Chat };
   joinedChatsIds: Chat['id'][];
+  subscribedChatsIds: Chat['id'][];
   currentChatId: Chat['id'] | null;
 };
 
@@ -53,4 +51,5 @@ export type Action =
   | ReturnType<typeof setCurrentChat>
   | ReturnType<typeof setUser>
   | ReturnType<typeof addChats>
-  | ReturnType<typeof deleteChats>;
+  | ReturnType<typeof deleteChats>
+  | ReturnType<typeof addSubscribedChats>;

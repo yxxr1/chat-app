@@ -2,28 +2,30 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Button, Input, InputRef } from 'antd';
 import { AiOutlineSend, AiOutlineMessage } from 'react-icons/ai';
-import { Chat as ChatType, State } from '@store/types';
+import { Chat as ChatType, State, User, UserSettings } from '@store/types';
 import { quitChat } from '@actions/async/quitChat';
 import { setCurrentChat } from '@actions/sync/setCurrentChat';
 import { publishChat } from '@actions/async/publishChat';
 import { joinChat } from '@actions/async/joinChat';
 import { Message } from '@components/Message';
+import { CONNECTION_METHODS } from '@const/settings';
+import { wsManager } from '@ws';
+import { MAX_MESSAGE_LENGTH } from '@const/limits';
 import { useJoinChat } from './use-join-chat';
 import styles from './styles.module.scss';
 
-const MAX_MESSAGE_LENGTH = 1024;
-
-export interface Props {
+export type Props = {
   currentChat: ChatType | null;
   joinedChatsIds: ChatType['id'][];
+  userSettings: UserSettings;
   publishChat: (chatId: string, message: string) => void;
   joinChat: (chatId: string) => void;
   setCurrentChat: (id: string | null) => void;
   quitChat: (chatId: string) => void;
-}
+};
 
-const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
-  useJoinChat({ currentChat, joinedChatsIds, ...props });
+const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, userSettings, ...props }) => {
+  useJoinChat({ currentChat, joinedChatsIds, userSettings, ...props });
 
   const onQuitClick = useCallback(() => {
     if (currentChat) {
@@ -42,10 +44,14 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
     }
 
     if (currentChat) {
-      props.publishChat(currentChat.id, messageText);
+      if (userSettings.connectionMethod === CONNECTION_METHODS.HTTP) {
+        props.publishChat(currentChat.id, messageText);
+      } else if (userSettings.connectionMethod === CONNECTION_METHODS.WS) {
+        wsManager.sendMessage('PUBLISH_MESSAGE', { chatId: currentChat.id, message: messageText });
+      }
       setMessageText('');
     }
-  }, [messageText, currentChat]);
+  }, [messageText, currentChat, userSettings]);
 
   const inputRef = useRef<InputRef>(null);
 
@@ -103,6 +109,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
 const selector = (state: State) => ({
   currentChat: state.currentChatId ? state.allChats[state.currentChatId] : null,
   joinedChatsIds: state.joinedChatsIds,
+  userSettings: (state.user as User).settings,
 });
 
 export const Chat = connect(selector, {

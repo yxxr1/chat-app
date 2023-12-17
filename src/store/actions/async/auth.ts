@@ -10,13 +10,13 @@ type ResponseType =
       name: null;
     };
 
-export const authUser = (name: string | null) =>
+export const authUser = (name: User['name'] | null) =>
   makeQuery<ResponseType>(
     'auth',
     'POST',
     { name },
     (dispatch, data) => {
-      dispatch(setUserSync(data));
+      dispatch(setUserSync(data.id === null ? null : data));
     },
     (dispatch, { message }) => {
       notification.error({ message });

@@ -8,15 +8,22 @@ interface ResponseType {
   deletedChatsIds: Chat['id'][];
 }
 
-export const watchChatsUpdates = () =>
-  makeQuery<ResponseType>('chats?watch=1', 'GET', null, (dispatch, data) => {
-    if (data.chats.length) {
-      dispatch(addChats(data.chats));
-    }
+export const watchChatsUpdates = (signal: AbortSignal) =>
+  makeQuery<ResponseType>(
+    'chats?watch=1',
+    'GET',
+    null,
+    (dispatch, data) => {
+      if (data.chats.length) {
+        dispatch(addChats(data.chats));
+      }
 
-    if (data.deletedChatsIds.length) {
-      dispatch(deleteChats(data.deletedChatsIds));
-    }
+      if (data.deletedChatsIds.length) {
+        dispatch(deleteChats(data.deletedChatsIds));
+      }
 
-    dispatch(watchChatsUpdates());
-  });
+      dispatch(watchChatsUpdates(signal));
+    },
+    null,
+    { signal: signal },
+  );

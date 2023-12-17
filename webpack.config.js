@@ -24,6 +24,8 @@ module.exports = {
       '@screens': `${__dirname}/src/screens`,
       '@containers': `${__dirname}/src/containers`,
       '@styles': `${__dirname}/src/styles`,
+      '@const': `${__dirname}/src/const`,
+      '@ws': `${__dirname}/src/ws`,
     },
   },
   devServer: {
@@ -51,6 +53,7 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         API_URL: JSON.stringify(process.env.API_URL),
+        WS_URL: JSON.stringify(process.env.WS_URL),
       },
     }),
     new CleanWebpackPlugin(),

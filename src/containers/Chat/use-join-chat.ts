@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Props } from '../Chat';
+import { Props } from '@containers/Chat';
 
 export const useJoinChat = ({ currentChat, joinedChatsIds, ...props }: Props) => {
   useEffect(() => {

@@ -19,11 +19,13 @@ export const makeQuery =
     method: 'GET' | 'POST',
     body: object | null,
     onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
-    onFailure?: (dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void,
+    onFailure?: ((dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void) | null,
+    options?: RequestInit | null,
   ): ThunkAction<Promise<void>, State, void, AnyAction> =>
   async (dispatch, getState) => {
     try {
       const resp = await fetch(path, {
+        ...options,
         method,
         ...(body ? { body: JSON.stringify(body) } : {}),
       });
@@ -33,7 +35,9 @@ export const makeQuery =
       } else {
         onFailure?.(dispatch, await resp.json(), getState);
       }
-    } catch (e) {
-      notification.error({ message: 'Network error' });
+    } catch (e: unknown) {
+      if ((e as Error).name !== 'AbortError') {
+        notification.error({ message: 'Network error' });
+      }
     }
   };

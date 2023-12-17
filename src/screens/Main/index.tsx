@@ -1,22 +1,51 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Form, Input, Radio } from 'antd';
-import { State, User, UserSettings } from '@store/types';
+import { State, User, UserSettings, Chat as ChatType, Message } from '@store/types';
 import { Header } from '@components/Header';
 import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
 import { authUser } from '@actions/async/auth';
 import { setUser } from '@actions/async/setUser';
+import { getChats } from '@actions/async/getChats';
+import { watchChatsUpdates } from '@actions/async/watchChatsUpdates';
+import { subscribeChat } from '@actions/async/subscribeChat';
+import { addChats } from '@actions/sync/addChats';
+import { deleteChats } from '@actions/sync/deleteChats';
+import { addMessages } from '@actions/sync/addMessages';
+import { addSubscribedChats } from '@actions/sync/addSubscribedChats';
 import { nameValidator } from '@utils/validation';
+import { CONNECTION_METHODS } from '@const/settings';
+import { useSubscribe } from './use-subscribe';
 import styles from './styles.module.scss';
 
-type Props = {
+export type Props = {
   user: User;
+  joinedChatsIds: ChatType['id'][];
+  subscribedChatsIds: ChatType['id'][];
   authUser: (userName: string | null) => void;
   setUser: (name: User['name'], settings: UserSettings) => void;
+  getChats: () => void;
+  watchChatsUpdates: (signal: AbortSignal) => void;
+  subscribeChat: (
+    chatId: ChatType['id'],
+    lastMessageId: Message['id'],
+    callback: (isFailure: boolean) => void,
+    signal: AbortSignal,
+  ) => void;
+  addChats: (chats: ChatType[]) => void;
+  deleteChats: (chatsIds: ChatType['id'][]) => void;
+  addMessages: (messages: Message[], id: ChatType['id']) => void;
+  addSubscribedChats: (chatsIds: ChatType['id'][]) => void;
 };
 
 export const _Main: React.FC<Props> = ({ user, ...props }) => {
+  useEffect(() => {
+    props.getChats();
+  }, []);
+
+  useSubscribe({ user, ...props });
+
   const onLogout = useCallback(() => {
     props.authUser(null);
   }, []);
@@ -41,6 +70,8 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
     [user],
   );
 
+  const onModalOk = useCallback(() => form.submit(), [form]);
+  const onModalCancel = useCallback(() => setIsShowSettingsModal(false), []);
   const onModalChange = useCallback(
     (open: boolean) => {
       if (open) {
@@ -62,8 +93,8 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
         title="Settings"
         okText="OK"
         okType="primary"
-        onOk={() => form.submit()}
-        onCancel={() => setIsShowSettingsModal(false)}
+        onOk={onModalOk}
+        onCancel={onModalCancel}
         afterOpenChange={onModalChange}
       >
         <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
@@ -77,8 +108,8 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
           </Form.Item>
           <Form.Item name="connectionMethod" label="Connection method">
             <Radio.Group>
-              <Radio.Button value="http">HTTP</Radio.Button>
-              <Radio.Button value="ws">WebSocket</Radio.Button>
+              <Radio.Button value={CONNECTION_METHODS.HTTP}>HTTP</Radio.Button>
+              <Radio.Button value={CONNECTION_METHODS.WS}>WebSocket</Radio.Button>
             </Radio.Group>
           </Form.Item>
         </Form>
@@ -87,8 +118,20 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
   );
 };
 
-const selector = ({ user }: State) => ({
+const selector = ({ user, joinedChatsIds, subscribedChatsIds }: State) => ({
   user: user as User,
+  joinedChatsIds,
+  subscribedChatsIds,
 });
 
-export const Main = connect(selector, { authUser, setUser })(_Main);
+export const Main = connect(selector, {
+  authUser,
+  setUser,
+  getChats,
+  watchChatsUpdates,
+  subscribeChat,
+  addChats,
+  deleteChats,
+  addMessages,
+  addSubscribedChats,
+})(_Main);

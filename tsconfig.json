@@ -21,16 +21,19 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "rootDir": "src",
-    "baseUrl": "src",
     "paths": {
-      "@config/*": ["config/*"],
-      "@components/*": ["components/*"],
-      "@actions/*": ["store/actions/*"],
-      "@store/*": ["store/*"],
-      "@utils/*": ["utils/*"],
-      "@screens/*": ["screens/*"],
-      "@containers/*": ["containers/*"],
-      "@styles/*": ["styles/*"]
+      "@config/*": ["./src/config/*"],
+      "@components/*": ["./src/components/*"],
+      "@actions/*": ["./src/store/actions/*"],
+      "@store": ["./src/store/index.ts"],
+      "@store/*": ["./src/store/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@containers/*": ["./src/containers/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@const/*": ["./src/const/*"],
+      "@ws": ["./src/ws/index.ts"],
+      "@ws/*": ["./src/ws/*"]
     },
     "plugins": [{
       "name": "typescript-plugin-css-modules"

@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Input, Form, Button, Radio, InputRef } from 'antd';
 import { State, Chat } from '@store/types';
-import { getChats } from '@actions/async/getChats';
-import { watchChatsUpdates } from '@actions/async/watchChatsUpdates';
 import { setCurrentChat } from '@actions/sync/setCurrentChat';
 import { createChat } from '@actions/async/createChat';
-import { joinChat } from '@actions/async/joinChat';
 import { ChatItem } from '@components/ChatItem';
 import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
@@ -15,19 +12,11 @@ export interface Props {
   allChats: Chat[];
   joinedChats: Chat[];
   currentChatId: Chat['id'] | null;
-  getChats: () => void;
-  watchChatsUpdates: () => void;
-  joinChat: (chatId: string) => void;
   setCurrentChat: (id: string | null) => void;
   createChat: (name: string) => void;
 }
 
 const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, ...props }) => {
-  useEffect(() => {
-    props.getChats();
-    props.watchChatsUpdates();
-  }, []);
-
   const [form] = Form.useForm();
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -122,9 +111,6 @@ const selector = (state: State) => ({
 });
 
 export const ChatList = connect(selector, {
-  getChats,
-  watchChatsUpdates,
-  joinChat,
   setCurrentChat,
   createChat,
 })(_ChatList);

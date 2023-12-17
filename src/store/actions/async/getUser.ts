@@ -11,6 +11,6 @@ export const getUser = () =>
       dispatch(setUser(data));
     },
     (dispatch) => {
-      dispatch(setUser({ id: null, name: null }));
+      dispatch(setUser(null));
     },
   );

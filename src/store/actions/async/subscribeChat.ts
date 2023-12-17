@@ -1,12 +1,17 @@
 import { makeQuery } from '@utils/actions';
-import { Message } from '@store/types';
+import { Message, Chat } from '@store/types';
 import { addMessages } from '@actions/sync/addMessages';
 
 interface ResponseType {
   messages: Message[];
 }
 
-export const subscribeChat = (chatId: string, lastMessageId: string, callback: (isFailure: boolean) => void) =>
+export const subscribeChat = (
+  chatId: Chat['id'],
+  lastMessageId: Message['id'],
+  callback: (isFailure: boolean) => void,
+  signal: AbortSignal,
+) =>
   makeQuery<ResponseType>(
     'subscribe',
     'POST',
@@ -21,4 +26,5 @@ export const subscribeChat = (chatId: string, lastMessageId: string, callback: (
     () => {
       callback(true);
     },
+    { signal },
   );
