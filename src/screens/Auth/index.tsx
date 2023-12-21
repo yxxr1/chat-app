@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'antd';
-import { authUser } from '@actions/async/auth';
+import { authUser } from '@actions/async';
 import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
 

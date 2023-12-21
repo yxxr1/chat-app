@@ -1,5 +1,5 @@
 import { makeQuery } from '@utils/actions';
-import { quitChat as quitChatSync } from '@actions/sync/quitChat';
+import { quitChat as quitChatSync } from '@actions/sync';
 import { Chat } from '@store/types';
 
 interface ResponseType {

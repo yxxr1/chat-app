@@ -1,7 +1,6 @@
 import { makeQuery } from '@utils/actions';
 import { Message, Chat } from '@store/types';
-import { addMessages } from '@actions/sync/addMessages';
-import { joinChat as joinChatSync } from '@actions/sync/joinChat';
+import { addMessages, joinChat as joinChatSync } from '@actions/sync';
 
 interface ResponseType {
   messages: Message[];

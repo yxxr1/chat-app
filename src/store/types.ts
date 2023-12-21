@@ -1,12 +1,14 @@
-import { addMessages } from '@actions/sync/addMessages';
-import { joinChat } from '@actions/sync/joinChat';
-import { quitChat } from '@actions/sync/quitChat';
-import { setChatList } from '@actions/sync/setChatList';
-import { setCurrentChat } from '@actions/sync/setCurrentChat';
-import { setUser } from '@actions/sync/setUser';
-import { addChats } from '@actions/sync/addChats';
-import { deleteChats } from '@actions/sync/deleteChats';
-import { addSubscribedChats } from '@actions/sync/addSubscribedChats';
+import {
+  addMessages,
+  joinChat,
+  quitChat,
+  setChatList,
+  setCurrentChat,
+  setUser,
+  addChats,
+  deleteChats,
+  addSubscribedChats,
+} from '@actions/sync';
 import { CONNECTION_METHODS } from '@const/settings';
 
 export type Chat = {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { State, User } from '@store/types';
-import { getUser } from '@actions/async/getUser';
+import { getUser } from '@actions/async';
 import { Loader } from '@components/Loader';
 import { Auth } from '@screens/Auth';
 import { Main } from '@screens/Main';

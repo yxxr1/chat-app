@@ -1,5 +1,5 @@
 import { makeQuery } from '@utils/actions';
-import { setUser } from '@actions/sync/setUser';
+import { setUser } from '@actions/sync';
 import { User } from '@store/types';
 
 export const getUser = () =>

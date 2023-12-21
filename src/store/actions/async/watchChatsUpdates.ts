@@ -1,6 +1,5 @@
 import { makeQuery } from '@utils/actions';
-import { addChats } from '@actions/sync/addChats';
-import { deleteChats } from '@actions/sync/deleteChats';
+import { addChats, deleteChats } from '@actions/sync';
 import { Chat } from '@store/types';
 
 interface ResponseType {

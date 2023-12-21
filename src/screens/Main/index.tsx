@@ -5,15 +5,8 @@ import { State, User, UserSettings, Chat as ChatType, Message } from '@store/typ
 import { Header } from '@components/Header';
 import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
-import { authUser } from '@actions/async/auth';
-import { setUser } from '@actions/async/setUser';
-import { getChats } from '@actions/async/getChats';
-import { watchChatsUpdates } from '@actions/async/watchChatsUpdates';
-import { subscribeChat } from '@actions/async/subscribeChat';
-import { addChats } from '@actions/sync/addChats';
-import { deleteChats } from '@actions/sync/deleteChats';
-import { addMessages } from '@actions/sync/addMessages';
-import { addSubscribedChats } from '@actions/sync/addSubscribedChats';
+import { authUser, setUser, getChats, watchChatsUpdates, subscribeChat } from '@actions/async';
+import { addChats, deleteChats, addMessages, addSubscribedChats } from '@actions/sync';
 import { nameValidator } from '@utils/validation';
 import { CONNECTION_METHODS } from '@const/settings';
 import { useSubscribe } from './use-subscribe';

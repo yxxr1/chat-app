@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { setUser as setUserSync } from '@actions/sync/setUser';
+import { setUser as setUserSync } from '@actions/sync';
 import { makeQuery } from '@utils/actions';
 import { User, UserSettings } from '@store/types';
 
