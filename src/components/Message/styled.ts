@@ -4,11 +4,23 @@ export const Message = styled.div`
   padding: 3px 0;
   cursor: pointer;
   word-break: break-word;
+  min-height: 25px;
 
   :hover {
     > *:last-child {
       opacity: 1;
     }
+  }
+`;
+
+export const UserTitle = styled.div`
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+  display: inline;
+
+  &:after {
+    content: ': ';
   }
 `;
 

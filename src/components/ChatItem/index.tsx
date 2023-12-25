@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message as MessageType } from '@store/types';
+import { getServiceMessage } from '@utils/common';
 import { Chat, Title, Message } from './styled';
 
 type Props = {
@@ -15,7 +16,14 @@ export const ChatItem: React.FC<Props> = ({ name, lastMessage, isCurrent, onClic
       <Title>{name}</Title>
       {lastMessage && (
         <Message>
-          <i>{lastMessage.fromName}:</i> {lastMessage.text}
+          {lastMessage.service ? (
+            <i>{getServiceMessage(lastMessage)}</i>
+          ) : (
+            <>
+              <i>{lastMessage.fromName}:</i>
+              {` ${lastMessage.text}`}
+            </>
+          )}
         </Message>
       )}
     </Chat>
