@@ -93,7 +93,7 @@ export const reducer = (state: State = initState, action: Action): State => {
           ...state.allChats,
           [action.payload.id]: {
             ...state.allChats[action.payload.id],
-            messages: [...state.allChats[action.payload.id].messages, ...action.payload.messages],
+            messages: [...state.allChats[action.payload.id].messages, ...action.payload.messages].sort((a, b) => a.index - b.index),
           },
         },
       };

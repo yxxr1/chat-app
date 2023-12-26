@@ -8,3 +8,4 @@ export * from './quitChat';
 export * from './setUser';
 export * from './subscribeChat';
 export * from './watchChatsUpdates';
+export * from './getMessages';

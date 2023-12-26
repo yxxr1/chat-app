@@ -22,8 +22,9 @@ export type Message = {
   text: string | null;
   fromId: string;
   fromName: string;
-  date: string;
+  date: number;
   service?: number;
+  index: number;
 };
 
 export type UserSettings = {
