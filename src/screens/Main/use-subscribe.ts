@@ -42,14 +42,10 @@ export const useSubscribe = ({ user, joinedChatsIds, subscribedChatsIds, ...prop
 
       return () => wsManager.close();
     } else if (connectionMethod === CONNECTION_METHODS.HTTP) {
-      const watchChatsAbortController = new AbortController();
       subscribeAbortController = new AbortController();
-      props.watchChatsUpdates(watchChatsAbortController.signal);
+      props.watchChatsUpdates(subscribeAbortController.signal);
 
-      return () => {
-        subscribeAbortController.abort();
-        watchChatsAbortController.abort();
-      };
+      return () => subscribeAbortController.abort();
     }
   }, [connectionMethod]);
 
