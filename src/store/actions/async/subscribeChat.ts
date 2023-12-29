@@ -8,7 +8,7 @@ interface ResponseType {
 
 export const subscribeChat = (
   chatId: Chat['id'],
-  lastMessageId: Message['id'],
+  lastMessageId: Message['id'] | null,
   callback: (isFailure: boolean) => void,
   signal: AbortSignal,
 ) =>

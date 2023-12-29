@@ -67,7 +67,7 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, ...p
             <ChatItem
               key={chat.id}
               name={chat.name}
-              lastMessage={chat.messages.length ? chat.messages[chat.messages.length - 1] : null}
+              lastMessage={chat.messages.slice(-1)[0] ?? null}
               isCurrent={currentChatId === chat.id}
               onClick={() => onChatClick(chat.id)}
             />

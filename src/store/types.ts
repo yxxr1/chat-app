@@ -14,7 +14,7 @@ import { CONNECTION_METHODS } from '@const/settings';
 export type Chat = {
   id: string;
   name: string;
-  messages: Message[];
+  messages: (Message | undefined)[];
 };
 
 export type Message = {

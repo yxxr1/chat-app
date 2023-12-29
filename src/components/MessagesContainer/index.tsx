@@ -3,12 +3,13 @@ import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { Message as MessageType, Chat } from '@store/types';
 import { Message } from '@components/Message';
+import { MessageSkeleton } from '@components/MessageSkeleton';
 import { MESSAGES_PAGE_SIZE } from '@const/limits';
 import { DIRECTIONS } from '@actions/async';
 import { Container, GoToBottom } from './styled';
 
 export type Props = {
-  messages: MessageType[];
+  messages: Chat['messages'];
   chatId: Chat['id'];
   onLoadMore: (lastMessageId: MessageType['id'], direction: (typeof DIRECTIONS)[keyof typeof DIRECTIONS]) => void;
 };
@@ -21,7 +22,7 @@ export const MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMor
   const [stateByChat, setStateByChat] = useState<Record<Chat['id'], StateSnapshot>>({});
 
   const [currentChatId, setCurrentChatId] = useState<Chat['id']>(chatId);
-  const [currentMessages, setCurrentMessages] = useState<MessageType[]>(messages);
+  const [currentMessages, setCurrentMessages] = useState<Chat['messages']>(messages);
 
   const [isShowGoToBottom, setIsShowGoToBottom] = useState<boolean>(false);
 
@@ -45,8 +46,8 @@ export const MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMor
         style={{ height: '100%' }}
         alignToBottom
         data={currentMessages}
-        itemContent={(index, message) => <Message message={message} />}
-        computeItemKey={(index, { id }) => id}
+        itemContent={(index, message) => (message ? <Message message={message} /> : <MessageSkeleton />)}
+        computeItemKey={(index, message) => message?.id ?? index}
         defaultItemHeight={DEFAULT_MESSAGE_HEIGHT}
         followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
         firstItemIndex={currentMessages[0]?.index}
@@ -54,7 +55,7 @@ export const MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMor
         atBottomThreshold={BOTTOM_THRESHOLD}
         atBottomStateChange={(isAtBottom) => setIsShowGoToBottom(!isAtBottom)}
         startReached={() => {
-          if (currentMessages.length && currentMessages[0].index !== 0) {
+          if (currentMessages.length && currentMessages[0] && currentMessages[0].index !== 0) {
             onLoadMore(currentMessages[0].id, DIRECTIONS.PREV);
           }
         }}

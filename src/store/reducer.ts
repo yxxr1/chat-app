@@ -1,4 +1,5 @@
-import { State, Action } from './types';
+import { State, Action } from '@store/types';
+import { addMessages } from '@utils/common';
 
 const initState: State = {
   isLoading: true,
@@ -87,13 +88,15 @@ export const reducer = (state: State = initState, action: Action): State => {
       };
     }
     case 'ADD_MESSAGES': {
+      const { id: chatId, messages: newMessages } = action.payload;
+
       return {
         ...state,
         allChats: {
           ...state.allChats,
-          [action.payload.id]: {
-            ...state.allChats[action.payload.id],
-            messages: [...state.allChats[action.payload.id].messages, ...action.payload.messages].sort((a, b) => a.index - b.index),
+          [chatId]: {
+            ...state.allChats[chatId],
+            messages: addMessages(state.allChats[action.payload.id]?.messages ?? [], newMessages),
           },
         },
       };

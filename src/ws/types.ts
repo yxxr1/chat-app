@@ -32,6 +32,6 @@ export type WSMessageOutgoing =
       'SUBSCRIBE_CHAT',
       {
         chatId: Chat['id'];
-        lastMessageId: Message['id'];
+        lastMessageId: Message['id'] | null;
       }
     >;

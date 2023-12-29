@@ -22,7 +22,7 @@ export type Props = {
   watchChatsUpdates: (signal: AbortSignal) => void;
   subscribeChat: (
     chatId: ChatType['id'],
-    lastMessageId: Message['id'],
+    lastMessageId: Message['id'] | null,
     callback: (isFailure: boolean) => void,
     signal: AbortSignal,
   ) => void;
