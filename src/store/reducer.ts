@@ -1,5 +1,16 @@
 import { State, Action } from '@store/types';
 import { addMessages } from '@utils/common';
+import {
+  SET_USER,
+  SET_CHAT_LIST,
+  JOIN_CHAT,
+  ADD_SUBSCRIBED_CHATS,
+  QUIT_CHAT,
+  SET_CURRENT_CHAT,
+  ADD_MESSAGES,
+  ADD_CHATS,
+  DELETE_CHATS,
+} from '@actions/sync';
 
 const initState: State = {
   isLoading: true,
@@ -12,7 +23,7 @@ const initState: State = {
 
 export const reducer = (state: State = initState, action: Action): State => {
   switch (action.type) {
-    case 'SET_USER': {
+    case SET_USER: {
       if (action.payload.user === null) {
         return {
           ...initState,
@@ -38,13 +49,13 @@ export const reducer = (state: State = initState, action: Action): State => {
         isLoading: false,
       };
     }
-    case 'SET_CHAT_LIST': {
+    case SET_CHAT_LIST: {
       return {
         ...state,
         allChats: action.payload.list.reduce((acc, chat) => ({ ...acc, [chat.id]: chat }), {}),
       };
     }
-    case 'JOIN_CHAT': {
+    case JOIN_CHAT: {
       if (!state.joinedChatsIds.includes(action.payload.id)) {
         return {
           ...state,
@@ -54,13 +65,13 @@ export const reducer = (state: State = initState, action: Action): State => {
 
       return state;
     }
-    case 'ADD_SUBSCRIBED_CHATS': {
+    case ADD_SUBSCRIBED_CHATS: {
       return {
         ...state,
         subscribedChatsIds: [...state.subscribedChatsIds, ...action.payload.chatsIds],
       };
     }
-    case 'QUIT_CHAT': {
+    case QUIT_CHAT: {
       if (state.joinedChatsIds.includes(action.payload.id)) {
         const joinedChatsIds = state.joinedChatsIds.filter((chatId) => chatId !== action.payload.id);
         const subscribedChatsIds = state.subscribedChatsIds.filter((chatId) => chatId !== action.payload.id);
@@ -81,13 +92,13 @@ export const reducer = (state: State = initState, action: Action): State => {
 
       return state;
     }
-    case 'SET_CURRENT_CHAT': {
+    case SET_CURRENT_CHAT: {
       return {
         ...state,
         currentChatId: action.payload.id,
       };
     }
-    case 'ADD_MESSAGES': {
+    case ADD_MESSAGES: {
       const { id: chatId, messages: newMessages } = action.payload;
 
       return {
@@ -101,13 +112,13 @@ export const reducer = (state: State = initState, action: Action): State => {
         },
       };
     }
-    case 'ADD_CHATS': {
+    case ADD_CHATS: {
       return {
         ...state,
         allChats: action.payload.chats.reduce((acc, chat) => ({ ...acc, [chat.id]: chat }), state.allChats),
       };
     }
-    case 'DELETE_CHATS': {
+    case DELETE_CHATS: {
       const allChats = Object.fromEntries(Object.entries(state.allChats).filter(([id]) => !action.payload.chatsIds.includes(id)));
 
       return {
