@@ -1,7 +1,6 @@
 import { makeQuery } from '@utils/actions';
 import { Chat } from '@store/types';
-import { setChatList } from '@actions/sync';
-import { joinChat } from '@actions/async';
+import { setChatList, joinChat } from '@actions/sync';
 
 interface ResponseType {
   chats: Chat[];
