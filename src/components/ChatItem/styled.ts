@@ -3,16 +3,15 @@ import styled from 'styled-components';
 export const Chat = styled.div<{ isCurrent: boolean }>`
   height: 60px;
   padding: 10px;
-  background-color: ${({ isCurrent }) => (isCurrent ? 'aliceblue' : 'white')};
+  background-color: white;
+  border: solid 1px ${({ isCurrent }) => (isCurrent ? '#d3d3d3' : 'white')};
   cursor: pointer;
   user-select: none;
-
-  &:not(:last-child) {
-    border-bottom: solid 1px #eee;
-  }
+  border-radius: 5px;
+  margin-bottom: 4px;
 
   &:hover {
-    background-color: aliceblue;
+    border-color: #d3d3d3;
   }
 `;
 

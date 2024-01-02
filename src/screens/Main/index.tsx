@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Modal, Form, Input, Radio } from 'antd';
+import { Form, Input, Radio, Drawer, Button } from 'antd';
+import { AiOutlineLogout } from 'react-icons/ai';
 import { State, User, UserSettings, Chat as ChatType, Message } from '@store/types';
-import { Header } from '@components/Header';
 import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
 import { authUser, setUser, getChats, watchChatsUpdates, subscribeChat } from '@actions/async';
@@ -44,15 +44,12 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
   }, []);
 
   const [form] = Form.useForm();
-  const [isShowSettingsModal, setIsShowSettingsModal] = useState(false);
 
-  const onSettings = useCallback(() => {
-    setIsShowSettingsModal(true);
-  }, []);
   const onSettingsSave = useCallback(() => {
-    const { name, connectionMethod } = form.getFieldsValue();
-    props.setUser(name, { connectionMethod });
-    setIsShowSettingsModal(false);
+    if (form.isFieldsTouched()) {
+      const { name, connectionMethod } = form.getFieldsValue();
+      props.setUser(name, { connectionMethod });
+    }
   }, []);
 
   const initialValues = useMemo(
@@ -63,9 +60,15 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
     [user],
   );
 
-  const onModalOk = useCallback(() => form.submit(), [form]);
-  const onModalCancel = useCallback(() => setIsShowSettingsModal(false), []);
-  const onModalChange = useCallback(
+  const [isShowSettingsDrawer, setIsShowSettingsDrawer] = useState(false);
+  const onSettings = useCallback(() => {
+    setIsShowSettingsDrawer(true);
+  }, []);
+  const onSettingsDrawerClose = useCallback(() => {
+    form.submit();
+    setIsShowSettingsDrawer(false);
+  }, [form]);
+  const onSettingsDrawerChange = useCallback(
     (open: boolean) => {
       if (open) {
         form.resetFields();
@@ -76,20 +79,23 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
 
   return (
     <>
-      <Header userName={user.name} userId={user.id} onLogout={onLogout} onSettings={onSettings} />
       <div className={styles.container}>
-        <ChatList />
+        <ChatList onSettingsClick={onSettings} />
         <Chat />
       </div>
-      <Modal
-        open={isShowSettingsModal}
+      <Drawer
         title="Settings"
-        okText="OK"
-        okType="primary"
-        onOk={onModalOk}
-        onCancel={onModalCancel}
-        afterOpenChange={onModalChange}
+        placement="right"
+        open={isShowSettingsDrawer}
+        onClose={onSettingsDrawerClose}
+        afterOpenChange={onSettingsDrawerChange}
       >
+        <div className={styles['settings-header']}>
+          <Form.Item label={'User ID'}>{user.id}</Form.Item>
+          <Button type="link" title="Logout" onClick={onLogout}>
+            <AiOutlineLogout size={22} />
+          </Button>
+        </div>
         <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
           <Form.Item
             name="name"
@@ -106,7 +112,7 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
             </Radio.Group>
           </Form.Item>
         </Form>
-      </Modal>
+      </Drawer>
     </>
   );
 };

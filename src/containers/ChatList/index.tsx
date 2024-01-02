@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Input, Form, Button, Radio, InputRef } from 'antd';
+import { AiOutlineSetting } from 'react-icons/ai';
 import { State, Chat } from '@store/types';
 import { setCurrentChat } from '@actions/sync';
 import { createChat } from '@actions/async';
@@ -12,11 +13,12 @@ export interface Props {
   allChats: Chat[];
   joinedChats: Chat[];
   currentChatId: Chat['id'] | null;
+  onSettingsClick: () => void;
   setCurrentChat: (id: string | null) => void;
   createChat: (name: string) => void;
 }
 
-const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, ...props }) => {
+const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSettingsClick, ...props }) => {
   const [form] = Form.useForm();
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -54,9 +56,14 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, ...p
   return (
     <>
       <div className={styles.list}>
-        <Button className={styles['create-button']} onClick={onCreateClick}>
-          Create chat
-        </Button>
+        <div className={styles['action-buttons']}>
+          <Button className={styles['settings-button']} type="link" title="Settings" onClick={onSettingsClick}>
+            <AiOutlineSetting size={22} />
+          </Button>
+          <Button className={styles['create-button']} onClick={onCreateClick}>
+            Create chat
+          </Button>
+        </div>
 
         <Radio.Group className={styles.filter} value={currentTab} onChange={(e) => setCurrentTab(e.target.value)}>
           <Radio.Button value={0}>All</Radio.Button>
