@@ -64,7 +64,7 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
           <Button className={styles['settings-button']} type="link" title="Settings" onClick={onSettingsClick}>
             <AiOutlineSetting color={theme.primary} size={22} />
           </Button>
-          <Button className={styles['create-button']} onClick={onCreateClick}>
+          <Button className={styles['create-button']} type="primary" onClick={onCreateClick}>
             Create chat
           </Button>
         </div>
