@@ -9,6 +9,8 @@ import { MessagesContainer, Props as MessagesContainerProps } from '@components/
 import { CONNECTION_METHODS } from '@const/settings';
 import { wsManager } from '@ws';
 import { MAX_MESSAGE_LENGTH } from '@const/limits';
+import { useTheme } from '@utils/theme';
+import { ChatHeader, Chat as ChatContainer, EmptyChat } from './styled';
 import styles from './styles.module.scss';
 
 export type Props = {
@@ -75,21 +77,23 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props })
     setMessageText('');
   }, [currentChat?.id]);
 
+  const theme = useTheme();
+
   if (currentChat === null) {
     return (
-      <div className={styles['empty-chat']}>
+      <EmptyChat>
         <AiOutlineMessage size={80} />
-        <div className={styles['empty-chat-text']}>Select or create chat to start</div>
-      </div>
+        <div className={styles['empty-chat-text']}>Join chat to start</div>
+      </EmptyChat>
     );
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles['chat-header']}>
+    <ChatContainer>
+      <ChatHeader>
         <h3 style={{ textAlign: 'center' }}>{currentChat.name}</h3>
         <Button onClick={onQuitClick}>Leave</Button>
-      </div>
+      </ChatHeader>
       <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
       <form
         className={styles['message-form']}
@@ -107,10 +111,10 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props })
           maxLength={MAX_MESSAGE_LENGTH}
         />
         <Button className={styles['send-button']} type="text" onClick={() => onMessageSend()}>
-          <AiOutlineSend />
+          <AiOutlineSend color={theme.primary} />
         </Button>
       </form>
-    </div>
+    </ChatContainer>
   );
 };
 

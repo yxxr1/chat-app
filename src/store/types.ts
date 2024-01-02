@@ -29,6 +29,7 @@ export type Message = {
 
 export type UserSettings = {
   connectionMethod: (typeof CONNECTION_METHODS)[keyof typeof CONNECTION_METHODS];
+  theme: 'light' | 'dark';
 };
 
 export type User = {

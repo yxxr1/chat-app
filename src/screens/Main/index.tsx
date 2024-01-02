@@ -8,7 +8,8 @@ import { Chat } from '@containers/Chat';
 import { authUser, setUser, getChats, watchChatsUpdates, subscribeChat } from '@actions/async';
 import { addChats, deleteChats, addMessages, addSubscribedChats } from '@actions/sync';
 import { nameValidator } from '@utils/validation';
-import { CONNECTION_METHODS } from '@const/settings';
+import { CONNECTION_METHODS, UI_THEMES } from '@const/settings';
+import { useTheme } from '@utils/theme';
 import { useSubscribe } from './use-subscribe';
 import styles from './styles.module.scss';
 
@@ -47,8 +48,8 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
 
   const onSettingsSave = useCallback(() => {
     if (form.isFieldsTouched()) {
-      const { name, connectionMethod } = form.getFieldsValue();
-      props.setUser(name, { connectionMethod });
+      const { name, connectionMethod, theme } = form.getFieldsValue();
+      props.setUser(name, { connectionMethod, theme });
     }
   }, []);
 
@@ -56,6 +57,7 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
     () => ({
       name: user.name,
       connectionMethod: user.settings.connectionMethod,
+      theme: user.settings.theme,
     }),
     [user],
   );
@@ -77,6 +79,8 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
     [form],
   );
 
+  const theme = useTheme();
+
   return (
     <>
       <div className={styles.container}>
@@ -93,7 +97,7 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
         <div className={styles['settings-header']}>
           <Form.Item label={'User ID'}>{user.id}</Form.Item>
           <Button type="link" title="Logout" onClick={onLogout}>
-            <AiOutlineLogout size={22} />
+            <AiOutlineLogout color={theme.primary} size={22} />
           </Button>
         </div>
         <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
@@ -109,6 +113,12 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
             <Radio.Group>
               <Radio.Button value={CONNECTION_METHODS.HTTP}>HTTP</Radio.Button>
               <Radio.Button value={CONNECTION_METHODS.WS}>WebSocket</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item name="theme" label="UI Theme">
+            <Radio.Group>
+              <Radio.Button value={UI_THEMES.LIGHT}>Light</Radio.Button>
+              <Radio.Button value={UI_THEMES.DARK}>Dark</Radio.Button>
             </Radio.Group>
           </Form.Item>
         </Form>

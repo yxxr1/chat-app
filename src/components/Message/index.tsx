@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import moment from 'moment';
 import { Message as MessageType } from '@store/types';
 import { getServiceMessage } from '@utils/common';
-import { Message as MessageC, UserTitle, MessageDateTime, ServiceMessage } from './styled';
+import { Message as MessageC, MessageUser, MessageText, MessageDateTime, ServiceMessage } from './styled';
 
 type Props = {
   message: MessageType;
@@ -17,8 +17,8 @@ export const Message: React.FC<Props> = ({ message }) => {
 
   return (
     <MessageC>
-      <UserTitle>{userTitle}</UserTitle>
-      <span>{message.text}</span>
+      <MessageUser>{userTitle}</MessageUser>
+      <MessageText>{message.text}</MessageText>
       <MessageDateTime>{moment(message.date).calendar()}</MessageDateTime>
     </MessageC>
   );

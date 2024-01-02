@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 import { authUser } from '@actions/async';
 import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
@@ -20,7 +20,7 @@ const _Auth: React.FC<Props> = (props) => {
   return (
     <div className={styles.container}>
       <Form form={form} onFinish={onSubmit}>
-        <h1 className={styles.title}>Welcome to Chat</h1>
+        <Typography.Title className={styles.title}>Welcome to Chat</Typography.Title>
         <Form.Item
           name="name"
           label="Name"
@@ -30,7 +30,7 @@ const _Auth: React.FC<Props> = (props) => {
           <Input autoFocus />
         </Form.Item>
 
-        <Button className={styles.button} onClick={() => form.submit()}>
+        <Button type="primary" className={styles.button} onClick={() => form.submit()}>
           Enter
         </Button>
       </Form>

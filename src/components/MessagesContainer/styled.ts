@@ -1,15 +1,19 @@
 import styled from 'styled-components';
+import { Theme } from '@utils/theme';
 
 export const Container = styled.div`
   height: 100%;
-  padding: 10px 0;
   position: relative;
 `;
 
-export const GoToBottom = styled.div<{ isShow: boolean }>`
+export const ListFooter = styled.div`
+  height: 10px;
+`;
+
+export const GoToBottom = styled.div<{ isShow: boolean; theme: Theme }>`
   border-radius: 100px;
-  border: solid 1px #777;
-  color: #777;
+  border: solid 1px ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.primary};
   position: absolute;
   bottom: 30px;
   right: 30px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Theme } from '@utils/theme';
 
 export const Message = styled.div`
   padding: 3px 0;
@@ -13,32 +14,37 @@ export const Message = styled.div`
   }
 `;
 
-export const UserTitle = styled.div`
+export const MessageUser = styled.div<{ theme: Theme }>`
   font-weight: 600;
   user-select: none;
   cursor: pointer;
   display: inline;
+  color: ${({ theme }) => theme.primary};
 
   &:after {
     content: ': ';
   }
 `;
 
-export const MessageDateTime = styled.div`
+export const MessageText = styled.span<{ theme: Theme }>`
+  color: ${({ theme }) => theme.text};
+`;
+
+export const MessageDateTime = styled.div<{ theme: Theme }>`
   float: right;
   position: relative;
   top: 4px;
   font-size: 8px;
-  color: #777;
+  color: ${({ theme }) => theme['text-alt']};
   user-select: none;
   opacity: 0;
   transition: all 50ms;
 `;
 
-export const ServiceMessage = styled.div`
+export const ServiceMessage = styled.div<{ theme: Theme }>`
   font-style: italic;
   user-select: none;
   text-align: center;
   padding: 8px 0;
-  color: #777;
+  color: ${({ theme }) => theme['text-alt']};
 `;

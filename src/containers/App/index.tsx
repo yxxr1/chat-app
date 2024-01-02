@@ -5,6 +5,7 @@ import { getUser } from '@actions/async';
 import { Loader } from '@components/Loader';
 import { Auth } from '@screens/Auth';
 import { Main } from '@screens/Main';
+import { ThemeProvider } from '@utils/theme';
 import styles from './styles.module.scss';
 
 export type Props = {
@@ -20,13 +21,15 @@ const _App: React.FC<Props> = ({ user, isLoading, ...props }) => {
 
   if (isLoading) {
     return (
-      <div className={styles.loading}>
-        <Loader />
-      </div>
+      <ThemeProvider>
+        <div className={styles.loading}>
+          <Loader />
+        </div>
+      </ThemeProvider>
     );
   }
 
-  return user ? <Main /> : <Auth />;
+  return <ThemeProvider value={user?.settings.theme}>{user ? <Main /> : <Auth />}</ThemeProvider>;
 };
 
 const selector = (state: State) => ({

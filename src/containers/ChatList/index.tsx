@@ -7,6 +7,8 @@ import { setCurrentChat } from '@actions/sync';
 import { createChat } from '@actions/async';
 import { ChatItem } from '@components/ChatItem';
 import { nameValidator } from '@utils/validation';
+import { useTheme } from '@utils/theme';
+import { List } from './styled';
 import styles from './styles.module.scss';
 
 export interface Props {
@@ -53,12 +55,14 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
     [form, inputRef],
   );
 
+  const theme = useTheme();
+
   return (
     <>
-      <div className={styles.list}>
+      <List>
         <div className={styles['action-buttons']}>
           <Button className={styles['settings-button']} type="link" title="Settings" onClick={onSettingsClick}>
-            <AiOutlineSetting size={22} />
+            <AiOutlineSetting color={theme.primary} size={22} />
           </Button>
           <Button className={styles['create-button']} onClick={onCreateClick}>
             Create chat
@@ -80,7 +84,7 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
             />
           ))}
         </div>
-      </div>
+      </List>
 
       <Modal
         open={isShowCreateModal}
