@@ -6,7 +6,7 @@ import { State, User, UserSettings, Chat as ChatType, Message } from '@store/typ
 import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
 import { authUser, setUser, getChats, watchChatsUpdates, subscribeChat } from '@actions/async';
-import { addChats, deleteChats, addMessages, addSubscribedChats } from '@actions/sync';
+import { addChats, deleteChats, addMessages, addSubscribedChats, updateChat } from '@actions/sync';
 import { nameValidator } from '@utils/validation';
 import { CONNECTION_METHODS, UI_THEMES } from '@const/settings';
 import { useTheme } from '@utils/theme';
@@ -31,6 +31,7 @@ export type Props = {
   deleteChats: (chatsIds: ChatType['id'][]) => void;
   addMessages: (messages: Message[], id: ChatType['id']) => void;
   addSubscribedChats: (chatsIds: ChatType['id'][]) => void;
+  updateChat: (chat: ChatType) => void;
 };
 
 export const _Main: React.FC<Props> = ({ user, ...props }) => {
@@ -143,4 +144,5 @@ export const Main = connect(selector, {
   deleteChats,
   addMessages,
   addSubscribedChats,
+  updateChat,
 })(_Main);

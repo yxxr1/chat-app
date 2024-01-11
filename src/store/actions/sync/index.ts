@@ -7,3 +7,4 @@ export * from './quitChat';
 export * from './setChatList';
 export * from './setCurrentChat';
 export * from './setUser';
+export * from './updateChat';

@@ -91,7 +91,12 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props })
   return (
     <ChatContainer>
       <ChatHeader>
-        <h3 style={{ textAlign: 'center' }}>{currentChat.name}</h3>
+        <div>
+          <h3>{currentChat.name}</h3>
+          <span>
+            {currentChat.joinedCount || 0} {currentChat.joinedCount === 1 ? 'member' : 'members'}
+          </span>
+        </div>
         <Button onClick={onQuitClick}>Leave</Button>
       </ChatHeader>
       <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />

@@ -8,6 +8,7 @@ import {
   addChats,
   deleteChats,
   addSubscribedChats,
+  updateChat,
 } from '@actions/sync';
 import { CONNECTION_METHODS } from '@const/settings';
 
@@ -15,6 +16,7 @@ export type Chat = {
   id: string;
   name: string;
   messages: (Message | undefined)[];
+  joinedCount: number | null;
 };
 
 export type Message = {
@@ -56,4 +58,5 @@ export type Action =
   | ReturnType<typeof setUser>
   | ReturnType<typeof addChats>
   | ReturnType<typeof deleteChats>
-  | ReturnType<typeof addSubscribedChats>;
+  | ReturnType<typeof addSubscribedChats>
+  | ReturnType<typeof updateChat>;

@@ -6,8 +6,9 @@ import { Props } from '@screens/Main';
 import { store } from '@store';
 
 type WatchChatsPayload = {
-  chats: Chat[];
+  newChats: Chat[];
   deletedChatsIds: Chat['id'][];
+  updatedChats: Chat[];
 };
 
 type ChatSubscribePayload = {
@@ -25,13 +26,15 @@ export const useSubscribe = ({ user, joinedChatsIds, subscribedChatsIds, ...prop
       wsManager.connect();
 
       wsManager.subscribe<WatchChatsPayload>('WATCH_CHATS', (payload) => {
-        if (payload.chats.length) {
-          props.addChats(payload.chats);
+        if (payload.newChats.length) {
+          props.addChats(payload.newChats);
         }
 
         if (payload.deletedChatsIds.length) {
           props.deleteChats(payload.deletedChatsIds);
         }
+
+        payload.updatedChats.forEach((chat) => props.updateChat(chat));
       });
 
       wsManager.subscribe<ChatSubscribePayload>('SUBSCRIBED_CHAT', (payload) => {

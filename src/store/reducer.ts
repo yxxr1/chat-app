@@ -10,6 +10,7 @@ import {
   ADD_MESSAGES,
   ADD_CHATS,
   DELETE_CHATS,
+  UPDATE_CHAT,
 } from '@actions/sync';
 
 const initState: State = {
@@ -127,6 +128,21 @@ export const reducer = (state: State = initState, action: Action): State => {
         joinedChatsIds: state.joinedChatsIds.filter((id) => !action.payload.chatsIds.includes(id)),
         subscribedChatsIds: state.subscribedChatsIds.filter((id) => !action.payload.chatsIds.includes(id)),
         currentChatId: state.currentChatId && action.payload.chatsIds.includes(state.currentChatId) ? null : state.currentChatId,
+      };
+    }
+    case UPDATE_CHAT: {
+      const { chat } = action.payload;
+
+      return {
+        ...state,
+        allChats: {
+          ...state.allChats,
+          [chat.id]: {
+            ...state.allChats[chat.id],
+            ...chat,
+            messages: state.allChats[chat.id].messages,
+          },
+        },
       };
     }
 

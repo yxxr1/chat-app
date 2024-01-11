@@ -1,25 +1,28 @@
 import { makeQuery } from '@utils/actions';
-import { addChats, deleteChats } from '@actions/sync';
+import { addChats, deleteChats, updateChat } from '@actions/sync';
 import { Chat } from '@store/types';
 
 interface ResponseType {
-  chats: Chat[];
+  newChats: Chat[];
   deletedChatsIds: Chat['id'][];
+  updatedChats: Chat[];
 }
 
 export const watchChatsUpdates = (signal: AbortSignal) =>
   makeQuery<ResponseType>(
-    'chats?watch=1',
+    'chats-subscribe',
     'GET',
     null,
     (dispatch, data) => {
-      if (data.chats.length) {
-        dispatch(addChats(data.chats));
+      if (data.newChats.length) {
+        dispatch(addChats(data.newChats));
       }
 
       if (data.deletedChatsIds.length) {
         dispatch(deleteChats(data.deletedChatsIds));
       }
+
+      data.updatedChats.forEach((chat) => dispatch(updateChat(chat)));
 
       dispatch(watchChatsUpdates(signal));
     },
