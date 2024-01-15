@@ -9,14 +9,16 @@ export type WSMessageIncoming =
   | WSMessage<
       'SUBSCRIBED_CHAT',
       {
+        chatId: Chat['id'];
         messages: Message[];
       }
     >
   | WSMessage<
       'WATCH_CHATS',
       {
-        chats: Chat[];
+        newChats: Chat[];
         deletedChatsIds: Chat['id'][];
+        updatedChats: Chat[];
       }
     >;
 
