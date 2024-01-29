@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import { COMMON_CONFIG } from '@config/common';
 import { WSMessageIncoming, WSMessageOutgoing } from '@ws/types';
 
-type Callback<Payload = WSMessageIncoming['payload']> = (payload: Payload) => void;
+type Callback<Payload = WSMessageIncoming['payload'] | any> = (payload: Payload) => void;
 
 class WebSocketManager {
   url: string;
