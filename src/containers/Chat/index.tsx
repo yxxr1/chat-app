@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Button, Input, InputRef } from 'antd';
 import { AiOutlineSend, AiOutlineMessage } from 'react-icons/ai';
 import { Chat as ChatType, State, User } from '@store/types';
@@ -25,6 +26,8 @@ export type Props = {
 };
 
 const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (currentChat) {
       const { id } = currentChat;
@@ -83,7 +86,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props })
     return (
       <EmptyChat>
         <AiOutlineMessage size={80} />
-        <div className={styles['empty-chat-text']}>Join chat to start</div>
+        <div className={styles['empty-chat-text']}>{t('joinChatToStart')}</div>
       </EmptyChat>
     );
   }
@@ -93,11 +96,9 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, user, ...props })
       <ChatHeader>
         <div>
           <h3>{currentChat.name}</h3>
-          <span>
-            {currentChat.joinedCount || 0} {currentChat.joinedCount === 1 ? 'member' : 'members'}
-          </span>
+          <span>{t('nMembers', { count: currentChat.joinedCount || 0 })}</span>
         </div>
-        <Button onClick={onQuitClick}>Leave</Button>
+        <Button onClick={onQuitClick}>{t('leave')}</Button>
       </ChatHeader>
       <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
       <form

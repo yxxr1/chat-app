@@ -26,6 +26,7 @@ module.exports = {
       '@styles': `${__dirname}/src/styles`,
       '@const': `${__dirname}/src/const`,
       '@ws': `${__dirname}/src/ws`,
+      '@i18n': `${__dirname}/src/i18n`,
     },
   },
   devServer: {

@@ -33,7 +33,8 @@
       "@styles/*": ["./src/styles/*"],
       "@const/*": ["./src/const/*"],
       "@ws": ["./src/ws/index.ts"],
-      "@ws/*": ["./src/ws/*"]
+      "@ws/*": ["./src/ws/*"],
+      "@i18n": ["./src/i18n/index.ts"]
     },
     "plugins": [{
       "name": "typescript-plugin-css-modules"

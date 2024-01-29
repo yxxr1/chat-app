@@ -1,12 +1,13 @@
+import i18n from 'i18next';
 import { MESSAGE_SERVICE_TYPES } from '@const/common';
 import { Message, Chat } from '@store/types';
 
 export const getServiceMessage = ({ service, fromName }: Message) => {
   switch (service) {
     case MESSAGE_SERVICE_TYPES.CHAT_JOINED:
-      return `${fromName} joined chat`;
+      return i18n.t('serviceMessage.joinedChat', { userName: fromName });
     case MESSAGE_SERVICE_TYPES.CHAT_LEFT:
-      return `${fromName} left chat`;
+      return i18n.t('serviceMessage.leftChat', { userName: fromName });
   }
 };
 

@@ -1,7 +1,9 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, Radio, Drawer, Button } from 'antd';
+import { Form, Input, Radio, Drawer, Button, Select } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { AiOutlineLogout } from 'react-icons/ai';
+import { AVAILABLE_LANGUAGES } from '@i18n';
 import { State, User, UserSettings, Chat as ChatType, Message } from '@store/types';
 import { ChatList } from '@containers/ChatList';
 import { Chat } from '@containers/Chat';
@@ -35,6 +37,8 @@ export type Props = {
 };
 
 export const _Main: React.FC<Props> = ({ user, ...props }) => {
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     props.getChats();
   }, []);
@@ -89,38 +93,41 @@ export const _Main: React.FC<Props> = ({ user, ...props }) => {
         <Chat />
       </div>
       <Drawer
-        title="Settings"
+        title={t('settings.title')}
         placement="right"
         open={isShowSettingsDrawer}
         onClose={onSettingsDrawerClose}
         afterOpenChange={onSettingsDrawerChange}
       >
         <div className={styles['settings-header']}>
-          <Form.Item label={'User ID'}>{user.id}</Form.Item>
-          <Button type="link" title="Logout" onClick={onLogout}>
+          <Form.Item label={t('settings.userId')}>{user.id}</Form.Item>
+          <Button className={styles['logout-button']} type="link" title={t('settings.logout')} onClick={onLogout}>
             <AiOutlineLogout color={theme.primary} size={22} />
           </Button>
         </div>
         <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
           <Form.Item
             name="name"
-            label="Name"
+            label={t('form.name')}
             validateTrigger="onBlur"
-            rules={[{ required: true, validator: nameValidator, message: 'Please enter correct user name' }]}
+            rules={[{ required: true, validator: nameValidator, message: t('form.enterCorrectUserName') }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item name="connectionMethod" label="Connection method">
+          <Form.Item name="connectionMethod" label={t('settings.connectionMethod')}>
             <Radio.Group>
               <Radio.Button value={CONNECTION_METHODS.HTTP}>HTTP</Radio.Button>
               <Radio.Button value={CONNECTION_METHODS.WS}>WebSocket</Radio.Button>
             </Radio.Group>
           </Form.Item>
-          <Form.Item name="theme" label="UI Theme">
+          <Form.Item name="theme" label={t('settings.theme.title')}>
             <Radio.Group>
-              <Radio.Button value={UI_THEMES.LIGHT}>Light</Radio.Button>
-              <Radio.Button value={UI_THEMES.DARK}>Dark</Radio.Button>
+              <Radio.Button value={UI_THEMES.LIGHT}>{t('settings.theme.light')}</Radio.Button>
+              <Radio.Button value={UI_THEMES.DARK}>{t('settings.theme.dark')}</Radio.Button>
             </Radio.Group>
+          </Form.Item>
+          <Form.Item label={t('settings.language')}>
+            <Select value={i18n.language} onChange={(lang) => i18n.changeLanguage(lang)} options={AVAILABLE_LANGUAGES} />
           </Form.Item>
         </Form>
       </Drawer>

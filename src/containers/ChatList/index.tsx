@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Modal, Input, Form, Button, Radio, InputRef } from 'antd';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { State, Chat } from '@store/types';
@@ -21,6 +22,8 @@ export interface Props {
 }
 
 const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSettingsClick, ...props }) => {
+  const { t } = useTranslation();
+
   const [form] = Form.useForm();
 
   const [currentTab, setCurrentTab] = useState(0);
@@ -61,17 +64,17 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
     <>
       <List>
         <div className={styles['action-buttons']}>
-          <Button className={styles['settings-button']} type="link" title="Settings" onClick={onSettingsClick}>
+          <Button className={styles['settings-button']} type="link" title={t('settings.title')} onClick={onSettingsClick}>
             <AiOutlineSetting color={theme.primary} size={22} />
           </Button>
           <Button className={styles['create-button']} type="primary" onClick={onCreateClick}>
-            Create chat
+            {t('createChat')}
           </Button>
         </div>
 
         <Radio.Group className={styles.filter} value={currentTab} onChange={(e) => setCurrentTab(e.target.value)}>
-          <Radio.Button value={0}>All</Radio.Button>
-          <Radio.Button value={1}>Joined</Radio.Button>
+          <Radio.Button value={0}>{t('chatFilter.all')}</Radio.Button>
+          <Radio.Button value={1}>{t('chatFilter.joined')}</Radio.Button>
         </Radio.Group>
         <div>
           {list.map((chat) => (
@@ -88,9 +91,10 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
 
       <Modal
         open={isShowCreateModal}
-        title="Enter name"
-        okText="Create"
+        title={t('createChat')}
+        okText={t('form.create')}
         okType="primary"
+        cancelText={t('form.cancel')}
         onOk={() => form.submit()}
         onCancel={() => setIsShowCreateModal(false)}
         afterOpenChange={onModalChange}
@@ -98,9 +102,9 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
         <Form form={form} onFinish={onCreateSubmit}>
           <Form.Item
             name="name"
-            label="Name"
+            label={t('form.name')}
             validateTrigger="onBlur"
-            rules={[{ required: true, validator: nameValidator, message: 'Please enter correct chat name' }]}
+            rules={[{ required: true, validator: nameValidator, message: t('form.enterCorrectChatName') }]}
           >
             <Input ref={inputRef} autoFocus />
           </Form.Item>

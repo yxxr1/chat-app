@@ -1,0 +1,37 @@
+{
+  "welcomeToChat": "Добро пожаловать в Чат",
+  "form": {
+    "name": "Имя",
+    "enter": "Войти",
+    "enterCorrectUserName": "Пожалуйста, введите корректное имя пользователя",
+    "enterCorrectChatName": "Пожалуйста, введите корректное имя чата",
+    "create": "Создать",
+    "cancel": "Отмена"
+  },
+  "settings": {
+    "title": "Настройки",
+    "userId": "ID Пользователя",
+    "logout": "Выйти",
+    "connectionMethod": "Метод подключения",
+    "theme": {
+      "title": "Тема UI",
+      "light": "Светлая",
+      "dark": "Темная"
+    },
+    "language": "Язык"
+  },
+  "createChat": "Создать чат",
+  "chatFilter": {
+    "all": "Все",
+    "joined": "Участие"
+  },
+  "joinChatToStart": "Присоединитесь к чату, чтобы начать",
+  "nMembers_one": "{{count}} участник",
+  "nMembers_few": "{{count}} участника",
+  "nMembers_many": "{{count}} участников",
+  "leave": "Покинуть",
+  "serviceMessage": {
+    "joinedChat": "{{userName}} присоединился к чату",
+    "leftChat": "{{userName}} вышел из чата"
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { authUser } from '@actions/async';
 import { nameValidator } from '@utils/validation';
 import styles from './styles.module.scss';
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const _Auth: React.FC<Props> = (props) => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
 
   const onSubmit = useCallback(() => {
@@ -20,18 +22,18 @@ const _Auth: React.FC<Props> = (props) => {
   return (
     <div className={styles.container}>
       <Form form={form} onFinish={onSubmit}>
-        <Typography.Title className={styles.title}>Welcome to Chat</Typography.Title>
+        <Typography.Title className={styles.title}>{t('welcomeToChat')}</Typography.Title>
         <Form.Item
           name="name"
-          label="Name"
+          label={t('form.name')}
           validateTrigger="onBlur"
-          rules={[{ validator: nameValidator, message: 'Please enter correct user name' }]}
+          rules={[{ validator: nameValidator, message: t('form.enterCorrectUserName') }]}
         >
           <Input autoFocus />
         </Form.Item>
 
         <Button type="primary" className={styles.button} onClick={() => form.submit()}>
-          Enter
+          {t('form.enter')}
         </Button>
       </Form>
     </div>

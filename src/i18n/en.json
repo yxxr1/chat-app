@@ -1,0 +1,36 @@
+{
+  "welcomeToChat": "Welcome to Chat",
+  "form": {
+    "name": "Name",
+    "enter": "Enter",
+    "enterCorrectUserName": "Please enter correct user name",
+    "enterCorrectChatName": "Please enter correct chat name",
+    "create": "Create",
+    "cancel": "Cancel"
+  },
+  "settings": {
+    "title": "Settings",
+    "userId": "User ID",
+    "logout": "Logout",
+    "connectionMethod": "Connection method",
+    "theme": {
+      "title": "UI Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": "Language"
+  },
+  "createChat": "Create chat",
+  "chatFilter": {
+    "all": "All",
+    "joined": "Joined"
+  },
+  "joinChatToStart": "Join chat to start",
+  "nMembers_one": "{{count}} member",
+  "nMembers_other": "{{count}} members",
+  "leave": "Leave",
+  "serviceMessage": {
+    "joinedChat": "{{userName}} joined chat",
+    "leftChat": "{{userName}} left chat"
+  }
+}

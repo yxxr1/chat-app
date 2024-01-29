@@ -6,6 +6,7 @@ import { Loader } from '@components/Loader';
 import { Auth } from '@screens/Auth';
 import { Main } from '@screens/Main';
 import { ThemeProvider } from '@utils/theme';
+import '@i18n';
 import styles from './styles.module.scss';
 
 export type Props = {
