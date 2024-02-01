@@ -78,13 +78,7 @@ const _ChatList: React.FC<Props> = ({ allChats, joinedChats, currentChatId, onSe
         </Radio.Group>
         <div>
           {list.map((chat) => (
-            <ChatItem
-              key={chat.id}
-              name={chat.name}
-              lastMessage={chat.messages.slice(-1)[0] ?? null}
-              isCurrent={currentChatId === chat.id}
-              onClick={() => onChatClick(chat.id)}
-            />
+            <ChatItem key={chat.id} chat={chat} isCurrent={currentChatId === chat.id} onClick={onChatClick} />
           ))}
         </div>
       </List>

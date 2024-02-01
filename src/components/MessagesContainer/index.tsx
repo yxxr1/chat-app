@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, memo } from 'react';
 import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { Message as MessageType, Chat } from '@store/types';
@@ -17,7 +17,7 @@ export type Props = {
 const DEFAULT_MESSAGE_HEIGHT = 25;
 const BOTTOM_THRESHOLD = 200;
 
-export const MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMore }) => {
+const _MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMore }) => {
   const ref = useRef<VirtuosoHandle>(null);
   const [stateByChat, setStateByChat] = useState<Record<Chat['id'], StateSnapshot>>({});
 
@@ -77,3 +77,5 @@ export const MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMor
     </Container>
   );
 };
+
+export const MessagesContainer = memo(_MessagesContainer);

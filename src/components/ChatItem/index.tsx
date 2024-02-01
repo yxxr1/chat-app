@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Message as MessageType } from '@store/types';
 import { getServiceMessage } from '@utils/common';
+import { Chat as ChatType } from '@store/types';
 import { Chat, Title, Message } from './styled';
 
 type Props = {
-  name: string;
-  lastMessage: MessageType | null;
+  chat: ChatType;
   isCurrent: boolean;
-  onClick: () => void;
+  onClick: (chatId: ChatType['id']) => void;
 };
 
-export const ChatItem: React.FC<Props> = ({ name, lastMessage, isCurrent, onClick }) => {
+const _ChatItem: React.FC<Props> = ({ chat, isCurrent, onClick }) => {
+  const lastMessage = useMemo<MessageType | null>(() => chat.messages.slice(-1)[0] ?? null, [chat.messages]);
+
   return (
-    <Chat isCurrent={isCurrent} onClick={onClick}>
-      <Title>{name}</Title>
+    <Chat isCurrent={isCurrent} onClick={() => onClick(chat.id)}>
+      <Title>{chat.name}</Title>
       {lastMessage && (
         <Message>
           {lastMessage.service ? (
@@ -29,3 +31,5 @@ export const ChatItem: React.FC<Props> = ({ name, lastMessage, isCurrent, onClic
     </Chat>
   );
 };
+
+export const ChatItem = memo(_ChatItem);

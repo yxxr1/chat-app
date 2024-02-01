@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import moment from 'moment';
 import { Message as MessageType } from '@store/types';
 import { getServiceMessage } from '@utils/common';
@@ -8,7 +8,7 @@ type Props = {
   message: MessageType;
 };
 
-export const Message: React.FC<Props> = ({ message }) => {
+const _Message: React.FC<Props> = ({ message }) => {
   const userTitle = useMemo(() => `${message.fromName}(${message.fromId.substr(message.fromId.length - 4)})`, [message]);
 
   if (message.service) {
@@ -23,3 +23,5 @@ export const Message: React.FC<Props> = ({ message }) => {
     </MessageC>
   );
 };
+
+export const Message = memo(_Message);
