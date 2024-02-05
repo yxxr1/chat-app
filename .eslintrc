@@ -19,13 +19,16 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "format-imports"],
   "rules": {
     "max-len": ["error", { "code": 140 }],
     "prettier/prettier": "error",
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "format-imports/empty-line-after-imports": "error",
+    "format-imports/group-imports-on-top": "error",
+    "newline-before-return": "error"
   },
   "settings": {
     "react": {

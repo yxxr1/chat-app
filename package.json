@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "antd": "^5.12.1",
+    "eslint-plugin-format-imports": "file:local_modules/eslint-plugin-format-imports",
     "i18next": "^23.8.1",
     "i18next-browser-languagedetector": "^7.2.0",
     "moment": "^2.29.4",
@@ -27,7 +28,8 @@
     "serve": "webpack serve --mode=development --progress",
     "build": "webpack",
     "build:prod": "webpack --config webpack.config.prod.js",
-    "eslint": "eslint ./src --ext .ts,.tsx"
+    "eslint": "eslint ./src --ext .ts,.tsx",
+    "eslint-fix": "eslint ./src --ext .ts,.tsx --fix"
   },
   "devDependencies": {
     "@types/react": "^18.2.42",

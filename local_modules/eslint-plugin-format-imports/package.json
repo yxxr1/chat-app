@@ -1,0 +1,8 @@
+{
+  "name": "eslint-plugin-format-imports",
+  "version": "1.0.0",
+  "description": "format imports",
+  "main": "index.js",
+  "author": "yxxr1",
+  "license": "ISC"
+}
