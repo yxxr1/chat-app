@@ -1,0 +1,103 @@
+import React, { useCallback, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, Drawer, Form, Input, Radio, Select } from 'antd';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
+import { nameValidator } from '@utils/validation';
+import { AVAILABLE_LANGUAGES } from '@i18n';
+import { useTheme } from '@utils/theme';
+import { UI_THEMES, CONNECTION_METHODS } from '@const/settings';
+import { State, User } from '@store/types';
+import { authUser, setUser } from '@api';
+import styles from './styles.module.scss';
+
+export type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
+  const user = useSelector<State, User>((state) => state.user as User);
+  const dispatch = useDispatch();
+
+  const { t, i18n } = useTranslation();
+
+  const onLogout = useCallback(() => {
+    dispatch(authUser(null));
+  }, []);
+
+  const [form] = Form.useForm();
+
+  const onSettingsSave = useCallback(() => {
+    if (form.isFieldsTouched()) {
+      const { name, connectionMethod, theme } = form.getFieldsValue();
+      dispatch(setUser(name, { connectionMethod, theme }));
+    }
+  }, []);
+
+  const initialValues = useMemo(
+    () => ({
+      name: user.name,
+      connectionMethod: user.settings.connectionMethod,
+      theme: user.settings.theme,
+    }),
+    [user],
+  );
+
+  const onSettingsDrawerClose = useCallback(() => {
+    form.submit();
+    onClose();
+  }, [form]);
+  const onSettingsDrawerChange = useCallback(
+    (open: boolean) => {
+      if (open) {
+        form.resetFields();
+      }
+    },
+    [form],
+  );
+
+  const theme = useTheme();
+
+  return (
+    <Drawer
+      title={t('settings.title')}
+      placement="right"
+      open={isOpen}
+      onClose={onSettingsDrawerClose}
+      afterOpenChange={onSettingsDrawerChange}
+    >
+      <div className={styles['settings-header']}>
+        <Form.Item label={t('settings.userId')}>{user.id}</Form.Item>
+        <Button className={styles['logout-button']} type="link" title={t('settings.logout')} onClick={onLogout}>
+          <AiOutlineLogout color={theme.primary} size={22} />
+        </Button>
+      </div>
+      <Form form={form} initialValues={initialValues} onFinish={onSettingsSave}>
+        <Form.Item
+          name="name"
+          label={t('form.name')}
+          validateTrigger="onBlur"
+          rules={[{ required: true, validator: nameValidator, message: t('form.enterCorrectUserName') }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="connectionMethod" label={t('settings.connectionMethod')}>
+          <Radio.Group>
+            <Radio.Button value={CONNECTION_METHODS.HTTP}>HTTP</Radio.Button>
+            <Radio.Button value={CONNECTION_METHODS.WS}>WebSocket</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item name="theme" label={t('settings.theme.title')}>
+          <Radio.Group>
+            <Radio.Button value={UI_THEMES.LIGHT}>{t('settings.theme.light')}</Radio.Button>
+            <Radio.Button value={UI_THEMES.DARK}>{t('settings.theme.dark')}</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label={t('settings.language')}>
+          <Select value={i18n.language} onChange={(lang) => i18n.changeLanguage(lang)} options={AVAILABLE_LANGUAGES} />
+        </Form.Item>
+      </Form>
+    </Drawer>
+  );
+};
