@@ -5,7 +5,7 @@ import { getUser } from '@api';
 import { Loader } from '@ui/Loader';
 import { Auth } from '@pages/Auth';
 import { Main } from '@pages/Main';
-import { ThemeProvider } from '@utils/theme';
+import { ThemeProvider, getTheme } from '@utils/theme';
 import '@i18n';
 import styles from './styles.module.scss';
 
@@ -30,7 +30,7 @@ const _App: React.FC<Props> = ({ user, isLoading, ...props }) => {
     );
   }
 
-  return <ThemeProvider value={user?.settings.theme}>{user ? <Main /> : <Auth />}</ThemeProvider>;
+  return <ThemeProvider value={getTheme()}>{user ? <Main /> : <Auth />}</ThemeProvider>;
 };
 
 const selector = (state: State) => ({

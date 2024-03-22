@@ -22,3 +22,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ value = DEFAULT_TH
 export type Theme = (typeof THEMES)[typeof DEFAULT_THEME];
 
 export const useTheme = () => useContext<Theme>(ThemeContext);
+
+export const setTheme = (theme: UserSettings['theme']) => (window.localStorage['theme'] = theme);
+export const getTheme = () => window.localStorage['theme'] || DEFAULT_THEME;
