@@ -8,6 +8,7 @@
     "url": "https://github.com/yxxr1/chat-app.git"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
     "antd": "^5.12.1",
     "eslint-plugin-format-imports": "file:local_modules/eslint-plugin-format-imports",
     "i18next": "^23.8.1",
