@@ -6,7 +6,7 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const ListFooter = styled.div`
+export const ListPadding = styled.div`
   height: 10px;
 `;
 

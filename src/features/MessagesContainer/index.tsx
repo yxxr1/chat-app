@@ -5,7 +5,7 @@ import { Message as MessageType, Chat } from '@store/types';
 import { MESSAGES_PAGE_SIZE } from '@const/limits';
 import { DIRECTIONS } from '@api';
 import { Message, MessageSkeleton } from '@entities/Message';
-import { Container, ListFooter, GoToBottom } from './styled';
+import { Container, ListPadding, GoToBottom } from './styled';
 
 export type Props = {
   messages: Chat['messages'];
@@ -43,7 +43,7 @@ const _MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMore }) =
         key={currentChatId}
         ref={ref}
         style={{ height: '100%' }}
-        components={{ Footer: () => <ListFooter /> }}
+        components={{ Footer: () => <ListPadding />, Header: () => <ListPadding /> }}
         alignToBottom
         data={currentMessages}
         itemContent={(index, message) => (message ? <Message message={message} /> : <MessageSkeleton />)}
