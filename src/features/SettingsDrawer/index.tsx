@@ -1,9 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Drawer, Form, Input, Radio, Select } from 'antd';
+import { Button, Drawer, Form, Input, Radio, Select, Checkbox, Divider, CheckboxProps } from 'antd';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import { nameValidator } from '@utils/validation';
+import { requestPermission } from '@utils/notification';
 import { AVAILABLE_LANGUAGES } from '@i18n';
 import { useTheme } from '@utils/theme';
 import { UI_THEMES, CONNECTION_METHODS } from '@const/settings';
@@ -30,16 +31,15 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
 
   const onSettingsSave = useCallback(() => {
     if (form.isFieldsTouched()) {
-      const { name, connectionMethod, theme } = form.getFieldsValue();
-      dispatch(setUser(name, { connectionMethod, theme }));
+      const { name, ...settings } = form.getFieldsValue();
+      dispatch(setUser(name, settings));
     }
   }, []);
 
   const initialValues = useMemo(
     () => ({
       name: user.name,
-      connectionMethod: user.settings.connectionMethod,
-      theme: user.settings.theme,
+      ...user.settings,
     }),
     [user],
   );
@@ -56,6 +56,16 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
     },
     [form],
   );
+
+  const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(initialValues.isNotificationsEnabled);
+  const onNotificationChange = useCallback<Required<CheckboxProps>['onChange']>(async ({ target: { checked } }) => {
+    setIsNotificationsEnabled(checked);
+
+    if (checked && (await requestPermission()) !== 'granted') {
+      form.setFieldValue('isNotificationsEnabled', false);
+      setIsNotificationsEnabled(false);
+    }
+  }, []);
 
   const theme = useTheme();
 
@@ -94,6 +104,14 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
             <Radio.Button value={UI_THEMES.DARK}>{t('settings.theme.dark')}</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Divider />
+        <Form.Item name="isNotificationsEnabled" valuePropName="checked" label={t('settings.notifications.enableNotifications')}>
+          <Checkbox checked={isNotificationsEnabled} onChange={onNotificationChange} />
+        </Form.Item>
+        <Form.Item name="isShowNotificationMessageText" valuePropName="checked" label={t('settings.notifications.showMessageText')}>
+          <Checkbox disabled={!isNotificationsEnabled} />
+        </Form.Item>
+        <Divider />
         <Form.Item label={t('settings.language')}>
           <Select value={i18n.language} onChange={(lang) => i18n.changeLanguage(lang)} options={AVAILABLE_LANGUAGES} />
         </Form.Item>

@@ -20,6 +20,8 @@ export type Message = {
 export type UserSettings = {
   connectionMethod: (typeof CONNECTION_METHODS)[keyof typeof CONNECTION_METHODS];
   theme: 'light' | 'dark';
+  isNotificationsEnabled: boolean;
+  isShowNotificationMessageText: boolean;
 };
 
 export type User = {

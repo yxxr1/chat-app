@@ -18,6 +18,10 @@
       "light": "Light",
       "dark": "Dark"
     },
+    "notifications": {
+      "enableNotifications": "Enable notifications",
+      "showMessageText": "Show message text"
+    },
     "language": "Language"
   },
   "createChat": "Create chat",
@@ -32,5 +36,9 @@
   "serviceMessage": {
     "joinedChat": "{{userName}} joined chat",
     "leftChat": "{{userName}} left chat"
+  },
+  "notifications": {
+    "newMessage": "New message in \"{{chatName}}\"",
+    "messageFrom": "Message from {{userName}}"
   }
 }

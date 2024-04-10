@@ -18,6 +18,10 @@
       "light": "Светлая",
       "dark": "Темная"
     },
+    "notifications": {
+      "enableNotifications": "Включить уведомления",
+      "showMessageText": "Показывать текст сообщения"
+    },
     "language": "Язык"
   },
   "createChat": "Создать чат",
@@ -33,5 +37,9 @@
   "serviceMessage": {
     "joinedChat": "{{userName}} присоединился к чату",
     "leftChat": "{{userName}} вышел из чата"
+  },
+  "notifications": {
+    "newMessage": "Новое сообщение в \"{{chatName}}\"",
+    "messageFrom": "Сообщение от {{userName}}"
   }
 }

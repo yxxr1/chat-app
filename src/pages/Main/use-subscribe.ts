@@ -7,6 +7,7 @@ import { ChatSubscribe, WatchChats } from '@ws/types';
 import { store } from '@store';
 import { watchChatsUpdates, subscribeChat } from '@api';
 import { addChats, deleteChats, addMessages, addSubscribedChats, clearSubscribedChats, updateChat } from '@store';
+import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
 
 let subscribeAbortController: AbortController;
 
@@ -45,6 +46,10 @@ export const useSubscribe = () => {
       wsManager.subscribe<ChatSubscribe>('SUBSCRIBED_CHAT', (payload) => {
         if (payload.messages) {
           dispatch(addMessages({ id: payload.chatId, messages: payload.messages }));
+
+          if (hasNotificationPermission()) {
+            payload.messages.forEach((message) => sendMessageNotification(message, payload.chatId));
+          }
         }
       });
 
