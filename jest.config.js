@@ -1,0 +1,22 @@
+module.exports = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  rootDir: '.',
+  moduleNameMapper: {
+    '^@app(.*)$': '<rootDir>/src/app$1',
+    '^@pages(.*)$': '<rootDir>/src/pages$1',
+    '^@widgets(.*)$': '<rootDir>/src/widgets$1',
+    '^@features(.*)$': '<rootDir>/src/features$1',
+    '^@entities(.*)$': '<rootDir>/src/entities$1',
+    '^@store(.*)$': '<rootDir>/src/shared/store$1',
+    '^@api(.*)$': '<rootDir>/src/shared/api$1',
+    '^@config(.*)$': '<rootDir>/src/shared/config$1',
+    '^@ui(.*)$': '<rootDir>/src/shared/ui$1',
+    '^@utils(.*)$': '<rootDir>/src/shared/utils$1',
+    '^@styles(.*)$': '<rootDir>/src/shared/styles$1',
+    '^@const(.*)$': '<rootDir>/src/shared/const$1',
+    '^@ws(.*)$': '<rootDir>/src/shared/ws$1',
+    '^@i18n(.*)$': '<rootDir>/src/shared/i18n$1',
+    '^.+\\.(css|less|scss)$': 'babel-jest',
+  },
+};
