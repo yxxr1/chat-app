@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ChatItem renders renders content 1`] = `
+<div
+  class="sc-aXZVg rugVN"
+  data-testid="chatItem-container"
+>
+  <div
+    class="sc-gEvEer eTINNo"
+  >
+    test chat
+  </div>
+  <div
+    class="sc-eqUAAy MWRcI"
+  >
+    <i>
+      testUser
+      :
+    </i>
+     test message
+  </div>
+</div>
+`;
+
+exports[`ChatItem renders renders content no messages 1`] = `
+<div
+  class="sc-aXZVg rugVN"
+  data-testid="chatItem-container"
+>
+  <div
+    class="sc-gEvEer eTINNo"
+  >
+    test chat
+  </div>
+</div>
+`;
+
+exports[`ChatItem renders renders content service message 1`] = `
+<div
+  class="sc-aXZVg rugVN"
+  data-testid="chatItem-container"
+>
+  <div
+    class="sc-gEvEer eTINNo"
+  >
+    test chat
+  </div>
+  <div
+    class="sc-eqUAAy MWRcI"
+  >
+    <i>
+      testUser joined chat
+    </i>
+  </div>
+</div>
+`;
