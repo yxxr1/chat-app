@@ -17,6 +17,7 @@ module.exports = {
     '^@const(.*)$': '<rootDir>/src/shared/const$1',
     '^@ws(.*)$': '<rootDir>/src/shared/ws$1',
     '^@i18n(.*)$': '<rootDir>/src/shared/i18n$1',
+    '^@test/(.*)$': '<rootDir>/src/shared/test/$1',
     '^.+\\.(css|less|scss)$': 'babel-jest',
   },
 };
