@@ -3,7 +3,7 @@
 exports[`ChatItem renders renders content 1`] = `
 <div
   class="sc-aXZVg rugVN"
-  data-testid="chatItem-container"
+  data-testid="chatItem__container"
 >
   <div
     class="sc-gEvEer eTINNo"
@@ -25,7 +25,7 @@ exports[`ChatItem renders renders content 1`] = `
 exports[`ChatItem renders renders content no messages 1`] = `
 <div
   class="sc-aXZVg rugVN"
-  data-testid="chatItem-container"
+  data-testid="chatItem__container"
 >
   <div
     class="sc-gEvEer eTINNo"
@@ -38,7 +38,7 @@ exports[`ChatItem renders renders content no messages 1`] = `
 exports[`ChatItem renders renders content service message 1`] = `
 <div
   class="sc-aXZVg rugVN"
-  data-testid="chatItem-container"
+  data-testid="chatItem__container"
 >
   <div
     class="sc-gEvEer eTINNo"
