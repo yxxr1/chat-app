@@ -7,7 +7,7 @@ import { useTheme } from '@utils/theme';
 import { MAX_MESSAGE_LENGTH } from '@const/limits';
 import { CONNECTION_METHODS } from '@const/settings';
 import { wsManager } from '@ws';
-import { publishChat } from '@api';
+import { publishChat } from './api/publishChat';
 import styles from './styles.module.scss';
 
 interface Props {

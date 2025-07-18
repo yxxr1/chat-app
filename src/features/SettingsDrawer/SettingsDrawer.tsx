@@ -9,7 +9,8 @@ import { AVAILABLE_LANGUAGES } from '@i18n';
 import { useTheme } from '@utils/theme';
 import { UI_THEMES, CONNECTION_METHODS } from '@const/settings';
 import { State, User } from '@store/types';
-import { authUser, setUser } from '@api';
+import { logoutUser } from './api/logoutUser';
+import { setUser } from './api/setUser';
 import styles from './styles.module.scss';
 
 export type Props = {
@@ -24,7 +25,7 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
 
   const onLogout = useCallback(() => {
-    dispatch(authUser(null));
+    dispatch(logoutUser());
   }, []);
 
   const [form] = Form.useForm();
