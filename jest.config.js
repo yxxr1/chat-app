@@ -9,7 +9,6 @@ module.exports = {
     '^@features(.*)$': '<rootDir>/src/features$1',
     '^@entities(.*)$': '<rootDir>/src/entities$1',
     '^@store(.*)$': '<rootDir>/src/shared/store$1',
-    '^@api(.*)$': '<rootDir>/src/shared/api$1',
     '^@config(.*)$': '<rootDir>/src/shared/config$1',
     '^@ui(.*)$': '<rootDir>/src/shared/ui$1',
     '^@utils(.*)$': '<rootDir>/src/shared/utils$1',
