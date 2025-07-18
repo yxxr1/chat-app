@@ -36,11 +36,13 @@
       "@const/*": ["./src/shared/const/*"],
       "@ws": ["./src/shared/ws/index.ts"],
       "@ws/*": ["./src/shared/ws/*"],
-      "@i18n": ["./src/shared/i18n/index.ts"]
+      "@i18n": ["./src/shared/i18n/index.ts"],
+      "@test/*": ["./src/shared/test/*"]
     },
     "plugins": [{
       "name": "typescript-plugin-css-modules"
-    }]
+    }],
+    "types": ["@testing-library/jest-dom"]
   },
   "include": [
     "src",

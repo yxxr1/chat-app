@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Message entity renders content 1`] = `
+<div
+  class="sc-aXZVg hRtgRa"
+  data-testid="message__main-container"
+>
+  <div
+    class="sc-gEvEer hsltlJ"
+  >
+    test_user(2Qne)
+  </div>
+  <span
+    class="sc-eqUAAy lsylT"
+    data-testid="message__main-container-text"
+  >
+    test message text
+  </span>
+  <div
+    class="sc-fqkvVR gBYpkF"
+  >
+    07/14/2024
+  </div>
+</div>
+`;

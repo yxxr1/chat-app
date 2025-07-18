@@ -13,7 +13,7 @@ const _ChatItem: React.FC<Props> = ({ chat, isCurrent, onClick }) => {
   const lastMessage = useMemo<MessageType | null>(() => chat.messages.slice(-1)[0] ?? null, [chat.messages]);
 
   return (
-    <Chat isCurrent={isCurrent} onClick={() => onClick(chat.id)}>
+    <Chat data-testid="chatItem__container" isCurrent={isCurrent} onClick={() => onClick(chat.id)}>
       <Title>{chat.name}</Title>
       {lastMessage && (
         <Message>
