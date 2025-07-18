@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Form, Input, InputRef, Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { nameValidator } from '@utils/validation';
-import { createChat } from '@api';
+import { createChat } from './api/createChat';
 
 type Props = {
   isOpen: boolean;

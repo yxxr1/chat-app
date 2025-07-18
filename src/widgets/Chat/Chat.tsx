@@ -4,10 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 import { AiOutlineMessage } from 'react-icons/ai';
 import { Chat as ChatType, State } from '@store/types';
-import { quitChat, joinChat, getMessages, DIRECTIONS } from '@api';
 import { setCurrentChat } from '@store';
 import { MessagesContainer, Props as MessagesContainerProps } from '@features/MessagesContainer';
 import { MessageInput } from '@features/MessageInput';
+import { joinChat } from './api/joinChat';
+import { quitChat } from './api/quitChat';
+import { getMessages } from './api/getMessages';
+import { MessagesDirections } from '@const/messages';
 import { ChatHeader, Chat as ChatContainer, EmptyChat } from './styled';
 import styles from './styles.module.scss';
 
@@ -17,7 +20,7 @@ export type Props = {
   joinChat: (chatId: string) => void;
   setCurrentChat: (id: string | null) => void;
   quitChat: (chatId: string) => void;
-  getMessages: (chatId: ChatType['id'], lastMessageId: ChatType['id'], direction: (typeof DIRECTIONS)[keyof typeof DIRECTIONS]) => void;
+  getMessages: (chatId: ChatType['id'], lastMessageId: ChatType['id'], direction: MessagesDirections) => void;
 };
 
 const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {

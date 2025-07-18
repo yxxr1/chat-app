@@ -1,8 +1,7 @@
 import { notification } from 'antd';
 import { setUser as setUserSync } from '@store';
 import { makeQuery } from '@utils/actions';
-import { setTheme } from '@utils/theme';
-import { User, UserSettings } from '@store/types';
+import { User } from '@store/types';
 
 type ResponseType =
   | User
@@ -11,17 +10,14 @@ type ResponseType =
       name: null;
     };
 
-export const authUser = (name: User['name'] | null, settings?: Partial<UserSettings>) =>
+export const logoutUser = () =>
   makeQuery<ResponseType>(
     'auth',
     'POST',
-    { name, settings },
+    { name: null },
     (dispatch, data) => {
       if (data.id === null) {
         dispatch(setUserSync(null));
-      } else {
-        dispatch(setUserSync(data));
-        setTheme(data.settings.theme);
       }
     },
     (dispatch, { message }) => {

@@ -3,14 +3,14 @@ import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { Message as MessageType, Chat } from '@store/types';
 import { MESSAGES_PAGE_SIZE } from '@const/limits';
-import { DIRECTIONS } from '@api';
+import { MESSAGE_DIRECTIONS, MessagesDirections } from '@const/messages';
 import { Message, MessageSkeleton } from '@entities/Message';
 import { Container, ListPadding, GoToBottom } from './styled';
 
 export type Props = {
   messages: Chat['messages'];
   chatId: Chat['id'];
-  onLoadMore: (lastMessageId: MessageType['id'], direction: (typeof DIRECTIONS)[keyof typeof DIRECTIONS]) => void;
+  onLoadMore: (lastMessageId: MessageType['id'], direction: MessagesDirections) => void;
 };
 
 const DEFAULT_MESSAGE_HEIGHT = 25;
@@ -56,7 +56,7 @@ const _MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMore }) =
         atBottomStateChange={(isAtBottom) => setIsShowGoToBottom(!isAtBottom)}
         startReached={() => {
           if (currentMessages.length && currentMessages[0] && currentMessages[0].index !== 0) {
-            onLoadMore(currentMessages[0].id, DIRECTIONS.PREV);
+            onLoadMore(currentMessages[0].id, MESSAGE_DIRECTIONS.PREV);
           }
         }}
         {...(stateByChat[currentChatId] ? {} : { initialTopMostItemIndex: { index: 'LAST', behavior: 'auto' } })}

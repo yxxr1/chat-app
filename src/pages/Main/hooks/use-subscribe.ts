@@ -5,9 +5,10 @@ import { CONNECTION_METHODS } from '@const/settings';
 import { wsManager } from '@ws';
 import { ChatSubscribe, WatchChats } from '@ws/types';
 import { store } from '@store';
-import { watchChatsUpdates, subscribeChat } from '@api';
 import { addChats, deleteChats, addMessages, addSubscribedChats, clearSubscribedChats, updateChat } from '@store';
 import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
+import { subscribeChat } from '../api/subscribeChat';
+import { watchChatsUpdates } from '../api/watchChatsUpdates';
 
 let subscribeAbortController: AbortController;
 

@@ -22,7 +22,6 @@ module.exports = {
       '@features': `${__dirname}/src/features`,
       '@entities': `${__dirname}/src/entities`,
       '@store': `${__dirname}/src/shared/store`,
-      '@api': `${__dirname}/src/shared/api`,
       '@config': `${__dirname}/src/shared/config`,
       '@ui': `${__dirname}/src/shared/ui`,
       '@utils': `${__dirname}/src/shared/utils`,

@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form, Input, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { authUser } from '@api';
 import { nameValidator } from '@utils/validation';
 import { getTheme } from '@utils/theme';
+import { authUser } from './api/auth';
 import styles from './styles.module.scss';
 import { Container } from './styled';
 
