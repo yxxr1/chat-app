@@ -32,7 +32,7 @@ export const ChatListWithFilters: React.FC<Props> = ({ onChatClick }) => {
         <Radio.Button value={0}>{t('chatFilter.all')}</Radio.Button>
         <Radio.Button value={1}>{t('chatFilter.joined')}</Radio.Button>
       </Radio.Group>
-      <div>
+      <div className={styles.container}>
         {list.map((chat) => (
           <ChatItem key={chat.id} chat={chat} isCurrent={currentChatId === chat.id} onClick={onChatClick} />
         ))}
