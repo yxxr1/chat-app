@@ -43,6 +43,7 @@ export const ChatCreateModal: React.FC<Props> = ({ isOpen, onClose }) => {
       onOk={() => form.submit()}
       onCancel={onClose}
       afterOpenChange={onModalChange}
+      okButtonProps={{ 'data-testid': 'ChatCreateModal_submit' }}
     >
       <Form form={form} onFinish={onCreateSubmit}>
         <Form.Item
@@ -51,7 +52,7 @@ export const ChatCreateModal: React.FC<Props> = ({ isOpen, onClose }) => {
           validateTrigger="onBlur"
           rules={[{ required: true, validator: nameValidator, message: t('form.enterCorrectChatName') }]}
         >
-          <Input ref={inputRef} autoFocus />
+          <Input data-testid="ChatCreateModal_input" ref={inputRef} autoFocus />
         </Form.Item>
       </Form>
     </Modal>

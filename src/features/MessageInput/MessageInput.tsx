@@ -54,6 +54,7 @@ export const MessageInput: React.FC<Props> = ({ chatId }) => {
       }}
     >
       <Input
+        data-testid="MessageInput_input"
         className={styles['message-input']}
         ref={inputRef}
         value={messageText}
@@ -61,7 +62,7 @@ export const MessageInput: React.FC<Props> = ({ chatId }) => {
         autoFocus
         maxLength={MAX_MESSAGE_LENGTH}
       />
-      <Button className={styles['send-button']} type="text" onClick={onMessageSend}>
+      <Button data-testid="MessageInput_submit" className={styles['send-button']} type="text" onClick={onMessageSend}>
         <AiOutlineSend color={theme.primary} />
       </Button>
     </form>
