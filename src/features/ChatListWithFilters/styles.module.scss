@@ -7,3 +7,8 @@
     text-align: center;
   }
 }
+
+.container {
+  height: calc(100% - 94px);
+  overflow-y: scroll;
+}
