@@ -26,7 +26,9 @@ describe('Chat-app', () => {
   });
 
   it('Add message', async () => {
-    await $(getTextSelector(chatName)).click();
+    const chat = $(getTextSelector(chatName));
+    await expect(chat).toBeClickable();
+    await chat.click();
     const input = await $(getSelector('MessageInput_input'));
     expect(input).toBeExisting();
     await input.setValue(testMessageText);
