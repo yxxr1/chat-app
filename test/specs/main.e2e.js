@@ -37,6 +37,7 @@ describe('Chat-app', () => {
   });
 
   it('Leave chat', async () => {
+    await $(getSelector('ChatListWithFilters_joinedFilter')).parentElement().parentElement().click();
     await $(getSelector('Chat_leaveButton')).click();
     await expect($(getTextSelector(chatName))).not.toBeExisting();
   });
