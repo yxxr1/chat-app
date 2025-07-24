@@ -34,7 +34,13 @@ export const ChatList: React.FC<Props> = ({ onSettingsClick }) => {
     <>
       <List>
         <div className={styles['action-buttons']}>
-          <Button className={styles['settings-button']} type="link" title={t('settings.title')} onClick={onSettingsClick}>
+          <Button
+            data-testid="ChatList_settingsButton"
+            className={styles['settings-button']}
+            type="link"
+            title={t('settings.title')}
+            onClick={onSettingsClick}
+          >
             <AiOutlineSetting color={theme.primary} size={22} />
           </Button>
           <Button data-testid="ChatList_createChat" className={styles['create-button']} type="primary" onClick={onCreateChat}>

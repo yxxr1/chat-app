@@ -41,4 +41,10 @@ describe('Chat-app', () => {
     await $(getSelector('Chat_leaveButton')).click();
     await expect($(getTextSelector(chatName))).not.toBeExisting();
   });
+
+  it('Logout', async () => {
+    await $(getSelector('ChatList_settingsButton')).click();
+    await $(getSelector('SettingsDrawer_logoutButton')).click();
+    await expect($(getSelector('LoginForm_name'))).toBeExisting();
+  });
 });

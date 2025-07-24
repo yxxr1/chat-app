@@ -80,7 +80,13 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
     >
       <div className={styles['settings-header']}>
         <Form.Item label={t('settings.userId')}>{user.id}</Form.Item>
-        <Button className={styles['logout-button']} type="link" title={t('settings.logout')} onClick={onLogout}>
+        <Button
+          data-testid="SettingsDrawer_logoutButton"
+          className={styles['logout-button']}
+          type="link"
+          title={t('settings.logout')}
+          onClick={onLogout}
+        >
           <AiOutlineLogout color={theme.primary} size={22} />
         </Button>
       </div>
