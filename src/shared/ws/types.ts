@@ -1,8 +1,11 @@
 import { Message, Chat } from '@store/types';
 
-type WSMessage<Type, Payload> = {
+type WSMessage<Type extends string, Payload> = {
   type: Type;
   payload: Payload;
+};
+type GetPayloadByType<T extends WSMessage<string, unknown>> = {
+  [type in T['type']]: Extract<T, { type: type }>['payload'];
 };
 
 export type WatchChats = WSMessage<
@@ -23,19 +26,22 @@ export type ChatSubscribe = WSMessage<
 >;
 
 export type WSMessageIncoming = ChatSubscribe | WatchChats;
+export type WSMessageIncomingPayloadByType = GetPayloadByType<WSMessageIncoming>;
 
-export type WSMessageOutgoing =
-  | WSMessage<
-      'PUBLISH_MESSAGE',
-      {
-        chatId: Chat['id'];
-        message: Message['text'];
-      }
-    >
-  | WSMessage<
-      'SUBSCRIBE_CHAT',
-      {
-        chatId: Chat['id'];
-        lastMessageId: Message['id'] | null;
-      }
-    >;
+type PublishMessage = WSMessage<
+  'PUBLISH_MESSAGE',
+  {
+    chatId: Chat['id'];
+    message: Message['text'];
+  }
+>;
+type SubscribeChat = WSMessage<
+  'SUBSCRIBE_CHAT',
+  {
+    chatId: Chat['id'];
+    lastMessageId: Message['id'] | null;
+  }
+>;
+
+export type WSMessageOutgoing = PublishMessage | SubscribeChat;
+export type WSMessageOutgoingPayloadByType = GetPayloadByType<WSMessageOutgoing>;

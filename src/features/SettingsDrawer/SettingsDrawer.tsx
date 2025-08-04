@@ -19,7 +19,7 @@ export type Props = {
 };
 
 export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
-  const user = useSelector<State, User>((state) => state.user as User);
+  const user = useSelector<State, User>((state) => (state.user as User) || {});
   const dispatch = useDispatch();
 
   const { t, i18n } = useTranslation();

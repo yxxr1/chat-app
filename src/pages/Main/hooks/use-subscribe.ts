@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { State, Chat, User, UserSettings } from '@store/types';
 import { CONNECTION_METHODS } from '@const/settings';
 import { wsManager } from '@ws';
-import { ChatSubscribe, WatchChats } from '@ws/types';
 import { store } from '@store';
 import { addChats, deleteChats, addMessages, addSubscribedChats, clearSubscribedChats, updateChat } from '@store';
 import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
@@ -19,7 +18,7 @@ export const useSubscribe = () => {
     subscribedChatsIds,
   } = useSelector<State, { settings: UserSettings } & Pick<State, 'joinedChatsIds' | 'subscribedChatsIds'>>(
     ({ user, joinedChatsIds, subscribedChatsIds }) => ({
-      settings: (user as User).settings,
+      settings: ((user as User) || {}).settings,
       joinedChatsIds,
       subscribedChatsIds,
     }),
@@ -32,7 +31,7 @@ export const useSubscribe = () => {
     if (connectionMethod === CONNECTION_METHODS.WS) {
       wsManager.connect();
 
-      wsManager.subscribe<WatchChats>('WATCH_CHATS', (payload) => {
+      wsManager.subscribe('WATCH_CHATS', (payload) => {
         if (payload.newChats.length) {
           dispatch(addChats(payload.newChats));
         }
@@ -44,7 +43,7 @@ export const useSubscribe = () => {
         payload.updatedChats.forEach((chat) => dispatch(updateChat(chat)));
       });
 
-      wsManager.subscribe<ChatSubscribe>('SUBSCRIBED_CHAT', (payload) => {
+      wsManager.subscribe('SUBSCRIBED_CHAT', (payload) => {
         if (payload.messages) {
           dispatch(addMessages({ id: payload.chatId, messages: payload.messages }));
 

@@ -45,7 +45,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
 
   const onLoadMoreMessages = useCallback<MessagesContainerProps['onLoadMore']>(
     (lastMessageId, direction) => {
-      props.getMessages((currentChat as ChatType).id, lastMessageId, direction);
+      currentChat && props.getMessages(currentChat.id, lastMessageId, direction);
     },
     [currentChat],
   );
