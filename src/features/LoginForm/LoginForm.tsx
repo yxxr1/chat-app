@@ -29,10 +29,10 @@ export const LoginForm: React.FC = () => {
             validateTrigger="onBlur"
             rules={[{ validator: nameValidator, message: t('form.enterCorrectUserName') }]}
           >
-            <Input autoFocus />
+            <Input data-testid="LoginForm_name" autoFocus />
           </Form.Item>
 
-          <Button type="primary" className={styles.button} onClick={() => form.submit()}>
+          <Button data-testid="LoginForm_submit" type="primary" className={styles.button} onClick={() => form.submit()}>
             {t('form.enter')}
           </Button>
         </Form>

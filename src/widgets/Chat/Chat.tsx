@@ -66,7 +66,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
           <h3>{currentChat.name}</h3>
           <span>{t('nMembers', { count: currentChat.joinedCount || 0 })}</span>
         </div>
-        <Button onClick={onQuitClick}>{t('leave')}</Button>
+        <Button data-testid="Chat_leaveButton" onClick={onQuitClick}>{t('leave')}</Button>
       </ChatHeader>
       <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
       <MessageInput chatId={currentChat?.id} />

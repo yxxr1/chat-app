@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { addMessages as addMessagesUtil } from '@utils/common';
 import { State, Chat, Message, User } from './types';
 
-const initialState: State = {
+export const initialState: State = {
   isLoading: true,
   user: null,
   allChats: {},
@@ -44,7 +44,7 @@ const rootSlice = createSlice({
       }
     },
     addSubscribedChats: (state, action: PayloadAction<Chat['id'][]>) => {
-      state.subscribedChatsIds = state.subscribedChatsIds.concat(action.payload);
+      state.subscribedChatsIds = Array.from(new Set(state.subscribedChatsIds.concat(action.payload)));
     },
     clearSubscribedChats: (state) => {
       state.subscribedChatsIds = [];
@@ -76,7 +76,7 @@ const rootSlice = createSlice({
         state.currentChatId = null;
       }
     },
-    updateChat: (state, action: PayloadAction<Chat>) => {
+    updateChat: (state, action: PayloadAction<Partial<Chat> & { id: Chat['id'] }>) => {
       const chat = action.payload;
 
       state.allChats[chat.id] = {
