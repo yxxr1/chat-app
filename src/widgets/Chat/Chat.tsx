@@ -34,7 +34,7 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
         props.joinChat(id);
       }
     }
-  }, [currentChat, joinedChatsIds]);
+  }, [currentChat?.id, joinedChatsIds]);
 
   const onQuitClick = useCallback(() => {
     if (currentChat) {
