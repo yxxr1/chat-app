@@ -34,7 +34,7 @@ module.exports = {
   devServer: {
     hot: true,
     compress: true,
-    port: 3000,
+    port: process.env.DEV_PORT || 3000,
   },
   module: {
     rules: [
