@@ -33,7 +33,13 @@ export const makeQuery =
       if (resp.status >= 200 && resp.status < 300) {
         onSuccess?.(dispatch, await resp.json(), getState);
       } else {
-        onFailure?.(dispatch, await resp.json(), getState);
+        const response = await resp.json();
+
+        if (onFailure !== undefined) {
+          onFailure?.(dispatch, response, getState);
+        } else {
+          notification.error({ message: response?.message });
+        }
       }
     } catch (e: unknown) {
       if ((e as Error).name !== 'AbortError') {
