@@ -6,3 +6,9 @@
 .logout-button {
   padding: 4px;
 }
+
+.settings-connection-methods {
+  :global .ant-col {
+    min-height: fit-content;
+  }
+}

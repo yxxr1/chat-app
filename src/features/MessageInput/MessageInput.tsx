@@ -29,10 +29,11 @@ export const MessageInput: React.FC<Props> = ({ chatId }) => {
     }
 
     if (chatId) {
-      if (connectionMethod === CONNECTION_METHODS.HTTP) {
-        dispatch(publishChat(chatId, messageText));
-      } else if (connectionMethod === CONNECTION_METHODS.WS) {
+      if (connectionMethod === CONNECTION_METHODS.WS) {
         wsManager.sendMessage('PUBLISH_MESSAGE', { chatId, message: messageText });
+      } else {
+        // HTTP, SSE
+        dispatch(publishChat(chatId, messageText));
       }
       setMessageText('');
     }

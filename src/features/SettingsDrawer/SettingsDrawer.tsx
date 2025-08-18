@@ -99,10 +99,16 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="connectionMethod" label={t('settings.connectionMethod')}>
+        <Form.Item
+          name="connectionMethod"
+          label={t('settings.connectionMethod')}
+          layout="vertical"
+          className={styles['settings-connection-methods']}
+        >
           <Radio.Group>
             <Radio.Button value={CONNECTION_METHODS.HTTP}>HTTP</Radio.Button>
             <Radio.Button value={CONNECTION_METHODS.WS}>WebSocket</Radio.Button>
+            <Radio.Button value={CONNECTION_METHODS.SSE}>SSE</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="theme" label={t('settings.theme.title')}>

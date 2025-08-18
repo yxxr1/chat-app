@@ -1,31 +1,17 @@
 import { makeQuery } from '@utils/actions';
-import { addChats, deleteChats, updateChat } from '@store';
-import { Chat } from '@store/types';
+import { WatchChats } from '@shared/types/subscribeData';
+import { handleWatchChatsData } from '@utils/subscribeData';
 
-interface ResponseType {
-  newChats: Chat[];
-  deletedChatsIds: Chat['id'][];
-  updatedChats: Chat[];
-}
-
-export const watchChatsUpdates = (signal: AbortSignal) =>
-  makeQuery<ResponseType>(
+export const watchChatsUpdates = (signal?: AbortSignal) =>
+  makeQuery<WatchChats>(
     'chats-subscribe',
     'GET',
     null,
     (dispatch, data) => {
-      if (data.newChats.length) {
-        dispatch(addChats(data.newChats));
-      }
-
-      if (data.deletedChatsIds.length) {
-        dispatch(deleteChats(data.deletedChatsIds));
-      }
-
-      data.updatedChats.forEach((chat) => dispatch(updateChat(chat)));
+      handleWatchChatsData(data, dispatch);
 
       dispatch(watchChatsUpdates(signal));
     },
     null,
-    { signal: signal },
+    { signal },
   );

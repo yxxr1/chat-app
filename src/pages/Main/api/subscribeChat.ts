@@ -1,30 +1,20 @@
 import { makeQuery } from '@utils/actions';
 import { Message, Chat } from '@store/types';
-import { addMessages } from '@store';
-import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
-
-interface ResponseType {
-  messages: Message[];
-}
+import { SubscribedChat } from '@shared/types/subscribeData';
+import { handleSubscribedChatData } from '@utils/subscribeData';
 
 export const subscribeChat = (
   chatId: Chat['id'],
   lastMessageId: Message['id'] | null,
   callback: (isFailure: boolean) => void,
-  signal: AbortSignal,
+  signal?: AbortSignal,
 ) =>
-  makeQuery<ResponseType>(
+  makeQuery<SubscribedChat>(
     'subscribe',
     'POST',
     { chatId, lastMessageId },
     (dispatch, data) => {
-      if (data.messages.length) {
-        dispatch(addMessages({ id: chatId, messages: data.messages }));
-
-        if (hasNotificationPermission()) {
-          data.messages.forEach((message) => sendMessageNotification(message, chatId));
-        }
-      }
+      handleSubscribedChatData(data, dispatch);
 
       callback(false);
     },

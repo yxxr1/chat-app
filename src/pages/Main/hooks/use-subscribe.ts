@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { State, Chat, User, UserSettings } from '@store/types';
 import { CONNECTION_METHODS } from '@const/settings';
 import { wsManager } from '@ws';
 import { store } from '@store';
-import { addChats, deleteChats, addMessages, addSubscribedChats, clearSubscribedChats, updateChat } from '@store';
-import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
+import { addSubscribedChats, clearSubscribedChats } from '@store';
+import { getEventSource } from '@sse';
+import { SubscribedChat, WatchChats } from '@shared/types/subscribeData';
+import { handleSubscribedChatData, handleWatchChatsData } from '@utils/subscribeData';
 import { subscribeChat } from '../api/subscribeChat';
 import { watchChatsUpdates } from '../api/watchChatsUpdates';
-
-let subscribeAbortController: AbortController;
 
 export const useSubscribe = () => {
   const {
@@ -24,42 +24,37 @@ export const useSubscribe = () => {
     }),
   );
   const dispatch = useDispatch();
+  const subscribeAbortController = useRef<AbortController | null>(null);
+  const setOnAbort = (cb: () => void) => subscribeAbortController.current?.signal.addEventListener('abort', cb);
 
   useEffect(() => {
     dispatch(clearSubscribedChats());
+
+    subscribeAbortController.current = new AbortController();
 
     if (connectionMethod === CONNECTION_METHODS.WS) {
       wsManager.connect();
 
       wsManager.subscribe('WATCH_CHATS', (payload) => {
-        if (payload.newChats.length) {
-          dispatch(addChats(payload.newChats));
-        }
-
-        if (payload.deletedChatsIds.length) {
-          dispatch(deleteChats(payload.deletedChatsIds));
-        }
-
-        payload.updatedChats.forEach((chat) => dispatch(updateChat(chat)));
+        handleWatchChatsData(payload, dispatch);
       });
 
       wsManager.subscribe('SUBSCRIBED_CHAT', (payload) => {
-        if (payload.messages) {
-          dispatch(addMessages({ id: payload.chatId, messages: payload.messages }));
-
-          if (hasNotificationPermission()) {
-            payload.messages.forEach((message) => sendMessageNotification(message, payload.chatId));
-          }
-        }
+        handleSubscribedChatData(payload, dispatch);
       });
 
-      return () => wsManager.close();
+      setOnAbort(() => wsManager.close());
     } else if (connectionMethod === CONNECTION_METHODS.HTTP) {
-      subscribeAbortController = new AbortController();
-      dispatch(watchChatsUpdates(subscribeAbortController.signal));
+      dispatch(watchChatsUpdates(subscribeAbortController.current?.signal));
+    } else if (connectionMethod === CONNECTION_METHODS.SSE) {
+      const eventSource = getEventSource<WatchChats>('/chats-subscribe-sse', (data) => {
+        handleWatchChatsData(data, dispatch);
+      });
 
-      return () => subscribeAbortController.abort();
+      setOnAbort(() => eventSource.close());
     }
+
+    return () => subscribeAbortController.current?.abort();
   }, [connectionMethod]);
 
   useEffect(() => {
@@ -75,11 +70,23 @@ export const useSubscribe = () => {
           const subscribe = (isFailure?: boolean) => {
             if (!isFailure) {
               const lastMessageId = getLastMessageId(chatId);
-              dispatch(subscribeChat(chatId, lastMessageId, subscribe, subscribeAbortController.signal));
+              dispatch(subscribeChat(chatId, lastMessageId, subscribe, subscribeAbortController.current?.signal));
             }
           };
 
           subscribe();
+        } else if (connectionMethod === CONNECTION_METHODS.SSE) {
+          const lastMessageId = getLastMessageId(chatId);
+          const eventSource = getEventSource<SubscribedChat>(
+            `/subscribe-sse?chatId=${encodeURIComponent(chatId)}${
+              lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''
+            }`,
+            (data) => {
+              handleSubscribedChatData(data, dispatch);
+            },
+          );
+
+          setOnAbort(() => eventSource.close());
         }
 
         subscribedChats.push(chatId);

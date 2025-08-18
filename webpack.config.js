@@ -28,7 +28,9 @@ module.exports = {
       '@styles': `${__dirname}/src/shared/styles`,
       '@const': `${__dirname}/src/shared/const`,
       '@ws': `${__dirname}/src/shared/ws`,
+      '@sse': `${__dirname}/src/shared/sse`,
       '@i18n': `${__dirname}/src/shared/i18n`,
+      '@shared': `${__dirname}/src/shared`,
     },
   },
   devServer: {

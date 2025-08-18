@@ -36,7 +36,10 @@
       "@const/*": ["./src/shared/const/*"],
       "@ws": ["./src/shared/ws/index.ts"],
       "@ws/*": ["./src/shared/ws/*"],
+      "@sse": ["./src/shared/sse/index.ts"],
+      "@sse/*": ["./src/shared/sse/*"],
       "@i18n": ["./src/shared/i18n/index.ts"],
+      "@shared/*": ["./src/shared/*"],
       "@test/*": ["./src/shared/test/*"]
     },
     "plugins": [{
