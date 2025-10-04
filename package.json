@@ -60,6 +60,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "dotenv": "^17.2.3",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-format-imports": "file:local_modules/eslint-plugin-format-imports",
