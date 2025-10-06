@@ -24,7 +24,7 @@ export const makeQuery =
   ): ThunkAction<Promise<void>, State, void, AnyAction> =>
   async (dispatch, getState) => {
     try {
-      const resp = await fetch(path, {
+      const resp = await fetch('api/' + path, {
         ...options,
         method,
         ...(body ? { body: JSON.stringify(body) } : {}),

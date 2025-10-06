@@ -47,7 +47,7 @@ export const useSubscribe = () => {
     } else if (connectionMethod === CONNECTION_METHODS.HTTP) {
       dispatch(watchChatsUpdates(subscribeAbortController.current?.signal));
     } else if (connectionMethod === CONNECTION_METHODS.SSE) {
-      const eventSource = getEventSource<WatchChats>('/chats-subscribe-sse', (data) => {
+      const eventSource = getEventSource<WatchChats>('/sse/chats-subscribe', (data) => {
         handleWatchChatsData(data, dispatch);
       });
 
@@ -78,7 +78,7 @@ export const useSubscribe = () => {
         } else if (connectionMethod === CONNECTION_METHODS.SSE) {
           const lastMessageId = getLastMessageId(chatId);
           const eventSource = getEventSource<SubscribedChat>(
-            `/subscribe-sse?chatId=${encodeURIComponent(chatId)}${
+            `/sse/subscribe?chatId=${encodeURIComponent(chatId)}${
               lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''
             }`,
             (data) => {
