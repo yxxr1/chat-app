@@ -17,17 +17,17 @@ export const makeQuery =
   <ResponseType, ErrorResponseType = { message: string }>(
     path: string,
     method: 'GET' | 'POST',
-    body: object | null,
+    payload: Record<string, any> | null,
     onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
     onFailure?: ((dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void) | null,
     options?: RequestInit | null,
   ): ThunkAction<Promise<void>, State, void, AnyAction> =>
   async (dispatch, getState) => {
     try {
-      const resp = await fetch('api/' + path, {
+      const resp = await fetch('api/' + path + (method === 'GET' && payload ? `?${new URLSearchParams(payload).toString()}` : ''), {
         ...options,
         method,
-        ...(body ? { body: JSON.stringify(body) } : {}),
+        ...(method === 'POST' && payload ? { body: JSON.stringify(payload) } : {}),
       });
 
       if (resp.status >= 200 && resp.status < 300) {

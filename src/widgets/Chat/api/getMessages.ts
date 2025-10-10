@@ -8,7 +8,7 @@ interface ResponseType {
 }
 
 export const getMessages = (chatId: Chat['id'], lastMessageId: Message['id'], direction: MessagesDirections) =>
-  makeQuery<ResponseType>('messages', 'POST', { chatId, lastMessageId, direction }, (dispatch, data) => {
+  makeQuery<ResponseType>('messages', 'GET', { chatId, lastMessageId, direction }, (dispatch, data) => {
     if (data.messages.length) {
       dispatch(addMessages({ id: chatId, messages: data.messages }));
     }

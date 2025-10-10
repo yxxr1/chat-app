@@ -11,7 +11,7 @@ export const subscribeChat = (
 ) =>
   makeQuery<SubscribedChat>(
     'subscribe',
-    'POST',
+    'GET',
     { chatId, lastMessageId },
     (dispatch, data) => {
       handleSubscribedChatData(data, dispatch);
