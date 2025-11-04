@@ -1,4 +1,4 @@
-import { CONNECTION_METHODS } from '@const/settings';
+import { CONNECTION_METHODS } from '@/shared/const/settings';
 
 export type Chat = {
   id: string;

@@ -1,7 +1,7 @@
-import { makeQuery } from '@utils/actions';
-import { Message, Chat } from '@store/types';
-import { SubscribedChat } from '@shared/types/subscribeData';
-import { handleSubscribedChatData } from '@utils/subscribeData';
+import { makeQuery } from '@/shared/utils/actions';
+import { Message, Chat } from '@/shared/store/types';
+import { SubscribedChat } from '@/shared/types/subscribeData';
+import { handleSubscribedChatData } from '@/shared/utils/subscribeData';
 
 export const subscribeChat = (
   chatId: Chat['id'],

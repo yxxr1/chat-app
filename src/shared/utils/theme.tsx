@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { ConfigProvider } from 'antd';
 import { ThemeProvider as StyledThemeProvider, ThemeContext } from 'styled-components';
-import { UserSettings } from '@store/types';
-import { THEMES, ANTD_THEMES } from '@styles/theme';
+import { UserSettings } from '@/shared/store/types';
+import { THEMES, ANTD_THEMES } from '@/shared/styles/theme';
 
 const DEFAULT_THEME = 'light';
 

@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, InputRef } from 'antd';
 import { AiOutlineSend } from 'react-icons/ai';
-import { State, Chat } from '@store/types';
-import { useTheme } from '@utils/theme';
-import { MAX_MESSAGE_LENGTH } from '@const/limits';
-import { CONNECTION_METHODS } from '@const/settings';
-import { wsManager } from '@ws';
+import { State, Chat } from '@/shared/store/types';
+import { useTheme } from '@/shared/utils/theme';
+import { MAX_MESSAGE_LENGTH } from '@/shared/const/limits';
+import { CONNECTION_METHODS } from '@/shared/const/settings';
+import { wsManager } from '@/shared/ws';
 import { publishChat } from './api/publishChat';
 import styles from './styles.module.scss';
 

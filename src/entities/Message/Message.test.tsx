@@ -1,10 +1,10 @@
 import React from 'react';
 import { cleanup, screen, render } from '@testing-library/react';
-import { Message } from '@entities/Message';
-import { Message as MessageType } from '@store/types';
-import { renderComponent } from '@test/utils';
-import { MESSAGE_SERVICE_TYPES } from '@const/common';
-import { THEMES } from '@styles/theme';
+import { Message } from '@/entities/Message';
+import { Message as MessageType } from '@/shared/store/types';
+import { renderComponent } from '@/shared/test/utils';
+import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
+import { THEMES } from '@/shared/styles/theme';
 import { formatDate, getUserTitle } from './utils';
 
 const message: MessageType = {

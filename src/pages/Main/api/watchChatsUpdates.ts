@@ -1,6 +1,6 @@
-import { makeQuery } from '@utils/actions';
-import { WatchChats } from '@shared/types/subscribeData';
-import { handleWatchChatsData } from '@utils/subscribeData';
+import { makeQuery } from '@/shared/utils/actions';
+import { WatchChats } from '@/shared/types/subscribeData';
+import { handleWatchChatsData } from '@/shared/utils/subscribeData';
 
 export const watchChatsUpdates = (signal?: AbortSignal) =>
   makeQuery<WatchChats>(

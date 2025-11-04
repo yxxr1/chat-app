@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ChatList } from '@widgets/ChatList';
-import { Chat } from '@widgets/Chat';
-import { SettingsDrawer } from '@features/SettingsDrawer';
+import { ChatList } from '@/widgets/ChatList';
+import { Chat } from '@/widgets/Chat';
+import { SettingsDrawer } from '@/features/SettingsDrawer';
 import { getChats } from './api/getChats';
 import { useSubscribe } from './hooks/use-subscribe';
 import styles from './styles.module.scss';

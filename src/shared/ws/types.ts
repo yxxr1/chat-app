@@ -1,5 +1,5 @@
-import { Message, Chat } from '@store/types';
-import { WatchChats as WatchChatsPayload, SubscribedChat as SubscribedChatPayload } from '@shared/types/subscribeData';
+import { Message, Chat } from '@/shared/store/types';
+import { WatchChats as WatchChatsPayload, SubscribedChat as SubscribedChatPayload } from '@/shared/types/subscribeData';
 
 type WSMessage<Type extends string, Payload> = {
   type: Type;

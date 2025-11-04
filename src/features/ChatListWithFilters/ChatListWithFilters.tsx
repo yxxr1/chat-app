@@ -2,8 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Radio } from 'antd';
-import { State, Chat } from '@store/types';
-import { ChatItem } from '@entities/ChatItem';
+import { State, Chat } from '@/shared/store/types';
+import { ChatItem } from '@/entities/ChatItem';
 import styles from './styles.module.scss';
 
 interface Props {

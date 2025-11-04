@@ -1,4 +1,4 @@
-import { Chat, Message } from '@store/types';
+import { Chat, Message } from '@/shared/store/types';
 
 export type SubscribedChat = {
   chatId: Chat['id'];

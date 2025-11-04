@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.tsx',
+  entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
@@ -17,21 +17,12 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      '@app': `${__dirname}/src/app`,
-      '@pages': `${__dirname}/src/pages`,
-      '@widgets': `${__dirname}/src/widgets`,
-      '@features': `${__dirname}/src/features`,
-      '@entities': `${__dirname}/src/entities`,
-      '@store': `${__dirname}/src/shared/store`,
-      '@config': `${__dirname}/src/shared/config`,
-      '@ui': `${__dirname}/src/shared/ui`,
-      '@utils': `${__dirname}/src/shared/utils`,
-      '@styles': `${__dirname}/src/shared/styles`,
-      '@const': `${__dirname}/src/shared/const`,
-      '@ws': `${__dirname}/src/shared/ws`,
-      '@sse': `${__dirname}/src/shared/sse`,
-      '@i18n': `${__dirname}/src/shared/i18n`,
-      '@shared': `${__dirname}/src/shared`,
+      '@/app': path.resolve(__dirname, 'src', 'app'),
+      '@/pages': path.resolve(__dirname, 'src', 'pages'),
+      '@/widgets': path.resolve(__dirname, 'src', 'widgets'),
+      '@/features': path.resolve(__dirname, 'src', 'features'),
+      '@/entities': path.resolve(__dirname, 'src', 'entities'),
+      '@/shared': path.resolve(__dirname, 'src', 'shared'),
     },
   },
   devServer: {
@@ -73,7 +64,7 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: path.resolve(__dirname, 'src', 'index.html'),
       filename: 'index.html',
       minify: {
         collapseWhitespace: true,

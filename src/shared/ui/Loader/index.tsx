@@ -1,6 +1,6 @@
 import React from 'react';
 import LoaderSpinner from 'react-loader-spinner';
-import { useTheme } from '@utils/theme';
+import { useTheme } from '@/shared/utils/theme';
 
 export const Loader = () => {
   const theme = useTheme();

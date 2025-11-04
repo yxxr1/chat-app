@@ -1,8 +1,8 @@
 import { notification } from 'antd';
 import { AnyAction } from 'redux';
 import { ThunkDispatch, ThunkAction } from 'redux-thunk';
-import { State } from '@store/types';
-import { fetch } from '@utils/fetch';
+import { State } from '@/shared/store/types';
+import { fetch } from '@/shared/utils/fetch';
 
 type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;
 

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
-import { addChats, addMessages, deleteChats, updateChat } from '@store';
-import { SubscribedChat, WatchChats } from '@shared/types/subscribeData';
-import { hasNotificationPermission, sendMessageNotification } from '@utils/notification';
+import { addChats, addMessages, deleteChats, updateChat } from '@/shared/store';
+import { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
+import { hasNotificationPermission, sendMessageNotification } from '@/shared/utils/notification';
 
 export const handleWatchChatsData = (data: WatchChats, dispatch: Dispatch) => {
   if (data.newChats.length) {

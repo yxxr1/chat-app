@@ -1,6 +1,6 @@
-import { makeQuery } from '@utils/actions';
-import { Chat } from '@store/types';
-import { setChatList, joinChat } from '@store';
+import { makeQuery } from '@/shared/utils/actions';
+import { Chat } from '@/shared/store/types';
+import { setChatList, joinChat } from '@/shared/store';
 
 interface ResponseType {
   chats: Chat[];

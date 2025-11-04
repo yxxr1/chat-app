@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '@utils/theme';
+import { Theme } from '@/shared/utils/theme';
 
 export const Chat = styled.div<{ isCurrent: boolean; theme: Theme }>`
   height: 60px;

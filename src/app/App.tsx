@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { State, User } from '@store/types';
+import { State, User } from '@/shared/store/types';
 import { getUser } from './api/getUser';
-import { Loader } from '@ui/Loader';
-import { Auth } from '@pages/Auth';
-import { Main } from '@pages/Main';
-import { ThemeProvider, getTheme } from '@utils/theme';
-import '@i18n';
+import { Loader } from '@/shared/ui/Loader';
+import { Auth } from '@/pages/Auth';
+import { Main } from '@/pages/Main';
+import { ThemeProvider, getTheme } from '@/shared/utils/theme';
+import '@/shared/i18n';
 import styles from './styles.module.scss';
 
 export type Props = {

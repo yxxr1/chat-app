@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { setCurrentChat } from '@store';
-import { Chat } from '@store/types';
-import { useTheme } from '@utils/theme';
-import { ChatCreateModal } from '@features/ChatCreateModal';
-import { ChatListWithFilters } from '@features/ChatListWithFilters';
+import { setCurrentChat } from '@/shared/store';
+import { Chat } from '@/shared/store/types';
+import { useTheme } from '@/shared/utils/theme';
+import { ChatCreateModal } from '@/features/ChatCreateModal';
+import { ChatListWithFilters } from '@/features/ChatListWithFilters';
 import { List } from './styled';
 import styles from './styles.module.scss';
 

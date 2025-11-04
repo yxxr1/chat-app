@@ -1,7 +1,7 @@
-import { setUser as setUserSync } from '@store';
-import { makeQuery } from '@utils/actions';
-import { setTheme } from '@utils/theme';
-import { User, UserSettings } from '@store/types';
+import { setUser as setUserSync } from '@/shared/store';
+import { makeQuery } from '@/shared/utils/actions';
+import { setTheme } from '@/shared/utils/theme';
+import { User, UserSettings } from '@/shared/store/types';
 
 type ResponseType =
   | User

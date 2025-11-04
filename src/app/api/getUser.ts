@@ -1,7 +1,7 @@
-import { makeQuery } from '@utils/actions';
-import { setUser } from '@store';
-import { User } from '@store/types';
-import { setTheme } from '@utils/theme';
+import { makeQuery } from '@/shared/utils/actions';
+import { setUser } from '@/shared/store';
+import { User } from '@/shared/store/types';
+import { setTheme } from '@/shared/utils/theme';
 
 export const getUser = () =>
   makeQuery<User>(

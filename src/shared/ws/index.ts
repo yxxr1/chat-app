@@ -1,6 +1,6 @@
 import { notification } from 'antd';
-import { COMMON_CONFIG } from '@config/common';
-import { WSMessageIncoming, WSMessageIncomingPayloadByType, WSMessageOutgoing, WSMessageOutgoingPayloadByType } from '@ws/types';
+import { COMMON_CONFIG } from '@/shared/config/common';
+import { WSMessageIncoming, WSMessageIncomingPayloadByType, WSMessageOutgoing, WSMessageOutgoingPayloadByType } from '@/shared/ws/types';
 
 type Callback<Payload = WSMessageIncoming['payload']> = (payload: Payload) => void;
 

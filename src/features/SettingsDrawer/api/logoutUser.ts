@@ -1,6 +1,6 @@
-import { setUser as setUserSync } from '@store';
-import { makeQuery } from '@utils/actions';
-import { User } from '@store/types';
+import { setUser as setUserSync } from '@/shared/store';
+import { makeQuery } from '@/shared/utils/actions';
+import { User } from '@/shared/store/types';
 
 type ResponseType =
   | User

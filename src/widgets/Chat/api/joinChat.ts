@@ -1,6 +1,6 @@
-import { makeQuery } from '@utils/actions';
-import { Chat, Message } from '@store/types';
-import { addMessages, joinChat as joinChatSync } from '@store';
+import { makeQuery } from '@/shared/utils/actions';
+import { Chat, Message } from '@/shared/store/types';
+import { addMessages, joinChat as joinChatSync } from '@/shared/store';
 
 type ResponseType = Chat & {
   messages: Message[];

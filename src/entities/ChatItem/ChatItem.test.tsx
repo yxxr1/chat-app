@@ -1,10 +1,10 @@
 import React from 'react';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
-import { ChatItem } from '@entities/ChatItem';
-import { Chat, Message } from '@store/types';
-import { renderComponent } from '@test/utils';
-import { THEMES } from '@styles/theme';
-import { MESSAGE_SERVICE_TYPES } from '@const/common';
+import { ChatItem } from '@/entities/ChatItem';
+import { Chat, Message } from '@/shared/store/types';
+import { renderComponent } from '@/shared/test/utils';
+import { THEMES } from '@/shared/styles/theme';
+import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
 
 const chat: Chat = {
   id: '1',
