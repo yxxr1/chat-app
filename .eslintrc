@@ -26,8 +26,9 @@
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
     "no-case-declarations": "off",
-    "format-imports/empty-line-after-imports": "error",
+    "format-imports/empty-line-after-imports": "warn",
     "format-imports/group-imports-on-top": "error",
+    "format-imports/sort-imports": ["error", "@/"],
     "newline-before-return": "error"
   },
   "settings": {
