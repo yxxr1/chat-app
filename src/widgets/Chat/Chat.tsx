@@ -7,10 +7,10 @@ import { Chat as ChatType, State } from '@/shared/store/types';
 import { setCurrentChat } from '@/shared/store';
 import { MessagesContainer, Props as MessagesContainerProps } from '@/features/MessagesContainer';
 import { MessageInput } from '@/features/MessageInput';
+import { MessagesDirections } from '@/shared/const/messages';
 import { joinChat } from './api/joinChat';
 import { quitChat } from './api/quitChat';
 import { getMessages } from './api/getMessages';
-import { MessagesDirections } from '@/shared/const/messages';
 import { ChatHeader, Chat as ChatContainer, EmptyChat } from './styled';
 import styles from './styles.module.scss';
 
@@ -66,7 +66,9 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
           <h3>{currentChat.name}</h3>
           <span>{t('nMembers', { count: currentChat.joinedCount || 0 })}</span>
         </div>
-        <Button data-testid="Chat_leaveButton" onClick={onQuitClick}>{t('leave')}</Button>
+        <Button data-testid="Chat_leaveButton" onClick={onQuitClick}>
+          {t('leave')}
+        </Button>
       </ChatHeader>
       <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
       <MessageInput chatId={currentChat?.id} />

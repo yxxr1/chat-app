@@ -17,6 +17,7 @@ export const makeQuery =
   <ResponseType, ErrorResponseType = { message: string }>(
     path: string,
     method: 'GET' | 'POST',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload: Record<string, any> | null,
     onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
     onFailure?: ((dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void) | null,
