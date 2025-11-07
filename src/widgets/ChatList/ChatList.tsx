@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { setCurrentChat } from '@/shared/store';
-import { Chat } from '@/shared/store/types';
+import type { Chat } from '@/shared/store/types';
 import { useTheme } from '@/shared/utils/theme';
 import { ChatCreateModal } from '@/features/ChatCreateModal';
 import { ChatListWithFilters } from '@/features/ChatListWithFilters';

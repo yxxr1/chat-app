@@ -1,7 +1,7 @@
 import { makeQuery } from '@/shared/utils/actions';
-import { Message, Chat } from '@/shared/store/types';
+import type { Message, Chat } from '@/shared/store/types';
 import { addMessages } from '@/shared/store';
-import { MessagesDirections } from '@/shared/const/messages';
+import type { MessagesDirections } from '@/shared/const/messages';
 
 interface ResponseType {
   messages: Message[];

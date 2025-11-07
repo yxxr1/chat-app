@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { addMessages as addMessagesUtil } from '@/shared/utils/common';
-import { State, Chat, Message, User } from './types';
+import type { State, Chat, Message, User } from './types';
 
 export const initialState: State = {
   isLoading: true,

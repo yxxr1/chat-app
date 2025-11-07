@@ -1,7 +1,7 @@
 import { setUser as setUserSync } from '@/shared/store';
 import { makeQuery } from '@/shared/utils/actions';
 import { setTheme } from '@/shared/utils/theme';
-import { User, UserSettings } from '@/shared/store/types';
+import type { User, UserSettings } from '@/shared/store/types';
 
 type ResponseType =
   | User

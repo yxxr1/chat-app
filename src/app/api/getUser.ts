@@ -1,6 +1,6 @@
 import { makeQuery } from '@/shared/utils/actions';
 import { setUser } from '@/shared/store';
-import { User } from '@/shared/store/types';
+import type { User } from '@/shared/store/types';
 import { setTheme } from '@/shared/utils/theme';
 
 export const getUser = () =>

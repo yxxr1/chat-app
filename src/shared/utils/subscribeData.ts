@@ -1,6 +1,6 @@
-import { Dispatch } from 'redux';
+import type { Dispatch } from 'redux';
 import { addChats, addMessages, deleteChats, updateChat } from '@/shared/store';
-import { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
+import type { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
 import { hasNotificationPermission, sendMessageNotification } from '@/shared/utils/notification';
 
 export const handleWatchChatsData = (data: WatchChats, dispatch: Dispatch) => {

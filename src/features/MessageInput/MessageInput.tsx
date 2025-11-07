@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, InputRef } from 'antd';
+import type { InputRef } from 'antd';
+import { Button, Input } from 'antd';
 import { AiOutlineSend } from 'react-icons/ai';
-import { State, Chat } from '@/shared/store/types';
+import type { State, Chat } from '@/shared/store/types';
 import { useTheme } from '@/shared/utils/theme';
 import { MAX_MESSAGE_LENGTH } from '@/shared/const/limits';
 import { CONNECTION_METHODS } from '@/shared/const/settings';

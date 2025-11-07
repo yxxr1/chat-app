@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Input, InputRef, Modal } from 'antd';
+import type { InputRef } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { nameValidator } from '@/shared/utils/validation';
 import { createChat } from './api/createChat';

@@ -1,5 +1,5 @@
 import { makeQuery } from '@/shared/utils/actions';
-import { Chat, Message } from '@/shared/store/types';
+import type { Chat, Message } from '@/shared/store/types';
 import { addMessages, joinChat as joinChatSync } from '@/shared/store';
 
 type ResponseType = Chat & {

@@ -29,7 +29,8 @@
     "format-imports/empty-line-after-imports": "warn",
     "format-imports/group-imports-on-top": "error",
     "format-imports/sort-imports": ["error", "@/"],
-    "newline-before-return": "error"
+    "newline-before-return": "error",
+    "@typescript-eslint/consistent-type-imports": "error"
   },
   "settings": {
     "react": {

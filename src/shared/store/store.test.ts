@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { reducer, actions, initialState } from '@/shared/store/store';
-import { Chat, Message, State, User } from '@/shared/store/types';
+import type { Chat, Message, State, User } from '@/shared/store/types';
 
 describe('reducer test', () => {
   let state: State = initialState;

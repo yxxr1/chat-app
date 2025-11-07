@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '@/shared/utils/theme';
+import type { Theme } from '@/shared/utils/theme';
 
 export const ChatHeader = styled.div<{ theme: Theme }>`
   height: 70px;

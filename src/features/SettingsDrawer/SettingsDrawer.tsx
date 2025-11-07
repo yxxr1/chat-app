@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Drawer, Form, Input, Radio, Select, Checkbox, Divider, CheckboxProps } from 'antd';
+import type { CheckboxProps } from 'antd';
+import { Button, Drawer, Form, Input, Radio, Select, Checkbox, Divider } from 'antd';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import { nameValidator } from '@/shared/utils/validation';
@@ -8,7 +9,7 @@ import { requestPermission } from '@/shared/utils/notification';
 import { AVAILABLE_LANGUAGES } from '@/shared/i18n';
 import { useTheme } from '@/shared/utils/theme';
 import { UI_THEMES, CONNECTION_METHODS } from '@/shared/const/settings';
-import { State, User } from '@/shared/store/types';
+import type { State, User } from '@/shared/store/types';
 import { logoutUser } from './api/logoutUser';
 import { setUser } from './api/setUser';
 import styles from './styles.module.scss';

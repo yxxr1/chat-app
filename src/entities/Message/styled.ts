@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Skeleton as AntdSkeleton } from 'antd';
-import { Theme } from '@/shared/utils/theme';
+import type { Theme } from '@/shared/utils/theme';
 
 export const Message = styled.div`
   padding: 3px 0;

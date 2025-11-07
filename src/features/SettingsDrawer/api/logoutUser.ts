@@ -1,6 +1,6 @@
 import { setUser as setUserSync } from '@/shared/store';
 import { makeQuery } from '@/shared/utils/actions';
-import { User } from '@/shared/store/types';
+import type { User } from '@/shared/store/types';
 
 type ResponseType =
   | User

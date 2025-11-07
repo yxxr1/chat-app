@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { State, Chat, User, UserSettings } from '@/shared/store/types';
+import type { State, Chat, User, UserSettings } from '@/shared/store/types';
 import { CONNECTION_METHODS } from '@/shared/const/settings';
 import { wsManager } from '@/shared/ws';
 import { store } from '@/shared/store';
 import { addSubscribedChats, clearSubscribedChats } from '@/shared/store';
 import { getEventSource } from '@/shared/sse';
-import { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
+import type { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
 import { handleSubscribedChatData, handleWatchChatsData } from '@/shared/utils/subscribeData';
 import { subscribeChat } from '../api/subscribeChat';
 import { watchChatsUpdates } from '../api/watchChatsUpdates';

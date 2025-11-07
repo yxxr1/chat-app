@@ -1,7 +1,7 @@
 import React from 'react';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { ChatItem } from '@/entities/ChatItem';
-import { Chat, Message } from '@/shared/store/types';
+import type { Chat, Message } from '@/shared/store/types';
 import { renderComponent } from '@/shared/test/utils';
 import { THEMES } from '@/shared/styles/theme';
 import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';

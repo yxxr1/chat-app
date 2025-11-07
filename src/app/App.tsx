@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { State, User } from '@/shared/store/types';
+import type { State, User } from '@/shared/store/types';
 import { Loader } from '@/shared/ui/Loader';
 import { Auth } from '@/pages/Auth';
 import { Main } from '@/pages/Main';

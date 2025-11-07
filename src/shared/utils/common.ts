@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
-import { Message, Chat } from '@/shared/store/types';
+import type { Message, Chat } from '@/shared/store/types';
 
 export const getServiceMessage = ({ service, fromName }: Message) => {
   switch (service) {

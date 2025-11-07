@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { Message, Chat } from '@/shared/store/types';
+import type { Message, Chat } from '@/shared/store/types';
 import { store } from '@/shared/store';
 
 export const requestPermission = () => Notification?.requestPermission();

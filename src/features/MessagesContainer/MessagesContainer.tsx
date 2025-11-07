@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState, memo } from 'react';
-import { Virtuoso, VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
+import type { VirtuosoHandle, StateSnapshot } from 'react-virtuoso';
+import { Virtuoso } from 'react-virtuoso';
 import { AiOutlineArrowDown } from 'react-icons/ai';
-import { Message as MessageType, Chat } from '@/shared/store/types';
+import type { Message as MessageType, Chat } from '@/shared/store/types';
 import { MESSAGES_PAGE_SIZE } from '@/shared/const/limits';
-import { MESSAGE_DIRECTIONS, MessagesDirections } from '@/shared/const/messages';
+import type { MessagesDirections } from '@/shared/const/messages';
+import { MESSAGE_DIRECTIONS } from '@/shared/const/messages';
 import { Message, MessageSkeleton } from '@/entities/Message';
 import { Container, ListPadding, GoToBottom } from './styled';
 
