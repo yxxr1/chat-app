@@ -1,6 +1,7 @@
 /* eslint-disable */
 require('dotenv').config();
 const path = require('path');
+const fs = require('fs');
 const { DefinePlugin } = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -16,14 +17,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    alias: {
-      '@/app': path.resolve(__dirname, 'src', 'app'),
-      '@/pages': path.resolve(__dirname, 'src', 'pages'),
-      '@/widgets': path.resolve(__dirname, 'src', 'widgets'),
-      '@/features': path.resolve(__dirname, 'src', 'features'),
-      '@/entities': path.resolve(__dirname, 'src', 'entities'),
-      '@/shared': path.resolve(__dirname, 'src', 'shared'),
-    },
+    alias: fs.readdirSync(path.resolve(__dirname, 'src'), { withFileTypes: true })
+      .reduce((acc, file) => {
+        if (file.isDirectory()) {
+          acc[`@/${file.name}`] = path.resolve(__dirname, 'src', file.name);
+        }
+        return acc;
+      }, {}),
   },
   devServer: {
     hot: true,

@@ -21,12 +21,7 @@
     "jsx": "react-jsx",
     "rootDir": "src",
     "paths": {
-      "@/app": ["./src/app/index.ts"],
-      "@/pages/*": ["./src/pages/*"],
-      "@/widgets/*": ["./src/widgets/*"],
-      "@/features/*": ["./src/features/*"],
-      "@/entities/*": ["./src/entities/*"],
-      "@/shared/*": ["./src/shared/*"],
+      "@/*": ["./src/*"],
     },
     "plugins": [{
       "name": "typescript-plugin-css-modules"
