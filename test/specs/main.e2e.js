@@ -6,12 +6,14 @@ const getTextSelector = (text) => `*=${text}`;
 
 describe('Chat-app', () => {
   const userName = `testUser${getRandom()}`;
+  const password = 'test';
   const chatName = `testChat${getRandom()}`;
   const testMessageText = `test message ${getRandom()}`;
 
   it('Login', async () => {
     await browser.url('http://localhost:3000/');
     await $(getSelector('LoginForm_name')).setValue(userName);
+    await $(getSelector('LoginForm_password')).setValue(password);
     await $(getSelector('LoginForm_submit')).click();
 
     await expect($(getSelector('ChatList_createChat'))).toBeExisting();

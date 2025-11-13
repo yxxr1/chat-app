@@ -2,7 +2,9 @@
   "welcomeToChat": "Welcome to Chat",
   "form": {
     "name": "Name",
-    "enter": "Enter",
+    "password": "Password",
+    "login": "Login",
+    "registration": "Registration",
     "enterCorrectUserName": "Please enter correct user name",
     "enterCorrectChatName": "Please enter correct chat name",
     "create": "Create",

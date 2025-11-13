@@ -9,8 +9,13 @@
     margin-bottom: 20px;
   }
 
-  .button {
-    margin: 30px auto 0 auto;
-    display: block;
+  .buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+
+    & > *:last-child {
+      margin-left: 16px;
+    }
   }
 }
