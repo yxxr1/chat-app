@@ -63,7 +63,7 @@
     "dotenv": "^17.2.3",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-format-imports": "file:local_modules/eslint-plugin-format-imports",
+    "eslint-plugin-format-imports": "^1.0.2",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "html-webpack-plugin": "^5.5.4",
