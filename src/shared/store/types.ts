@@ -26,7 +26,7 @@ export type UserSettings = {
 
 export type User = {
   id: string;
-  name: string;
+  username: string;
   settings: UserSettings;
 };
 

@@ -40,7 +40,7 @@ export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
 
   const initialValues = useMemo(
     () => ({
-      name: user.name,
+      name: user.username,
       ...user.settings,
     }),
     [user],

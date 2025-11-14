@@ -1,17 +1,19 @@
 import { setUser as setUserSync } from '@/shared/store';
 import { makeQuery } from '@/shared/utils/actions';
-import type { User } from '@/shared/store/types';
+import { setToken } from '@/shared/utils/token';
 
-type ResponseType =
-  | User
-  | {
-      id: null;
-      name: null;
-    };
+type ResponseType = Record<string, never>;
 
 export const logoutUser = () =>
-  makeQuery<ResponseType>('auth', 'POST', { name: null }, (dispatch, data) => {
-    if (data.id === null) {
+  makeQuery<ResponseType>(
+    'auth/logout',
+    'POST',
+    {},
+    (dispatch) => {
+      setToken(undefined);
       dispatch(setUserSync(null));
-    }
-  });
+    },
+    undefined,
+    undefined,
+    false,
+  );

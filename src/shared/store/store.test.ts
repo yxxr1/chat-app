@@ -12,7 +12,7 @@ describe('reducer test', () => {
   test('setUser', () => {
     const user: User = {
       id: '1',
-      name: 'test_user',
+      username: 'test_user',
       settings: {
         connectionMethod: 'ws',
         theme: 'light',

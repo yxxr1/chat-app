@@ -2,7 +2,9 @@ import { notification } from 'antd';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import type { State } from '@/shared/store/types';
-import { fetch } from '@/shared/utils/fetch';
+import { fetch, RefreshError } from '@/shared/utils/fetch';
+import { setToken } from '@/shared/utils/token';
+import { setUser as setUserSync } from '@/shared/store';
 
 type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;
 
@@ -22,14 +24,19 @@ export const makeQuery =
     onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
     onFailure?: ((dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void) | null,
     options?: RequestInit | null,
+    handleRefresh?: boolean,
   ): ThunkAction<Promise<void>, State, void, AnyAction> =>
   async (dispatch, getState) => {
     try {
-      const resp = await fetch('api/' + path + (method === 'GET' && payload ? `?${new URLSearchParams(payload).toString()}` : ''), {
-        ...options,
-        method,
-        ...(method === 'POST' && payload ? { body: JSON.stringify(payload) } : {}),
-      });
+      const resp = await fetch(
+        'api/' + path + (method === 'GET' && payload ? `?${new URLSearchParams(payload).toString()}` : ''),
+        {
+          ...options,
+          method,
+          ...(method === 'POST' && payload ? { body: JSON.stringify(payload) } : {}),
+        },
+        handleRefresh,
+      );
 
       if (resp.status >= 200 && resp.status < 300) {
         onSuccess?.(dispatch, await resp.json(), getState);
@@ -43,7 +50,10 @@ export const makeQuery =
         }
       }
     } catch (e: unknown) {
-      if ((e as Error).name !== 'AbortError') {
+      if (e instanceof RefreshError) {
+        setToken(undefined);
+        dispatch(setUserSync(null));
+      } else if ((e as Error).name !== 'AbortError') {
         notification.error({ message: 'Network error' });
       }
     }

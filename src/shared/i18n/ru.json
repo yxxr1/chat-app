@@ -2,7 +2,9 @@
   "welcomeToChat": "Добро пожаловать в Чат",
   "form": {
     "name": "Имя",
-    "enter": "Войти",
+    "password": "Пароль",
+    "login": "Вход",
+    "registration": "Регистрация",
     "enterCorrectUserName": "Пожалуйста, введите корректное имя пользователя",
     "enterCorrectChatName": "Пожалуйста, введите корректное имя чата",
     "create": "Создать",
