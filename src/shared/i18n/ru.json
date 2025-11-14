@@ -37,6 +37,7 @@
   "nMembers_many": "{{count}} участников",
   "leave": "Покинуть",
   "serviceMessage": {
+    "chatCreated": "Чат создан пользователем \"{{userName}}\"",
     "joinedChat": "{{userName}} присоединился к чату",
     "leftChat": "{{userName}} вышел из чата"
   },

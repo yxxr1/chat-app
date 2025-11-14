@@ -36,6 +36,7 @@
   "nMembers_other": "{{count}} members",
   "leave": "Leave",
   "serviceMessage": {
+    "chatCreated": "Chat created by \"{{userName}}\"",
     "joinedChat": "{{userName}} joined chat",
     "leftChat": "{{userName}} left chat"
   },

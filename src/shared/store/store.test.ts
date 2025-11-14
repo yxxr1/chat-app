@@ -100,7 +100,7 @@ describe('reducer test', () => {
         fromId: '1',
         fromName: 'new_test_user',
         date: new Date().valueOf(),
-        service: 0,
+        service: null,
         index: 8,
       },
       {
@@ -109,7 +109,7 @@ describe('reducer test', () => {
         fromId: '1',
         fromName: 'new_test_user',
         date: new Date().valueOf(),
-        service: 0,
+        service: null,
         index: 7,
       },
     ];
@@ -119,7 +119,7 @@ describe('reducer test', () => {
       fromId: '1',
       fromName: 'new_test_user',
       date: new Date().valueOf(),
-      service: 0,
+      service: null,
       index: 5,
     };
 

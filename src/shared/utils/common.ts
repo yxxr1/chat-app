@@ -1,13 +1,15 @@
-import i18n from 'i18next';
+import type i18n from 'i18next';
 import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
 import type { Message, Chat } from '@/shared/store/types';
 
-export const getServiceMessage = ({ service, fromName }: Message) => {
+export const getServiceMessage = (t: (typeof i18n)['t'], { service, fromName }: Message) => {
   switch (service) {
+    case MESSAGE_SERVICE_TYPES.CHAT_CREATED:
+      return t('serviceMessage.chatCreated', { userName: fromName });
     case MESSAGE_SERVICE_TYPES.CHAT_JOINED:
-      return i18n.t('serviceMessage.joinedChat', { userName: fromName });
+      return t('serviceMessage.joinedChat', { userName: fromName });
     case MESSAGE_SERVICE_TYPES.CHAT_LEFT:
-      return i18n.t('serviceMessage.leftChat', { userName: fromName });
+      return t('serviceMessage.leftChat', { userName: fromName });
   }
 };
 

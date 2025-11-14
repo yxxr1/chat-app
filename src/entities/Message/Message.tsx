@@ -1,4 +1,5 @@
 import React, { useMemo, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Message as MessageType } from '@/shared/store/types';
 import { getServiceMessage } from '@/shared/utils/common';
 import { getUserTitle, formatDate } from './utils';
@@ -8,9 +9,11 @@ type Props = {
   message: MessageType;
 };
 
-const _Message: React.FC<Props> = ({ message }) =>
-  message.service ? (
-    <ServiceMessage>{getServiceMessage(message)}</ServiceMessage>
+const _Message: React.FC<Props> = ({ message }) => {
+  const { t } = useTranslation();
+
+  return message.service !== null ? (
+    <ServiceMessage>{getServiceMessage(t, message)}</ServiceMessage>
   ) : (
     <MessageC data-testid="message__main-container">
       <MessageUser>{getUserTitle(message)}</MessageUser>
@@ -18,6 +21,7 @@ const _Message: React.FC<Props> = ({ message }) =>
       <MessageDateTime>{formatDate(message.date)}</MessageDateTime>
     </MessageC>
   );
+};
 
 const _MessageSkeleton: React.FC = () => {
   const widthIndex = useMemo(() => Math.floor(Math.random() * 10), []);

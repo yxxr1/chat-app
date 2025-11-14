@@ -13,7 +13,7 @@ const message: MessageType = {
   fromId: 'y_ZAWNqKsDgRLKLDu2Qne',
   fromName: 'test_user',
   date: new Date('2024-07-14').valueOf(),
-  service: 0,
+  service: null,
   index: 0,
 };
 const serviceMessage = { ...message, service: MESSAGE_SERVICE_TYPES.CHAT_LEFT };
