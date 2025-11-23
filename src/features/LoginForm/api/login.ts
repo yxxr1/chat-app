@@ -2,7 +2,7 @@ import { setUser as setUserSync } from '@/shared/store';
 import { makeQuery } from '@/shared/utils/actions';
 import { setTheme } from '@/shared/utils/theme';
 import type { User } from '@/shared/store/types';
-import { setToken } from '@/shared/utils/token';
+import { setToken } from '@/shared/network';
 
 type ResponseType = {
   accessToken: string;

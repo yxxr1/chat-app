@@ -3,12 +3,7 @@ import type { Message, Chat } from '@/shared/store/types';
 import type { SubscribedChat } from '@/shared/types/subscribeData';
 import { handleSubscribedChatData } from '@/shared/utils/subscribeData';
 
-export const subscribeChat = (
-  chatId: Chat['id'],
-  lastMessageId: Message['id'] | null,
-  callback: (isFailure: boolean) => void,
-  signal?: AbortSignal,
-) =>
+export const subscribeChat = (chatId: Chat['id'], lastMessageId: Message['id'] | null, callback: () => void, signal?: AbortSignal) =>
   makeQuery<SubscribedChat>(
     'subscribe',
     'GET',
@@ -16,10 +11,8 @@ export const subscribeChat = (
     (dispatch, data) => {
       handleSubscribedChatData(data, dispatch);
 
-      callback(false);
+      callback();
     },
-    () => {
-      callback(true);
-    },
+    null,
     { signal },
   );

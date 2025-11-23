@@ -1,6 +1,6 @@
 import { setUser as setUserSync } from '@/shared/store';
 import { makeQuery } from '@/shared/utils/actions';
-import { setToken } from '@/shared/utils/token';
+import { setToken } from '@/shared/network';
 
 type ResponseType = Record<string, never>;
 
@@ -14,6 +14,6 @@ export const logoutUser = () =>
       dispatch(setUserSync(null));
     },
     undefined,
-    undefined,
+    { credentials: 'include' },
     false,
   );

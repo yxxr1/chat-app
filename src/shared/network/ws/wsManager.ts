@@ -1,15 +1,13 @@
 import { notification } from 'antd';
-import { COMMON_CONFIG } from '@/shared/config/common';
-import type {
-  WSMessageIncoming,
-  WSMessageIncomingPayloadByType,
-  WSMessageOutgoing,
-  WSMessageOutgoingPayloadByType,
-} from '@/shared/ws/types';
+import { isObject } from '@/shared/utils/common';
+import { getToken, RefreshError, refreshToken } from '../auth';
+import type { WSMessageIncoming, WSMessageIncomingPayloadByType, WSMessageOutgoing, WSMessageOutgoingPayloadByType } from './types';
 
 type Callback<Payload = WSMessageIncoming['payload']> = (payload: Payload) => void;
+type CallbacksMap = {
+  [type: string]: Callback[];
+};
 
-const isObject = (data: unknown): data is Record<string, unknown> => !!data && typeof data === 'object' && !Array.isArray(data);
 function assertWSMessageIncoming(data: unknown): asserts data is WSMessageIncoming {
   if (isObject(data) && typeof data.type === 'string' && isObject(data.payload)) {
     return;
@@ -18,26 +16,33 @@ function assertWSMessageIncoming(data: unknown): asserts data is WSMessageIncomi
   throw new Error('Incorrect WSMessage');
 }
 
-class WebSocketManager {
-  url: string;
-  socket: WebSocket | null = null;
-  _callbacksByType: {
-    [type: string]: Callback[];
-  } = {};
+export class WebSocketManager {
+  _socket: WebSocket | null = null;
+  _callbacksByType: CallbacksMap = {};
 
-  constructor(url = COMMON_CONFIG.WS_URL) {
-    this.url = url;
-  }
+  connect(url: string, onRefreshError: () => void, onReconnect?: () => void) {
+    this._socket = new WebSocket(url + `?accessToken=${getToken()}`);
 
-  connect() {
-    this.socket = new WebSocket(this.url);
-
-    this.socket.addEventListener('message', this._onMessage.bind(this));
+    this._socket.addEventListener('message', this._onMessage.bind(this));
+    this._socket.addEventListener('close', async (e) => {
+      if (e.code === 3000) {
+        try {
+          await refreshToken();
+          this._socket?.close();
+          this.connect(url, onRefreshError, onReconnect);
+          onReconnect?.();
+        } catch (e) {
+          if (e instanceof RefreshError) {
+            onRefreshError?.();
+          }
+        }
+      }
+    });
   }
 
   close() {
-    this.socket?.close();
-    this.socket = null;
+    this._socket?.close();
+    this._socket = null;
     this._callbacksByType = {};
   }
 
@@ -56,12 +61,16 @@ class WebSocketManager {
   sendMessage<T extends WSMessageOutgoing['type']>(type: T, payload: WSMessageOutgoingPayloadByType[T]) {
     const message = JSON.stringify({ type, payload });
 
-    if (this.socket?.readyState === WebSocket.CONNECTING) {
-      this.socket.addEventListener('open', () => {
-        this.socket?.send(message);
-      });
-    } else if (this.socket?.readyState === WebSocket.OPEN) {
-      this.socket?.send(message);
+    if (this._socket?.readyState === WebSocket.CONNECTING) {
+      this._socket.addEventListener(
+        'open',
+        () => {
+          this._socket?.send(message);
+        },
+        { once: true },
+      );
+    } else if (this._socket?.readyState === WebSocket.OPEN) {
+      this._socket?.send(message);
     }
   }
 
@@ -85,5 +94,3 @@ class WebSocketManager {
     }
   }
 }
-
-export const wsManager = new WebSocketManager();

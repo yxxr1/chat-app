@@ -2,8 +2,7 @@ import { notification } from 'antd';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import type { State } from '@/shared/store/types';
-import { fetch, RefreshError } from '@/shared/utils/fetch';
-import { setToken } from '@/shared/utils/token';
+import { fetch, RefreshError, setToken } from '@/shared/network';
 import { setUser as setUserSync } from '@/shared/store';
 
 type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;

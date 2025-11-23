@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { addMessages as addMessagesUtil } from '@/shared/utils/common';
+import { addMessages as addMessagesUtil } from './utils';
 import type { State, Chat, Message, User } from './types';
 
 export const initialState: State = {
