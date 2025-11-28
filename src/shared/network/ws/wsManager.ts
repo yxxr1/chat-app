@@ -1,14 +1,14 @@
 import { notification } from 'antd';
 import { isObject } from '@/shared/utils/common';
 import { getToken, RefreshError, refreshToken } from '../auth';
-import type { WSMessageIncoming, WSMessageIncomingPayloadByType, WSMessageOutgoing, WSMessageOutgoingPayloadByType } from './types';
+import type { WSMessage, GetPayloadByType } from './types';
 
-type Callback<Payload = WSMessageIncoming['payload']> = (payload: Payload) => void;
+type Callback<Payload = WSMessage['payload']> = (payload: Payload) => void;
 type CallbacksMap = {
   [type: string]: Callback[];
 };
 
-function assertWSMessageIncoming(data: unknown): asserts data is WSMessageIncoming {
+function assertWSMessage(data: unknown): asserts data is WSMessage {
   if (isObject(data) && typeof data.type === 'string' && isObject(data.payload)) {
     return;
   }
@@ -16,20 +16,20 @@ function assertWSMessageIncoming(data: unknown): asserts data is WSMessageIncomi
   throw new Error('Incorrect WSMessage');
 }
 
-export class WebSocketManager {
+export class WebSocketManager<MessageIncoming extends WSMessage, MessageOutgoing extends WSMessage> {
   _socket: WebSocket | null = null;
   _callbacksByType: CallbacksMap = {};
 
-  connect(url: string, onRefreshError: () => void, onReconnect?: () => void) {
+  connect(url: string, refreshUrl: string, onRefreshError: () => void, onReconnect?: () => void) {
     this._socket = new WebSocket(url + `?accessToken=${getToken()}`);
 
     this._socket.addEventListener('message', this._onMessage.bind(this));
     this._socket.addEventListener('close', async (e) => {
       if (e.code === 3000) {
         try {
-          await refreshToken();
+          await refreshToken(refreshUrl);
           this._socket?.close();
-          this.connect(url, onRefreshError, onReconnect);
+          this.connect(url, refreshUrl, onRefreshError, onReconnect);
           onReconnect?.();
         } catch (e) {
           if (e instanceof RefreshError) {
@@ -50,7 +50,7 @@ export class WebSocketManager {
     try {
       const message: unknown = JSON.parse(data);
 
-      assertWSMessageIncoming(message);
+      assertWSMessage(message);
 
       this._callbacksByType[message.type]?.forEach((callback) => callback(message.payload));
     } catch (e) {
@@ -58,7 +58,7 @@ export class WebSocketManager {
     }
   }
 
-  sendMessage<T extends WSMessageOutgoing['type']>(type: T, payload: WSMessageOutgoingPayloadByType[T]) {
+  sendMessage<T extends MessageOutgoing['type']>(type: T, payload: GetPayloadByType<MessageOutgoing, T>) {
     const message = JSON.stringify({ type, payload });
 
     if (this._socket?.readyState === WebSocket.CONNECTING) {
@@ -74,15 +74,15 @@ export class WebSocketManager {
     }
   }
 
-  subscribe<T extends WSMessageIncoming['type']>(type: T, callback: Callback<WSMessageIncomingPayloadByType[T]>) {
+  subscribe<T extends MessageIncoming['type']>(type: T, callback: Callback<GetPayloadByType<MessageIncoming, T>>) {
     if (!this._callbacksByType[type]) {
       this._callbacksByType[type] = [];
     }
 
-    this._callbacksByType[type].push(callback as Callback);
+    this._callbacksByType[type].push(callback);
   }
 
-  unsubscribe<T extends WSMessageIncoming['type']>(type: T, callback: Callback<WSMessageIncomingPayloadByType[T]>) {
+  unsubscribe<T extends MessageIncoming['type']>(type: T, callback: Callback<GetPayloadByType<MessageIncoming, T>>) {
     if (this._callbacksByType[type]) {
       const callbacks = this._callbacksByType[type].filter((cb) => cb !== callback);
 

@@ -16,3 +16,6 @@ export const {
 } = actions;
 
 export const store = configureStore({ reducer });
+
+export { logoutUser, handleSubscribedChatData, handleWatchChatsData } from './utils';
+export type { State, User, UserSettings, Chat, Message } from './types';

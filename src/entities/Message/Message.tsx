@@ -1,6 +1,6 @@
 import React, { useMemo, memo } from 'react';
-import type { Message as MessageType } from '@/shared/store/types';
-import { getServiceMessage } from '@/shared/utils/common';
+import type { Message as MessageType } from '@/store';
+import { getServiceMessage } from '@/i18n/utils';
 import { getUserTitle, formatDate } from './utils';
 import { Message as MessageC, MessageUser, MessageText, MessageDateTime, ServiceMessage, Skeleton } from './styled';
 

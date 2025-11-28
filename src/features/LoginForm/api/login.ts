@@ -1,7 +1,7 @@
-import { setUser as setUserSync } from '@/shared/store';
+import { setUser as setUserSync } from '@/store';
 import { makeQuery } from '@/shared/utils/actions';
 import { setTheme } from '@/shared/utils/theme';
-import type { User } from '@/shared/store/types';
+import type { User, State } from '@/store';
 import { setToken } from '@/shared/network';
 
 type ResponseType = {
@@ -11,7 +11,7 @@ type ResponseType = {
 };
 
 export const login = (username: string, password: string) =>
-  makeQuery<ResponseType>(
+  makeQuery<State, ResponseType>(
     'auth/login',
     'POST',
     { username, password },
@@ -20,6 +20,7 @@ export const login = (username: string, password: string) =>
       dispatch(setUserSync(data.user));
       setTheme(data.user.settings.theme);
     },
+    undefined,
     undefined,
     undefined,
     false,

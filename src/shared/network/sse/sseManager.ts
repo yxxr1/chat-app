@@ -1,9 +1,8 @@
 import { notification } from 'antd';
-import { getToken, RefreshError, refreshToken } from '../auth';
 import { isObject } from '@/shared/utils/common';
-import type { SSEMessage } from './types';
+import { getToken, RefreshError, refreshToken } from '../auth';
 
-function assertSSEMessageIncoming<T>(data: unknown): asserts data is T {
+function assertSSEMessage<T>(data: unknown): asserts data is T {
   if (isObject(data)) {
     return;
   }
@@ -11,20 +10,32 @@ function assertSSEMessageIncoming<T>(data: unknown): asserts data is T {
   throw new Error('Incorrect SSEMessage');
 }
 
-export class SSEManager<T extends SSEMessage> {
+export class SSEManager<T extends object> {
   _eventSource: EventSource | null = null;
 
-  constructor(url: string, handler: (data: T) => void, onRefreshError: () => void, getUrlParams?: () => URLSearchParams) {
-    this._addEventSource(url, handler, onRefreshError, getUrlParams);
+  constructor(
+    url: string,
+    refreshUrl: string,
+    handler: (data: T) => void,
+    onRefreshError: () => void,
+    getUrlParams?: () => URLSearchParams,
+  ) {
+    this._addEventSource(url, refreshUrl, handler, onRefreshError, getUrlParams);
   }
 
-  _addEventSource(url: string, handler: (data: T) => void, onRefreshError: () => void, getUrlParams?: () => URLSearchParams) {
+  _addEventSource(
+    url: string,
+    refreshUrl: string,
+    handler: (data: T) => void,
+    onRefreshError: () => void,
+    getUrlParams?: () => URLSearchParams,
+  ) {
     const parsedUrl = new URL(url);
 
     if (getUrlParams) {
       const searchParams = getUrlParams();
 
-      for (let [key, value] of searchParams.entries()) {
+      for (const [key, value] of searchParams.entries()) {
         parsedUrl.searchParams.set(key, value);
       }
     }
@@ -35,9 +46,9 @@ export class SSEManager<T extends SSEMessage> {
     this._eventSource?.addEventListener('message', this._onMessage.bind(this, handler));
     this._eventSource?.addEventListener('unauthorized', async () => {
       try {
-        await refreshToken();
+        await refreshToken(refreshUrl);
         this._eventSource?.close();
-        this._addEventSource(url, handler, onRefreshError, getUrlParams);
+        this._addEventSource(url, refreshUrl, handler, onRefreshError, getUrlParams);
       } catch (e) {
         if (e instanceof RefreshError) {
           onRefreshError?.();
@@ -50,7 +61,7 @@ export class SSEManager<T extends SSEMessage> {
     try {
       const message: unknown = JSON.parse(data);
 
-      assertSSEMessageIncoming<T>(message);
+      assertSSEMessage<T>(message);
 
       handler(message);
     } catch (e) {

@@ -8,12 +8,6 @@ import { getChats } from './api/getChats';
 import { useSubscribe } from './hooks/use-subscribe';
 import styles from './styles.module.scss';
 
-declare global {
-  interface AppContext {
-    sendMessage?: (chatId: string, message: string) => void;
-  }
-}
-
 export const Main: React.FC = () => {
   const dispatch = useDispatch();
 

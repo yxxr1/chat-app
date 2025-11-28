@@ -1,10 +1,10 @@
 import { makeQuery } from '@/shared/utils/actions';
-import { setUser } from '@/shared/store';
-import type { User } from '@/shared/store/types';
+import { setUser, logoutUser } from '@/store';
+import type { User, State } from '@/store';
 import { setTheme } from '@/shared/utils/theme';
 
 export const getUser = () =>
-  makeQuery<User>(
+  makeQuery<State, User>(
     'user',
     'GET',
     null,
@@ -15,4 +15,5 @@ export const getUser = () =>
     (dispatch) => {
       dispatch(setUser(null));
     },
+    logoutUser,
   );

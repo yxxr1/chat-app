@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
-import type { Message as MessageType, Chat as ChatType } from '@/shared/store/types';
-import { getServiceMessage } from '@/shared/utils/common';
+import type { Message as MessageType, Chat as ChatType } from '@/store';
+import { getServiceMessage } from '@/i18n/utils';
 import { Chat, Title, Message } from './styled';
 
 type Props = {

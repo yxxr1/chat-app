@@ -1,10 +1,11 @@
 import React from 'react';
 import { cleanup, screen, render } from '@testing-library/react';
 import { Message } from '@/entities/Message';
-import type { Message as MessageType } from '@/shared/store/types';
-import { renderComponent } from '@/shared/test/utils';
-import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
-import { THEMES } from '@/shared/styles/theme';
+import type { Message as MessageType } from '@/store';
+import { renderComponent } from '@/shared/test';
+import { MESSAGE_SERVICE_TYPES } from '@/const/common';
+import { THEMES } from '@/shared/styles';
+import { store } from '@/store';
 import { formatDate, getUserTitle } from './utils';
 
 const message: MessageType = {
@@ -39,14 +40,14 @@ describe('Message entity', () => {
   });
 
   test('render non service, theme light', () => {
-    renderComponent(<Message message={message} />, 'light');
+    renderComponent(<Message message={message} />, store, 'light');
     expect(screen.getByTestId('message__main-container-text')).toHaveStyle({
       color: THEMES.light['text'],
     });
   });
 
   test('render non service, theme dark', () => {
-    renderComponent(<Message message={message} />, 'dark');
+    renderComponent(<Message message={message} />, store, 'dark');
     expect(screen.getByTestId('message__main-container-text')).toHaveStyle({
       color: THEMES.dark['text'],
     });

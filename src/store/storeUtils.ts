@@ -1,4 +1,4 @@
-import type { Chat, Message } from '@/shared/store/types';
+import type { Chat, Message } from './types';
 
 export const addMessages = (sourceMessages: Chat['messages'], newMessages: Message[]): Chat['messages'] => {
   const messages: Chat['messages'] = [];

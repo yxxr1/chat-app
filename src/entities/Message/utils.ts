@@ -1,5 +1,5 @@
 import moment from 'moment';
-import type { Message as MessageType } from '@/shared/store/types';
+import type { Message as MessageType } from '@/store';
 
 export const getUserTitle = (message: MessageType) => `${message.fromName}(${message.fromId.substr(message.fromId.length - 4)})`;
 

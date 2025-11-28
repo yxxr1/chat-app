@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import type { State, User } from '@/shared/store/types';
+import type { State, User } from '@/store';
 import { Loader } from '@/shared/ui/Loader';
 import { Auth } from '@/pages/Auth';
 import { Main } from '@/pages/Main';
 import { ThemeProvider, getTheme } from '@/shared/utils/theme';
-import '@/shared/i18n';
+import '@/i18n';
+import '@/types/context';
 import { getUser } from './api/getUser';
 import styles from './styles.module.scss';
 

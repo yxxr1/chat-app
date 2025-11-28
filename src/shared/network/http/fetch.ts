@@ -1,12 +1,11 @@
-import { COMMON_CONFIG } from '@/shared/config/common';
 import { getToken, refreshToken } from '../auth';
 
 const STATUS_UNAUTHORIZED = 401;
 
-export const fetch = async (path: string, opt: RequestInit = {}, handleRefresh: boolean = true): Promise<Response> => {
+export const fetch = async (url: string, refreshUrl: string, opt: RequestInit = {}, handleRefresh: boolean = true): Promise<Response> => {
   const token = getToken();
 
-  const result = await window.fetch(`${COMMON_CONFIG.API_URL}/${path}`, {
+  const result = await window.fetch(url, {
     ...opt,
     credentials: 'include',
     headers: {
@@ -17,9 +16,9 @@ export const fetch = async (path: string, opt: RequestInit = {}, handleRefresh: 
   });
 
   if (handleRefresh && result.status === STATUS_UNAUTHORIZED) {
-    await refreshToken();
+    await refreshToken(refreshUrl);
 
-    return fetch(path, opt, false);
+    return fetch(url, refreshUrl, opt, false);
   }
 
   return result;

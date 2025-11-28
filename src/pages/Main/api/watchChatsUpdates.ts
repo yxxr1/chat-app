@@ -1,9 +1,10 @@
 import { makeQuery } from '@/shared/utils/actions';
-import type { WatchChats } from '@/shared/types/subscribeData';
-import { handleWatchChatsData } from '@/shared/utils/subscribeData';
+import type { WatchChats } from '@/types/subscribeData';
+import { handleWatchChatsData, logoutUser } from '@/store';
+import type { State } from '@/store';
 
 export const watchChatsUpdates = (signal?: AbortSignal) =>
-  makeQuery<WatchChats>(
+  makeQuery<State, WatchChats>(
     'chats-subscribe',
     'GET',
     null,
@@ -13,5 +14,6 @@ export const watchChatsUpdates = (signal?: AbortSignal) =>
       dispatch(watchChatsUpdates(signal));
     },
     null,
+    logoutUser,
     { signal },
   );

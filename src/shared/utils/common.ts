@@ -1,16 +1,3 @@
-import i18n from 'i18next';
-import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
-import type { Message } from '@/shared/store/types';
-
-export const getServiceMessage = ({ service, fromName }: Message) => {
-  switch (service) {
-    case MESSAGE_SERVICE_TYPES.CHAT_JOINED:
-      return i18n.t('serviceMessage.joinedChat', { userName: fromName });
-    case MESSAGE_SERVICE_TYPES.CHAT_LEFT:
-      return i18n.t('serviceMessage.leftChat', { userName: fromName });
-  }
-};
-
 export const isObject = (data: unknown): data is Record<string, unknown> => !!data && typeof data === 'object' && !Array.isArray(data);
 
 export const throttledAsyncFn = <T = unknown>(fn: () => Promise<T>) => {

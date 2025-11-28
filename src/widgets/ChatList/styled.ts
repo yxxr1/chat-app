@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import type { Theme } from '@/shared/utils/theme';
+import type { Theme } from '@/shared/styles';
 
 export const List = styled.div<{ theme: Theme }>`
   height: 100%;

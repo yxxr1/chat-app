@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 import { Button, Input } from 'antd';
 import { AiOutlineSend } from 'react-icons/ai';
-import type { Chat } from '@/shared/store/types';
+import type { Chat } from '@/store';
 import { useTheme } from '@/shared/utils/theme';
-import { MAX_MESSAGE_LENGTH } from '@/shared/const/limits';
+import { MAX_MESSAGE_LENGTH } from '@/const/limits';
 import { useAppContext } from '@/shared/context';
 import styles from './styles.module.scss';
 
