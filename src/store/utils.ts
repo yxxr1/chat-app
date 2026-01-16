@@ -4,7 +4,9 @@ import { store, addChats, deleteChats, setUser, updateChat, addMessages } from '
 import type { SubscribedChat, WatchChats } from '@/types/subscribeData';
 import { hasNotificationPermission, sendNotification } from '@/shared/utils/notification';
 import { setToken } from '@/shared/network';
-import type { Chat, Message } from './types';
+import type { MessageWithSender } from '@/entities/Message';
+import { getMessageWithSender } from '@/entities/Message';
+import type { Chat } from './types';
 
 export const handleWatchChatsData = (data: WatchChats, dispatch: Dispatch) => {
   if (data.newChats.length) {
@@ -18,7 +20,7 @@ export const handleWatchChatsData = (data: WatchChats, dispatch: Dispatch) => {
   data.updatedChats.forEach((chat) => dispatch(updateChat(chat)));
 };
 
-const sendMessageNotification = ({ fromId, fromName, text }: Message, chatId: Chat['id']) => {
+const sendMessageNotification = ({ fromId, fromName, text }: MessageWithSender, chatId: Chat['id']) => {
   const state = store.getState();
   const { isNotificationsEnabled, isShowNotificationMessageText } = state.user?.settings ?? {};
 
@@ -34,7 +36,9 @@ export const handleSubscribedChatData = (data: SubscribedChat, dispatch: Dispatc
     dispatch(addMessages({ id: data.chatId, messages: data.messages }));
 
     if (hasNotificationPermission()) {
-      data.messages.forEach((message) => sendMessageNotification(message, data.chatId));
+      Promise.all(data.messages.map(getMessageWithSender)).then((messages) => {
+        messages.forEach((message) => sendMessageNotification(message, data.chatId));
+      });
     }
   }
 };

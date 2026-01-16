@@ -1,8 +1,8 @@
 import i18n from 'i18next';
-import type { Message } from '@/store';
+import type { MessageWithSender } from '@/entities/Message';
 import { MESSAGE_SERVICE_TYPES } from '@/const/common';
 
-export const getServiceMessage = ({ service, fromName }: Message) => {
+export const getServiceMessage = ({ service, fromName }: MessageWithSender) => {
   switch (service) {
     case MESSAGE_SERVICE_TYPES.CHAT_JOINED:
       return i18n.t('serviceMessage.joinedChat', { userName: fromName });

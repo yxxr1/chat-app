@@ -7,6 +7,8 @@ import { THEMES } from '@/shared/styles';
 import { MESSAGE_SERVICE_TYPES } from '@/const/common';
 import { store } from '@/store';
 
+jest.mock('@/entities/Message/hooks');
+
 const chat: Chat = {
   id: '1',
   name: 'test chat',
@@ -15,7 +17,6 @@ const chat: Chat = {
       id: '1',
       text: 'test message',
       fromId: '1',
-      fromName: 'testUser',
       date: new Date().valueOf(),
       index: 0,
     },

@@ -11,7 +11,6 @@ export type Message = {
   id: string;
   text: string | null;
   fromId: string;
-  fromName: string;
   date: number;
   service?: number;
   index: number;
@@ -30,6 +29,8 @@ export type User = {
   settings: UserSettings;
 };
 
+export type UserProfile = Omit<User, 'settings'>;
+
 export interface State {
   isLoading: boolean;
   user: User | null;
@@ -37,4 +38,5 @@ export interface State {
   joinedChatsIds: Chat['id'][];
   subscribedChatsIds: Chat['id'][];
   currentChatId: Chat['id'] | null;
+  users: Record<UserProfile['id'], UserProfile>;
 }

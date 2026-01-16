@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { addMessages as addMessagesUtil } from './storeUtils';
-import type { State, Chat, Message, User } from './types';
+import type { State, Chat, Message, User, UserProfile } from './types';
 
 export const initialState: State = {
   isLoading: true,
@@ -10,6 +10,7 @@ export const initialState: State = {
   joinedChatsIds: [],
   subscribedChatsIds: [],
   currentChatId: null,
+  users: {},
 };
 
 const rootSlice = createSlice({
@@ -83,6 +84,15 @@ const rootSlice = createSlice({
         ...state.allChats[chat.id],
         ...chat,
         messages: state.allChats[chat.id].messages,
+      };
+    },
+    addUser: (state, action: PayloadAction<UserProfile>) => {
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          [action.payload.id]: action.payload,
+        },
       };
     },
   },
