@@ -17,6 +17,7 @@ const chat: Chat = {
       id: '1',
       text: 'test message',
       fromId: '1',
+      service: null,
       date: new Date().valueOf(),
       index: 0,
     },

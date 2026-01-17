@@ -99,7 +99,7 @@ describe('reducer test', () => {
         text: 'test message 3',
         fromId: '1',
         date: new Date().valueOf(),
-        service: 0,
+        service: null,
         index: 8,
       },
       {
@@ -107,7 +107,7 @@ describe('reducer test', () => {
         text: 'test message 2',
         fromId: '1',
         date: new Date().valueOf(),
-        service: 0,
+        service: null,
         index: 7,
       },
     ];
@@ -116,7 +116,7 @@ describe('reducer test', () => {
       text: 'test message 1',
       fromId: '1',
       date: new Date().valueOf(),
-      service: 0,
+      service: null,
       index: 5,
     };
 

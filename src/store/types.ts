@@ -7,12 +7,14 @@ export type Chat = {
   joinedCount: number | null;
 };
 
+export type MessageServiceType = 0 | 1 | 2;
+
 export type Message = {
   id: string;
   text: string | null;
   fromId: string;
   date: number;
-  service?: number;
+  service: MessageServiceType | null;
   index: number;
 };
 
