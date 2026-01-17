@@ -1,4 +1,4 @@
-import type { CONNECTION_METHODS } from '@/shared/const/settings';
+import type { CONNECTION_METHODS } from '@/const/settings';
 
 export type Chat = {
   id: string;
@@ -13,7 +13,6 @@ export type Message = {
   id: string;
   text: string | null;
   fromId: string;
-  fromName: string;
   date: number;
   service: MessageServiceType | null;
   index: number;
@@ -32,6 +31,8 @@ export type User = {
   settings: UserSettings;
 };
 
+export type UserProfile = Omit<User, 'settings'>;
+
 export interface State {
   isLoading: boolean;
   user: User | null;
@@ -39,4 +40,5 @@ export interface State {
   joinedChatsIds: Chat['id'][];
   subscribedChatsIds: Chat['id'][];
   currentChatId: Chat['id'] | null;
+  users: Record<UserProfile['id'], UserProfile>;
 }

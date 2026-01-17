@@ -1,7 +1,8 @@
 import React, { useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Message as MessageType } from '@/shared/store/types';
-import { getServiceMessage } from '@/shared/utils/common';
+import type { Message as MessageType } from '@/store';
+import { getServiceMessage } from '@/i18n/utils';
+import { useGetMessageWithSender } from '@/entities/Message/hooks';
 import { getUserTitle, formatDate } from './utils';
 import { Message as MessageC, MessageUser, MessageText, MessageDateTime, ServiceMessage, Skeleton } from './styled';
 
@@ -9,8 +10,12 @@ type Props = {
   message: MessageType;
 };
 
-const _Message: React.FC<Props> = ({ message }) => {
+const _Message: React.FC<Props> = (props) => {
   const { t } = useTranslation();
+
+  const message = useGetMessageWithSender(props.message);
+
+  if (!message) return null;
 
   return message.service !== null ? (
     <ServiceMessage>{getServiceMessage(t, message)}</ServiceMessage>

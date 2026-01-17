@@ -1,6 +1,6 @@
 # Frontend for [node-chat](https://github.com/yxxr1/node-chat)
 
-[Envs](src/shared/config/common.ts):
+[Envs](src/config/common.ts):
 - `API_URL`: api url, default `http://localhost:8080`
 - `WS_URL`: api ws url, default `ws://localhost:8080/ws`
 - `DEV_PORT`: dev server port, default 3000

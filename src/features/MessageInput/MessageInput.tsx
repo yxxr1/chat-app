@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import type { InputRef } from 'antd';
 import { Button, Input } from 'antd';
 import { AiOutlineSend } from 'react-icons/ai';
-import type { State, Chat } from '@/shared/store/types';
+import type { Chat } from '@/store';
 import { useTheme } from '@/shared/utils/theme';
-import { MAX_MESSAGE_LENGTH } from '@/shared/const/limits';
-import { CONNECTION_METHODS } from '@/shared/const/settings';
-import { wsManager } from '@/shared/ws';
-import { publishChat } from './api/publishChat';
+import { MAX_MESSAGE_LENGTH } from '@/const/limits';
+import { useAppContext } from '@/shared/context';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -17,8 +14,7 @@ interface Props {
 
 export const MessageInput: React.FC<Props> = ({ chatId }) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const connectionMethod = useSelector<State>((state) => state.user?.settings.connectionMethod);
+  const { sendMessage } = useAppContext();
 
   const [messageText, setMessageText] = useState('');
 
@@ -30,15 +26,10 @@ export const MessageInput: React.FC<Props> = ({ chatId }) => {
     }
 
     if (chatId) {
-      if (connectionMethod === CONNECTION_METHODS.WS) {
-        wsManager.sendMessage('PUBLISH_MESSAGE', { chatId, message: messageText });
-      } else {
-        // HTTP, SSE
-        dispatch(publishChat(chatId, messageText));
-      }
+      sendMessage?.(chatId, messageText);
       setMessageText('');
     }
-  }, [messageText, chatId, connectionMethod]);
+  }, [messageText, chatId]);
 
   const inputRef = useRef<InputRef>(null);
 

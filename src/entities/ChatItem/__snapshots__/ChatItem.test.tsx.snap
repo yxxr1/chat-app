@@ -2,19 +2,19 @@
 
 exports[`ChatItem renders renders content 1`] = `
 <div
-  class="sc-aXZVg rugVN"
+  class="sc-gsFSXq fspdoH"
   data-testid="chatItem__container"
 >
   <div
-    class="sc-gEvEer eTINNo"
+    class="sc-kAyceB kDWPwt"
   >
     test chat
   </div>
   <div
-    class="sc-eqUAAy MWRcI"
+    class="sc-imWYAI iDGrTm"
   >
     <i>
-      testUser
+      test_user
       :
     </i>
      test message
@@ -24,11 +24,11 @@ exports[`ChatItem renders renders content 1`] = `
 
 exports[`ChatItem renders renders content no messages 1`] = `
 <div
-  class="sc-aXZVg rugVN"
+  class="sc-gsFSXq fspdoH"
   data-testid="chatItem__container"
 >
   <div
-    class="sc-gEvEer eTINNo"
+    class="sc-kAyceB kDWPwt"
   >
     test chat
   </div>
@@ -37,19 +37,19 @@ exports[`ChatItem renders renders content no messages 1`] = `
 
 exports[`ChatItem renders renders content service message 1`] = `
 <div
-  class="sc-aXZVg rugVN"
+  class="sc-gsFSXq fspdoH"
   data-testid="chatItem__container"
 >
   <div
-    class="sc-gEvEer eTINNo"
+    class="sc-kAyceB kDWPwt"
   >
     test chat
   </div>
   <div
-    class="sc-eqUAAy MWRcI"
+    class="sc-imWYAI iDGrTm"
   >
     <i>
-      testUser joined chat
+      test_user joined chat
     </i>
   </div>
 </div>

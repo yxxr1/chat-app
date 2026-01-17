@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { reducer, actions, initialState } from '@/shared/store/store';
-import type { Chat, Message, State, User } from '@/shared/store/types';
+import { reducer, actions, initialState } from './store';
+import type { Chat, Message, State, User } from './types';
 
 describe('reducer test', () => {
   let state: State = initialState;
@@ -98,7 +98,6 @@ describe('reducer test', () => {
         id: '9',
         text: 'test message 3',
         fromId: '1',
-        fromName: 'new_test_user',
         date: new Date().valueOf(),
         service: null,
         index: 8,
@@ -107,7 +106,6 @@ describe('reducer test', () => {
         id: '8',
         text: 'test message 2',
         fromId: '1',
-        fromName: 'new_test_user',
         date: new Date().valueOf(),
         service: null,
         index: 7,
@@ -117,7 +115,6 @@ describe('reducer test', () => {
       id: '6',
       text: 'test message 1',
       fromId: '1',
-      fromName: 'new_test_user',
       date: new Date().valueOf(),
       service: null,
       index: 5,

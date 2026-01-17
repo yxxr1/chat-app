@@ -1,12 +1,8 @@
 import { notification } from 'antd';
-import type { AnyAction } from 'redux';
+import type { AnyAction, Dispatch } from 'redux';
 import type { ThunkDispatch, ThunkAction } from 'redux-thunk';
-import type { State } from '@/shared/store/types';
-import { fetch, RefreshError } from '@/shared/utils/fetch';
-import { setToken } from '@/shared/utils/token';
-import { setUser as setUserSync } from '@/shared/store';
-
-type ThunkDispatchType = ThunkDispatch<State, void, AnyAction>;
+import { fetch, RefreshError } from '@/shared/network';
+import { COMMON_CONFIG, REFRESH_URL } from '@/config/common';
 
 export const createAction =
   <Type extends string, PayloadCreator extends (...args: never[]) => ReturnType<PayloadCreator>>(
@@ -16,20 +12,23 @@ export const createAction =
   (...args) => ({ type, payload: payloadCreator(...args) });
 
 export const makeQuery =
-  <ResponseType, ErrorResponseType = { message: string }>(
+  <State, ResponseType, ErrorResponseType = { message: string }>(
     path: string,
     method: 'GET' | 'POST',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload: Record<string, any> | null,
-    onSuccess?: ((dispatch: ThunkDispatchType, response: ResponseType, getState: () => State) => void) | null,
-    onFailure?: ((dispatch: ThunkDispatchType, response: ErrorResponseType, getState: () => State) => void) | null,
+    onSuccess?: ((dispatch: ThunkDispatch<State, void, AnyAction>, response: ResponseType, getState: () => State) => void) | null,
+    onFailure?: ((dispatch: ThunkDispatch<State, void, AnyAction>, response: ErrorResponseType, getState: () => State) => void) | null,
+    onRefreshError?: (dispatch: Dispatch) => void,
     options?: RequestInit | null,
     handleRefresh?: boolean,
   ): ThunkAction<Promise<void>, State, void, AnyAction> =>
   async (dispatch, getState) => {
     try {
+      const urlPath = 'api/' + path + (method === 'GET' && payload ? `?${new URLSearchParams(payload).toString()}` : '');
       const resp = await fetch(
-        'api/' + path + (method === 'GET' && payload ? `?${new URLSearchParams(payload).toString()}` : ''),
+        `${COMMON_CONFIG.API_URL}/${urlPath}`,
+        REFRESH_URL,
         {
           ...options,
           method,
@@ -51,8 +50,7 @@ export const makeQuery =
       }
     } catch (e: unknown) {
       if (e instanceof RefreshError) {
-        setToken(undefined);
-        dispatch(setUserSync(null));
+        onRefreshError?.(dispatch);
       } else if ((e as Error).name !== 'AbortError') {
         notification.error({ message: 'Network error' });
       }

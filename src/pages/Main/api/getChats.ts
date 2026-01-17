@@ -1,6 +1,6 @@
 import { makeQuery } from '@/shared/utils/actions';
-import type { Chat } from '@/shared/store/types';
-import { setChatList, joinChat } from '@/shared/store';
+import type { Chat, State } from '@/store';
+import { setChatList, joinChat, logoutUser } from '@/store';
 
 interface ResponseType {
   chats: Chat[];
@@ -8,7 +8,14 @@ interface ResponseType {
 }
 
 export const getChats = () =>
-  makeQuery<ResponseType>('chats', 'GET', null, (dispatch, data) => {
-    dispatch(setChatList(data.chats));
-    data.joinedChatsIds.forEach((chatId) => dispatch(joinChat(chatId)));
-  });
+  makeQuery<State, ResponseType>(
+    'chats',
+    'GET',
+    null,
+    (dispatch, data) => {
+      dispatch(setChatList(data.chats));
+      data.joinedChatsIds.forEach((chatId) => dispatch(joinChat(chatId)));
+    },
+    undefined,
+    logoutUser,
+  );

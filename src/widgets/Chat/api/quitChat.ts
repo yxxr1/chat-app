@@ -1,12 +1,19 @@
 import { makeQuery } from '@/shared/utils/actions';
-import { quitChat as quitChatSync } from '@/shared/store';
-import type { Chat } from '@/shared/store/types';
+import { quitChat as quitChatSync, logoutUser } from '@/store';
+import type { Chat, State } from '@/store';
 
 interface ResponseType {
   chatId: string;
 }
 
 export const quitChat = (chatId: Chat['id']) =>
-  makeQuery<ResponseType>('quit', 'POST', { chatId }, (dispatch, data) => {
-    dispatch(quitChatSync(data.chatId));
-  });
+  makeQuery<State, ResponseType>(
+    'quit',
+    'POST',
+    { chatId },
+    (dispatch, data) => {
+      dispatch(quitChatSync(data.chatId));
+    },
+    undefined,
+    logoutUser,
+  );

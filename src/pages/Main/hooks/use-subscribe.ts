@@ -1,13 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import type { State, Chat, User, UserSettings } from '@/shared/store/types';
-import { CONNECTION_METHODS } from '@/shared/const/settings';
-import { wsManager } from '@/shared/ws';
-import { store } from '@/shared/store';
-import { addSubscribedChats, clearSubscribedChats } from '@/shared/store';
-import { getEventSource } from '@/shared/sse';
-import type { SubscribedChat, WatchChats } from '@/shared/types/subscribeData';
-import { handleSubscribedChatData, handleWatchChatsData } from '@/shared/utils/subscribeData';
+import type { State, Chat, User, UserSettings } from '@/store';
+import { CONNECTION_METHODS } from '@/const/settings';
+import { SSEManager, WebSocketManager } from '@/shared/network';
+import { store, addSubscribedChats, clearSubscribedChats, handleSubscribedChatData, handleWatchChatsData, logoutUser } from '@/store';
+import type { SubscribedChat, WatchChats } from '@/types/subscribeData';
+import { COMMON_CONFIG, REFRESH_URL } from '@/config/common';
+import { publishChat } from '@/features/MessageInput/api/publishChat';
+import type { WSMessageIncoming, WSMessageOutgoing } from '@/types/ws';
+import {
+  PUBLISH_MESSAGE_OUTGOING_TYPE,
+  SUBSCRIBE_CHAT_OUTGOING_TYPE,
+  SUBSCRIBED_CHAT_INCOMING_TYPE,
+  WATCH_CHATS_INCOMING_TYPE,
+} from '@/const/ws';
 import { subscribeChat } from '../api/subscribeChat';
 import { watchChatsUpdates } from '../api/watchChatsUpdates';
 
@@ -27,19 +33,25 @@ export const useSubscribe = () => {
   const subscribeAbortController = useRef<AbortController | null>(null);
   const setOnAbort = (cb: () => void) => subscribeAbortController.current?.signal.addEventListener('abort', cb);
 
+  const wsManager = useMemo(() => new WebSocketManager<WSMessageIncoming, WSMessageOutgoing>(), []);
+
+  const onRefreshError = () => {
+    logoutUser(dispatch);
+  };
+
   useEffect(() => {
     dispatch(clearSubscribedChats());
 
     subscribeAbortController.current = new AbortController();
 
     if (connectionMethod === CONNECTION_METHODS.WS) {
-      wsManager.connect();
+      wsManager.connect(COMMON_CONFIG.WS_URL, REFRESH_URL, onRefreshError, () => dispatch(clearSubscribedChats()));
 
-      wsManager.subscribe('WATCH_CHATS', (payload) => {
+      wsManager.subscribe(WATCH_CHATS_INCOMING_TYPE, (payload) => {
         handleWatchChatsData(payload, dispatch);
       });
 
-      wsManager.subscribe('SUBSCRIBED_CHAT', (payload) => {
+      wsManager.subscribe(SUBSCRIBED_CHAT_INCOMING_TYPE, (payload) => {
         handleSubscribedChatData(payload, dispatch);
       });
 
@@ -47,11 +59,16 @@ export const useSubscribe = () => {
     } else if (connectionMethod === CONNECTION_METHODS.HTTP) {
       dispatch(watchChatsUpdates(subscribeAbortController.current?.signal));
     } else if (connectionMethod === CONNECTION_METHODS.SSE) {
-      const eventSource = getEventSource<WatchChats>('/sse/chats-subscribe', (data) => {
-        handleWatchChatsData(data, dispatch);
-      });
+      const sseManager = new SSEManager<WatchChats>(
+        `${COMMON_CONFIG.API_URL}/sse/chats-subscribe`,
+        REFRESH_URL,
+        (data) => {
+          handleWatchChatsData(data, dispatch);
+        },
+        onRefreshError,
+      );
 
-      setOnAbort(() => eventSource.close());
+      setOnAbort(() => sseManager.close());
     }
 
     return () => subscribeAbortController.current?.abort();
@@ -65,28 +82,35 @@ export const useSubscribe = () => {
       if (!subscribedChatsIds.includes(chatId)) {
         if (connectionMethod === CONNECTION_METHODS.WS) {
           const lastMessageId = getLastMessageId(chatId);
-          wsManager.sendMessage('SUBSCRIBE_CHAT', { chatId, lastMessageId });
+          wsManager.sendMessage(SUBSCRIBE_CHAT_OUTGOING_TYPE, { chatId, lastMessageId });
         } else if (connectionMethod === CONNECTION_METHODS.HTTP) {
-          const subscribe = (isFailure?: boolean) => {
-            if (!isFailure) {
-              const lastMessageId = getLastMessageId(chatId);
-              dispatch(subscribeChat(chatId, lastMessageId, subscribe, subscribeAbortController.current?.signal));
-            }
+          const subscribe = () => {
+            const lastMessageId = getLastMessageId(chatId);
+            dispatch(subscribeChat(chatId, lastMessageId, subscribe, subscribeAbortController.current?.signal));
           };
 
           subscribe();
         } else if (connectionMethod === CONNECTION_METHODS.SSE) {
-          const lastMessageId = getLastMessageId(chatId);
-          const eventSource = getEventSource<SubscribedChat>(
-            `/sse/subscribe?chatId=${encodeURIComponent(chatId)}${
-              lastMessageId ? `&lastMessageId=${encodeURIComponent(lastMessageId)}` : ''
-            }`,
+          const getUrlParams = () => {
+            const lastMessageId = getLastMessageId(chatId);
+            const search = new URLSearchParams();
+            search.set('chatId', chatId);
+            if (lastMessageId) search.set('lastMessageId', lastMessageId);
+
+            return search;
+          };
+
+          const sseManager = new SSEManager<SubscribedChat>(
+            `${COMMON_CONFIG.API_URL}/sse/subscribe`,
+            REFRESH_URL,
             (data) => {
               handleSubscribedChatData(data, dispatch);
             },
+            onRefreshError,
+            getUrlParams,
           );
 
-          setOnAbort(() => eventSource.close());
+          setOnAbort(() => sseManager.close());
         }
 
         subscribedChats.push(chatId);
@@ -97,4 +121,18 @@ export const useSubscribe = () => {
       dispatch(addSubscribedChats(subscribedChats));
     }
   }, [joinedChatsIds, subscribedChatsIds]);
+
+  const sendMessage = useCallback(
+    (chatId: Chat['id'], messageText: string) => {
+      if (connectionMethod === CONNECTION_METHODS.WS) {
+        wsManager.sendMessage(PUBLISH_MESSAGE_OUTGOING_TYPE, { chatId, message: messageText });
+      } else {
+        // HTTP, SSE
+        dispatch(publishChat(chatId, messageText));
+      }
+    },
+    [connectionMethod, wsManager],
+  );
+
+  return { sendMessage };
 };

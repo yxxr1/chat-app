@@ -13,6 +13,10 @@ export const {
   addChats,
   deleteChats,
   updateChat,
+  addUser,
 } = actions;
 
 export const store = configureStore({ reducer });
+
+export { logoutUser, handleSubscribedChatData, handleWatchChatsData } from './utils';
+export type { State, User, UserSettings, UserProfile, Chat, Message } from './types';

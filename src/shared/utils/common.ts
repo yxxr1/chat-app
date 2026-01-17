@@ -1,35 +1,46 @@
-import type i18n from 'i18next';
-import { MESSAGE_SERVICE_TYPES } from '@/shared/const/common';
-import type { Message, Chat } from '@/shared/store/types';
+export const isObject = (data: unknown): data is Record<string, unknown> => !!data && typeof data === 'object' && !Array.isArray(data);
 
-export const getServiceMessage = (t: (typeof i18n)['t'], { service, fromName }: Message) => {
-  switch (service) {
-    case MESSAGE_SERVICE_TYPES.CHAT_CREATED:
-      return t('serviceMessage.chatCreated', { userName: fromName });
-    case MESSAGE_SERVICE_TYPES.CHAT_JOINED:
-      return t('serviceMessage.joinedChat', { userName: fromName });
-    case MESSAGE_SERVICE_TYPES.CHAT_LEFT:
-      return t('serviceMessage.leftChat', { userName: fromName });
-  }
+export const throttledAsyncFn = <T = unknown>(fn: () => Promise<T>) => {
+  let currentCall: Promise<T> | null = null;
+
+  const handler = async () => {
+    try {
+      return await fn();
+    } finally {
+      currentCall = null;
+    }
+  };
+
+  return async () => {
+    if (!currentCall) {
+      currentCall = handler();
+    }
+
+    return currentCall;
+  };
 };
 
-export const addMessages = (sourceMessages: Chat['messages'], newMessages: Message[]): Chat['messages'] => {
-  const messages: Chat['messages'] = [];
-  let minIndex = sourceMessages[0]?.index ?? Infinity;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const throttledAsyncFnWithArgs = <T = unknown>(fn: (...args: any[]) => Promise<T>) => {
+  const currentCall: Record<string, Promise<T>> = {};
 
-  sourceMessages.forEach((message) => {
-    if (message) {
-      messages[message.index] = message;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handler = async (jsonArgsKey: string, ...args: any[]) => {
+    try {
+      return await fn(...args);
+    } finally {
+      delete currentCall[jsonArgsKey];
     }
-  });
+  };
 
-  newMessages.forEach((message) => {
-    if (message.index < minIndex) {
-      minIndex = message.index;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return async (...args: any[]) => {
+    const jsonArgsKey = JSON.stringify(args);
+
+    if (!currentCall[jsonArgsKey]) {
+      currentCall[jsonArgsKey] = handler(jsonArgsKey, ...args);
     }
 
-    messages[message.index] = message;
-  });
-
-  return messages.slice(minIndex);
+    return currentCall[jsonArgsKey];
+  };
 };

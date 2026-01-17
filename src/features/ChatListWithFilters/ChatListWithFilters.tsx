@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Radio } from 'antd';
-import type { State, Chat } from '@/shared/store/types';
+import type { State, Chat } from '@/store';
 import { ChatItem } from '@/entities/ChatItem';
 import styles from './styles.module.scss';
 
