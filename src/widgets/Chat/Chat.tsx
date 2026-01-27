@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, Suspense } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
@@ -6,14 +6,16 @@ import { AiOutlineMessage } from 'react-icons/ai';
 import type { Chat as ChatType, State } from '@/store';
 import { setCurrentChat } from '@/store';
 import type { Props as MessagesContainerProps } from '@/features/MessagesContainer';
-import { MessagesContainer } from '@/features/MessagesContainer';
 import { MessageInput } from '@/features/MessageInput';
 import type { MessagesDirections } from '@/const/messages';
+import { Loader } from '@/shared/ui/Loader';
 import { joinChat } from './api/joinChat';
 import { quitChat } from './api/quitChat';
 import { getMessages } from './api/getMessages';
-import { ChatHeader, Chat as ChatContainer, EmptyChat } from './styled';
+import { ChatHeader, Chat as ChatContainer, NoChatContainer } from './styled';
 import styles from './styles.module.scss';
+
+const MessagesContainer = React.lazy(() => import('@/features/MessagesContainer'));
 
 export type Props = {
   currentChat: ChatType | null;
@@ -53,10 +55,10 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
 
   if (currentChat === null) {
     return (
-      <EmptyChat>
+      <NoChatContainer>
         <AiOutlineMessage size={80} />
         <div className={styles['empty-chat-text']}>{t('joinChatToStart')}</div>
-      </EmptyChat>
+      </NoChatContainer>
     );
   }
 
@@ -71,8 +73,16 @@ const _Chat: React.FC<Props> = ({ currentChat, joinedChatsIds, ...props }) => {
           {t('leave')}
         </Button>
       </ChatHeader>
-      <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
-      <MessageInput chatId={currentChat?.id} />
+      <Suspense
+        fallback={
+          <NoChatContainer>
+            <Loader />
+          </NoChatContainer>
+        }
+      >
+        <MessagesContainer chatId={currentChat.id} messages={currentChat.messages} onLoadMore={onLoadMoreMessages} />
+        <MessageInput chatId={currentChat?.id} />
+      </Suspense>
     </ChatContainer>
   );
 };

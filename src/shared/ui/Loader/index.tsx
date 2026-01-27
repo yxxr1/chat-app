@@ -5,5 +5,5 @@ import { useTheme } from '@/shared/utils/theme';
 export const Loader = () => {
   const theme = useTheme();
 
-  return <LoaderSpinner type="BallTriangle" color={theme.primary} height={50} width={50} />;
+  return <LoaderSpinner type="BallTriangle" color={theme.primary} height={50} width={50} visible />;
 };

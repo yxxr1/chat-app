@@ -35,7 +35,7 @@ export const Chat = styled.div<{ theme: Theme }>`
   background-color: ${({ theme }) => theme.background};
 `;
 
-export const EmptyChat = styled.div<{ theme: Theme }>`
+export const NoChatContainer = styled.div<{ theme: Theme }>`
   flex: 1;
   display: flex;
   justify-content: center;

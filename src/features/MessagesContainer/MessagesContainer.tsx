@@ -80,3 +80,4 @@ const _MessagesContainer: React.FC<Props> = ({ messages, chatId, onLoadMore }) =
 };
 
 export const MessagesContainer = memo(_MessagesContainer);
+export default MessagesContainer;
