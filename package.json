@@ -12,7 +12,6 @@
     "antd": "5.18",
     "i18next": "^23.8.1",
     "i18next-browser-languagedetector": "^7.2.0",
-    "moment": "^2.29.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-i18next": "^14.0.1",
@@ -25,9 +24,10 @@
     "styled-components": "^5.2.1"
   },
   "scripts": {
-    "serve": "webpack serve --mode=development --progress",
-    "build": "webpack",
-    "build:prod": "webpack --config webpack.config.prod.js",
+    "serve": "cross-env NODE_ENV=development webpack serve --mode=development --progress",
+    "build": "cross-env NODE_ENV=development webpack --mode=development",
+    "build:prod": "cross-env NODE_ENV=production webpack --mode=production --config webpack.config.prod.js",
+    "build:analyze": "cross-env NODE_ENV=production BUNDLE_ANALYZER=1 webpack --mode=production --config webpack.config.prod.js",
     "eslint": "eslint ./src --ext .ts,.tsx",
     "eslint-fix": "eslint ./src --ext .ts,.tsx --fix",
     "test": "jest",
@@ -59,6 +59,7 @@
     "babel-jest": "^30.0.4",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
+    "cross-env": "^10.1.0",
     "css-loader": "^6.8.1",
     "dotenv": "^17.2.3",
     "eslint": "^8.55.0",
@@ -80,6 +81,7 @@
     "typescript": "^5.9.2",
     "typescript-plugin-css-modules": "^5.0.2",
     "webpack": "^5.89.0",
+    "webpack-bundle-analyzer": "^5.2.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0"

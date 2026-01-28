@@ -7,6 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'development',
@@ -76,5 +77,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style-[hash].css',
     }),
-  ],
+    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
+  ].filter(Boolean),
 };
