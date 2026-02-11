@@ -8,8 +8,8 @@
     "url": "https://github.com/yxxr1/chat-app.git"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.2.3",
-    "antd": "5.18",
+    "@reduxjs/toolkit": "^2.11.2",
+    "antd": "^6.3.0",
     "i18next": "^23.8.1",
     "i18next-browser-languagedetector": "^7.2.0",
     "react": "^19.2.3",
@@ -17,10 +17,10 @@
     "react-i18next": "^14.0.1",
     "react-icons": "^4.12.0",
     "react-loader-spinner": "^4.0.0",
-    "react-redux": "^7.2.2",
+    "react-redux": "^9.2.0",
     "react-virtuoso": "^4.6.2",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "styled-components": "^5.2.1"
   },
   "scripts": {
@@ -29,7 +29,7 @@
     "build:prod": "cross-env NODE_ENV=production webpack --mode=production --config webpack.config.prod.js",
     "build:analyze": "cross-env NODE_ENV=production BUNDLE_ANALYZER=1 webpack --mode=production --config webpack.config.prod.js",
     "eslint": "eslint ./src --ext .ts,.tsx",
-    "eslint-fix": "eslint ./src --ext .ts,.tsx --fix",
+    "eslint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "test": "jest",
     "test:e2e": "wdio run ./wdio.conf.js"
   },

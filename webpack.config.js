@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const globals = require('./globals.js')
 
 module.exports = {
   mode: 'development',
@@ -48,12 +49,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new DefinePlugin({
-      'process.env': {
-        API_URL: JSON.stringify(process.env.API_URL),
-        WS_URL: JSON.stringify(process.env.WS_URL),
-      },
-    }),
+    new DefinePlugin(globals),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [

@@ -3,4 +3,5 @@ declare module '*.scss' {
   export = content;
 }
 
-declare const process = { env: Record<string, string> };
+declare const __API_URL__ = string;
+declare const __WS_URL__ = string;

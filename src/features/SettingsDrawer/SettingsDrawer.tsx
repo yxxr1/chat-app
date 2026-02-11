@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import type { CheckboxProps } from 'antd';
 import { Button, Drawer, Form, Input, Radio, Select, Checkbox, Divider } from 'antd';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -10,6 +9,7 @@ import { AVAILABLE_LANGUAGES } from '@/i18n';
 import { useTheme } from '@/shared/utils/theme';
 import { UI_THEMES, CONNECTION_METHODS } from '@/const/settings';
 import type { State, User } from '@/store';
+import { useAppSelector, useAppDispatch } from '@/store';
 import { logoutUser } from './api/logoutUser';
 import { setUser } from './api/setUser';
 import styles from './styles.module.scss';
@@ -20,8 +20,8 @@ export type Props = {
 };
 
 export const SettingsDrawer: React.FC<Props> = ({ isOpen, onClose }) => {
-  const user = useSelector<State, User>((state) => (state.user as User) || {});
-  const dispatch = useDispatch();
+  const user = useAppSelector<State, User>((state) => (state.user as User) || {});
+  const dispatch = useAppDispatch();
 
   const { t, i18n } = useTranslation();
 

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { Button, Form, Input, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '@/store';
 import { nameValidator } from '@/shared/utils/validation';
 import { login } from './api/login';
 import { registration } from './api/registration';
@@ -11,7 +11,7 @@ import { Container } from './styled';
 export const LoginForm: React.FC = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(() => {
     const name = form.getFieldValue('name');

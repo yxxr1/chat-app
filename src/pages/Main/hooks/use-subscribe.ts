@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import type { State, Chat, User, UserSettings } from '@/store';
+import { useAppSelector, useAppDispatch } from '@/store';
 import { CONNECTION_METHODS } from '@/const/settings';
 import { SSEManager, WebSocketManager } from '@/shared/network';
 import { store, addSubscribedChats, clearSubscribedChats, handleSubscribedChatData, handleWatchChatsData, logoutUser } from '@/store';
@@ -22,14 +22,14 @@ export const useSubscribe = () => {
     settings: { connectionMethod },
     joinedChatsIds,
     subscribedChatsIds,
-  } = useSelector<State, { settings: UserSettings } & Pick<State, 'joinedChatsIds' | 'subscribedChatsIds'>>(
+  } = useAppSelector<State, { settings: UserSettings } & Pick<State, 'joinedChatsIds' | 'subscribedChatsIds'>>(
     ({ user, joinedChatsIds, subscribedChatsIds }) => ({
       settings: ((user as User) || {}).settings,
       joinedChatsIds,
       subscribedChatsIds,
     }),
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const subscribeAbortController = useRef<AbortController | null>(null);
   const setOnAbort = (cb: () => void) => subscribeAbortController.current?.signal.addEventListener('abort', cb);
 

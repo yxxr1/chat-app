@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { setCurrentChat } from '@/store';
+import { setCurrentChat, useAppDispatch } from '@/store';
 import type { Chat } from '@/store';
 import { useTheme } from '@/shared/utils/theme';
 import { ChatCreateModal } from '@/features/ChatCreateModal';
@@ -17,7 +16,7 @@ export interface Props {
 
 export const ChatList: React.FC<Props> = ({ onSettingsClick }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onChatClick = useCallback((id: Chat['id']) => {
     dispatch(setCurrentChat(id));

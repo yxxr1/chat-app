@@ -1,12 +1,13 @@
 import type { Dispatch } from 'redux';
 import i18n from 'i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { store, addChats, deleteChats, setUser, updateChat, addMessages } from '@/store';
 import type { SubscribedChat, WatchChats } from '@/types/subscribeData';
 import { hasNotificationPermission, sendNotification } from '@/shared/utils/notification';
 import { setToken } from '@/shared/network';
 import type { MessageWithSender } from '@/entities/Message';
 import { getMessageWithSender } from '@/entities/Message';
-import type { Chat } from './types';
+import type { Chat, State } from './types';
 
 export const handleWatchChatsData = (data: WatchChats, dispatch: Dispatch) => {
   if (data.newChats.length) {
@@ -47,3 +48,6 @@ export const logoutUser = (dispatch: Dispatch) => {
   setToken(undefined);
   dispatch(setUser(null));
 };
+
+export const useAppDispatch = useDispatch.withTypes<typeof store.dispatch>();
+export const useAppSelector = useSelector.withTypes<State>();

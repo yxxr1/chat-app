@@ -28,7 +28,7 @@ describe('Message entity', () => {
 
   test('utils', () => {
     expect(getUserTitle(message)).toEqual('test_user(2Qne)');
-    expect(formatDate(message.date)).toEqual('07/14/2024');
+    expect(formatDate(message.date)).toEqual('14.07.2024 03:00:00');
   });
 
   test('renders content', () => {

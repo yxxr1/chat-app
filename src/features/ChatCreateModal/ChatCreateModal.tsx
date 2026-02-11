@@ -1,8 +1,8 @@
 import React, { useCallback, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import type { InputRef } from 'antd';
 import { Form, Input, Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '@/store';
 import { nameValidator } from '@/shared/utils/validation';
 import { createChat } from './api/createChat';
 
@@ -13,7 +13,7 @@ type Props = {
 
 export const ChatCreateModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [form] = Form.useForm();
   const inputRef = useRef<InputRef>(null);

@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Radio } from 'antd';
 import type { State, Chat } from '@/store';
+import { useAppSelector } from '@/store';
 import { ChatItem } from '@/entities/ChatItem';
 import styles from './styles.module.scss';
 
@@ -14,7 +14,7 @@ export const ChatListWithFilters: React.FC<Props> = ({ onChatClick }) => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState(0);
 
-  const { allChats, joinedChatsIds, currentChatId } = useSelector<State, Pick<State, 'allChats' | 'joinedChatsIds' | 'currentChatId'>>(
+  const { allChats, joinedChatsIds, currentChatId } = useAppSelector<State, Pick<State, 'allChats' | 'joinedChatsIds' | 'currentChatId'>>(
     ({ allChats, joinedChatsIds, currentChatId }) => ({
       allChats,
       joinedChatsIds,

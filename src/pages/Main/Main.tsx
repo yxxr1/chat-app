@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/store';
 import { ChatList } from '@/widgets/ChatList';
 import { Chat } from '@/widgets/Chat';
 import { SettingsDrawer } from '@/features/SettingsDrawer';
@@ -9,7 +9,7 @@ import { useSubscribe } from './hooks/use-subscribe';
 import styles from './styles.module.scss';
 
 export const Main: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getChats());

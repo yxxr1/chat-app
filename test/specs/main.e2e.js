@@ -6,7 +6,7 @@ const getTextSelector = (text) => `*=${text}`;
 
 describe('Chat-app', () => {
   const userName = `testUser${getRandom()}`;
-  const password = 'test';
+  const password = 'test1234';
   const chatName = `testChat${getRandom()}`;
   const testMessageText = `test message ${getRandom()}`;
 
